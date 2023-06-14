@@ -16,7 +16,7 @@ async function login(event) {
 
     const sessionData = new Array();
     sessionData.push(user.userId, await response.text())
-    $.cookie("sessionData", sessionData, {domain: "127.0.0.1", path: "/", expires: 1})
+    $.cookie("sessionData", sessionData, {domain: "127.0.0.1", path: "/", expires: 14})
 
     check(sessionData);
 }
@@ -35,7 +35,7 @@ async function check(sessionData){
         setTimeout("deleteMessage()", 1500);
     } else {
         console.log("OK")
-        location.href = `http://125.26.15.242:9005/th/Home`
+        location.href = `http://127.0.0.1:5500/ui/home/home.html`
     }
 }
 

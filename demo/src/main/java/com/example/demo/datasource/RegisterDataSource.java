@@ -1,11 +1,15 @@
 package com.example.demo.datasource;
 
 import com.example.demo.model.RegisterModel;
+import com.example.demo.model.StockModel;
 import com.example.demo.repository.RegisterRepository;
+import com.example.demo.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

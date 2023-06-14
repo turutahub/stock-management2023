@@ -1,6 +1,6 @@
-/*document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     if(document.cookie === "") {
-        location.href = `http://127.0.0.1:5500/login/login.html`
+        location.href = `http://127.0.0.1:5500/ui/login/login.html`
     } else {
     const userId = $.cookie("sessionData").split(",")[0];
     const sessionId = $.cookie("sessionData").split(",")[1];
@@ -22,7 +22,7 @@ async function checkId(userId, sessionId){
     } else {
         console.log("OK")
     }
-}*/
+}
 
 // 時計、日付、曜日を表示
 // 日付・時計機能の実装
