@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="jp">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+        <title> login </title>
+    </head>
+    <body>
+        <header></header>
+        <main>
+            <form>
+                <label for="userId">userID</label>
+                <input name="userId" id="userId">
+                <label for="password">password</label>
+                <input name="password" id="password" type="password">
+                <button type="submit" onclick="login(event)"></button>
+            </form>
+            <p id="messageBox"></p>
+        </main>
+        <footer></footer>
+    </body>
+    <script src="login.js"></script>
+</html>
