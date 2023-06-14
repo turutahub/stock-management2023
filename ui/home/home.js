@@ -72,7 +72,6 @@ function showContent(contentId) {
 // 初期表示時にホームと時計を表示
 window.onload = function() {
   showContent('home');
-  showDateTime();
 };
 
 // 在庫概要の表示

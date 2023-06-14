@@ -1,7 +1,7 @@
 // 在庫一覧を取得して表示する関数
 async function getInventoryList() {
   try {
-    const response = await fetch('/stock');
+    const response = await fetch('http://localhost:8080/stock');
     const data = await response.json();
     const tableBody = document.getElementById('tableBody');
 
