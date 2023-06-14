@@ -1,0 +1,99 @@
+<html lang="jp">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+  <title>在庫管理システム</title>
+  <link rel="stylesheet" type="text/css" href="home.css" />
+  <script src="home.js"></script>
+</head>
+<body>
+  <header class="header">
+    <h1>在庫管理システム</h1>
+    <div>
+      <div class="clock" id="clock"></div>
+      <div class="date" id="date"></div>
+    </div>
+  </header>
+
+  <div class="button-container">
+    <button onclick="showContent('home')">ホーム</button>
+    <button onclick="showContent('dashboard')">ダッシュボード</button>
+    <button onclick="showContent('stock')">在庫一覧</button>
+    <button onclick="showContent('register')">在庫登録</button>
+    <button onclick="showContent('order')">発注</button>
+    <button onclick="showContent('inspect')">検品</button>
+    <button onclick="showContent('reports')">棚卸</button>
+    <button onclick="showContent('finditem')">検索</button>
+  </div>
+
+  <section id="home" class="content">
+    <h2>ホーム</h2>
+    <div id="stockSummary">
+      <h3>在庫概要</h3>
+      <p>総在庫数: <span id="totalStock"></span></p>
+      <div id="categoryStock">
+        <h4>カテゴリごとの在庫数</h4>
+        <!-- カテゴリごとの在庫数の表示 -->
+      </div>
+      <h4>低在庫品</h4>
+      <ul id="lowStockItems">
+        <!-- 低在庫品の一覧の表示 -->
+      </ul>
+    </div>
+
+    <div id="importantAlerts">
+      <h3>重要なアラート</h3>
+      <ul>
+        <!-- 重要なアラートの表示 -->
+      </ul>
+    </div>
+
+    <div id="latestShipments">
+      <h3>最新の出荷情報</h3>
+      <ul>
+        <!-- 最新の出荷情報の表示 -->
+      </ul>
+    </div>
+  </section>
+
+  <section id="dashboard" class="content">
+    <h2>ダッシュボード</h2>
+    <!-- ダッシュボードの内容を記述 -->
+  </section>
+
+  <section id="stock" class="content">
+    <h2>在庫一覧</h2>
+    <table>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <script src="stock.js"></script>
+  </section>
+  
+  <section id="register" class="content">
+    <h2>在庫登録</h2>
+    <script src="register.js"></script>
+  </section>
+  
+  <section id="order" class="content">
+    <h2>発注</h2>
+    <script src="order.js"></script>
+  </section>
+  
+  <section id="inspect" class="content">
+    <h2>検品</h2>
+    <script src="inspect.js"></script>
+  </section>
+  
+  <section id="reports" class="content">
+    <h2>棚卸</h2>
+    <script src="reports.js"></script>
+  </section>
+
+ <section id="finditem" class="content">
+    <h2>検索</h2>
+    <script src="finditem.js"></script>
+  </section>
+</body>
+</html>

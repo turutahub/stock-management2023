@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:12.2-alpine
+    container_name: "stock-database"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=stock
+      - POSTGRES_USER=stockuser
+      - POSTGRES_PASSWORD=stockpassword
