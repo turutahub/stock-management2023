@@ -92,17 +92,6 @@ function showStockSummary() {
     categoryStockElement.appendChild(categoryStockItem);
   }
 
-  // 低在庫品の取得と表示
-  const lowStockItemsElement = document.getElementById('lowStockItems');
-  const lowStockItems = getLowStockItemsFromDatabase(); // データベースから低在庫品を取得
-  lowStockItemsElement.innerHTML = '';
-  for (const item of lowStockItems) {
-    const lowStockItem = document.createElement('li');
-    lowStockItem.textContent = item;
-    lowStockItemsElement.appendChild(lowStockItem);
-  }
-}
-
 // 重要なアラートの表示
 function showImportantAlerts() {
   const importantAlertsElement = document.getElementById('importantAlerts');
@@ -115,10 +104,10 @@ function showImportantAlerts() {
   }
 }
 
-// 最新の出荷情報の表示
+// 最新の発注情報
 function showLatestShipments() {
   const latestShipmentsElement = document.getElementById('latestShipments');
-  const latestShipments = getLatestShipmentsFromDatabase(); // データベースから最新の出荷情報を取得
+  const latestShipments = getLatestShipmentsFromDatabase(); // データベースから最新の発注情報を取得
   latestShipmentsElement.innerHTML = '';
   for (const shipment of latestShipments) {
     const shipmentItem = document.createElement('li');
@@ -136,3 +125,4 @@ function updateDashboard() {
 
 // ページ読み込み時にダッシュボードを更新
 window.addEventListener('load', updateDashboard);
+}

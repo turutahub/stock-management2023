@@ -37,11 +37,6 @@
         <h4>カテゴリごとの在庫数</h4>
         <!-- カテゴリごとの在庫数の表示 -->
       </div>
-      <h4>低在庫品</h4>
-      <ul id="lowStockItems">
-        <!-- 低在庫品の一覧の表示 -->
-      </ul>
-    </div>
 
     <div id="importantAlerts">
       <h3>重要なアラート</h3>
@@ -51,9 +46,9 @@
     </div>
 
     <div id="latestShipments">
-      <h3>最新の出荷情報</h3>
+      <h3>最新の発注情報</h3>
       <ul>
-        <!-- 最新の出荷情報の表示 -->
+        <!-- 最新の発注情報の表示 -->
       </ul>
     </div>
   </section>
@@ -71,10 +66,22 @@
     <script src="stock.js"></script>
   </section>
   
-  <section id="register" class="content">
-    <h2>在庫登録</h2>
-    <script src="register.js"></script>
-  </section>
+ <section id="register" class="content">
+  <h2>在庫登録</h2>
+  <form id="registerForm">
+    <input type="text" id="productName" placeholder="商品名" required />
+    <input type="text" id="productCode" placeholder="商品コード" required />
+    <input type="number" id="quantity" placeholder="数量" required />
+    <input type="number" id="price" placeholder="価格" required />
+    <input type="text" id="category" placeholder="カテゴリ" required />
+    <input type="text" id="location" placeholder="場所" required />
+    <button type="submit">登録</button>
+  </form>
+  <table>
+    <tbody id="registertable"></tbody>
+  </table>
+  <script src="register.js"></script>
+</section>
   
   <section id="order" class="content">
     <h2>発注</h2>
@@ -91,9 +98,33 @@
     <script src="reports.js"></script>
   </section>
 
- <section id="finditem" class="content">
+  <section id="finditem" class="content">
     <h2>検索</h2>
-    <script src="finditem.js"></script>
+    <div>
+      <label for="keyword">キーワード:</label>
+      <input type="text" id="keyword">
+      <button onclick="search()">検索</button>
+    </div>
+    <div>
+      <label for="category">カテゴリー:</label>
+      <select id="category">
+        <option value="category1">カテゴリー1</option>
+        <option value="category2">カテゴリー2</option>
+        <option value="category3">カテゴリー3</option>
+      </select>
+      <button onclick="filter()">フィルタリング</button>
+    </div>
+    <div>
+      <label for="sortBy">ソート順:</label>
+      <select id="sortBy">
+        <option value="option1">オプション1</option>
+        <option value="option2">オプション2</option>
+        <option value="option3">オプション3</option>
+      </select>
+      <button onclick="sort()">ソート</button>
+    </div>
+    <button onclick="showStock()">在庫状況表示</button>
+  </section>
   </section>
 </body>
 </html>
