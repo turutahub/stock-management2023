@@ -12,16 +12,20 @@ import java.util.List;
 public class RegisterController {
     private final RegisterService service;
 
-    @GetMapping("application/json")
+    public RegisterController(RegisterService service) {
+        this.service = service;
+    }
+
+    @GetMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public List<RegisterModel> getFood() {
         return service.getAll();
     }
 
-    @PostMapping("application/json")
+    @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody RegisterRequest request) {
-        service.registerFood(request.toResisterModel());
+    public void register(@RequestBody RegisterModel request) {
+        service.registerFood(request);
     }
 
     @GetMapping(value = "/{foodId}", produces = "application/json")
@@ -30,19 +34,15 @@ public class RegisterController {
         return service.getById(foodId);
     }
 
-    @PutMapping(value = "/{foodId}", produces = "application/json")
+    @PutMapping(value = "/{foodId}", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable int foodId, @RequestBody RegisterRequest request) {
-        service.updateFood(request.toResisterModel(foodId));
+    public void update(@PathVariable int foodId, @RequestBody RegisterModel request) {
+        service.updateFood(request);
     }
 
     @DeleteMapping(value = "/{foodId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int foodId) {
         service.deleteFood(foodId);
-    }
-
-    public RegisterController(RegisterService service) {
-        this.service = service;
     }
 }
