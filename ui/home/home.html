@@ -61,40 +61,83 @@
   <section id="stock" class="content">
     <h2>在庫一覧</h2>
     <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>不足数</th>
+          <th>発注数</th>
+          <th>納品予定日</th>
+          <th>在庫数</th>
+          <th>必要数</th>
+          <th>消費期間</th>
+        </tr>
+      </thead>
       <tbody id="tableBody"></tbody>
     </table>
     <script src="stock.js"></script>
   </section>
   
- <section id="register" class="content">
-  <h2>在庫登録</h2>
-  <form id="registerForm">
-    <input type="text" id="productName" placeholder="商品名" required />
-    <input type="text" id="productCode" placeholder="商品コード" required />
-    <input type="number" id="quantity" placeholder="数量" required />
-    <input type="number" id="price" placeholder="価格" required />
-    <input type="text" id="category" placeholder="カテゴリ" required />
-    <input type="text" id="location" placeholder="場所" required />
-    <button type="submit">登録</button>
-  </form>
-  <table>
-    <tbody id="registertable"></tbody>
-  </table>
-  <script src="register.js"></script>
-</section>
+  <section id="register" class="content">
+    <h2>在庫登録</h2>
+    <script src="register.js"></script>
+  </section>
   
   <section id="order" class="content">
     <h2>発注</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>単位</th>
+          <th>単価</th>
+          <th>消費期間</th>
+          <th>仕入れ店</th>
+          <th>備考</th>
+          <th>発注数</th>
+          <th>納品予定日</th>
+
+        </tr>
+      </thead>
+      <tbody id="orderTable"></tbody>
+    </table>
     <script src="order.js"></script>
   </section>
   
   <section id="inspect" class="content">
     <h2>検品</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>単位</th>
+          <th>単価</th>
+          <th>消費期間</th>
+          <th>仕入れ店</th>
+          <th>備考</th>
+          <th>発注数</th>
+          <th>検品数</th>
+        </tr>
+      </thead>
+      <tbody id="inspectTable"></tbody>
+    </table>
     <script src="inspect.js"></script>
   </section>
   
   <section id="reports" class="content">
     <h2>棚卸</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>消費数</th>
+          <th>原価</th>
+          <th>廃棄数</th>
+          <th>廃棄額</th>
+          <th>ロス率（％）</th>
+        </tr>
+      </thead>
+      <tbody id="reportsTable"></tbody>
+    </table>
     <script src="reports.js"></script>
   </section>
 
