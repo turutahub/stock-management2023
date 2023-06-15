@@ -143,6 +143,23 @@
 
   <section id="finditem" class="content">
     <h2>検索</h2>
+    <!-- 検索フォーム -->
+    <div>
+      <!-- チェックボックス -->
+      <label for="displayCost">原価</label>
+      <input type="checkbox" id="displayCost">
+  
+      <label for="displayCostRatio">原価率</label>
+      <input type="checkbox" id="displayCostRatio">
+  
+      <label for="displayProfit">収支</label>
+      <input type="checkbox" id="displayProfit">
+  
+      <!-- 他の表示項目のチェックボックスも同様に追加 -->
+  
+      <!-- 検索ボタン -->
+      <button onclick="search()">検索</button>
+    </div>
     <div>
       <label for="keyword">キーワード:</label>
       <input type="text" id="keyword">
@@ -167,7 +184,9 @@
       <button onclick="sort()">ソート</button>
     </div>
     <button onclick="showStock()">在庫状況表示</button>
-  </section>
+  
+    <!-- 検索結果の表示領域 -->
+    <div id="searchResults"></div>
   </section>
 </body>
 </html>
