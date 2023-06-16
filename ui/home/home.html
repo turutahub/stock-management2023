@@ -21,7 +21,7 @@
     <button onclick="showContent('home')">ホーム</button>
     <button onclick="showContent('dashboard')">ダッシュボード</button>
     <button onclick="showContent('stock')">在庫一覧</button>
-    <button onclick="showContent('register');getInventoryList()">在庫登録</button>
+    <button onclick="showContent('register');getInventoryList()">食材登録</button>
     <button onclick="showContent('order');getOrderTable()">発注</button>
     <button onclick="showContent('inspect')">検品</button>
     <button onclick="showContent('reports')">棚卸</button>
@@ -78,7 +78,16 @@
   </section>
   
   <section id="register" class="content">
-    <h2>在庫登録</h2>
+    <h2>食材登録</h2>
+    <form onsubmit="event.preventDefault();registerProduct(this)">
+      <input name="foodName">
+      <input name="unit">
+      <input name="cost" type="number">
+      <input name="expDays" type="number">
+      <input name="supplier">
+      <input name="note">
+      <button type="submit">登録</button>
+    </form>
     <table>
       <thead>
         <tr>
