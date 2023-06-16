@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     if(document.cookie === "") {
-        location.href = `http://127.0.0.1:5500/ui/login/login.html`
+        location.href = `http://localhost:5500/login/login.html`
     } else {
     const userId = $.cookie("sessionData").split(",")[0];
     const sessionId = $.cookie("sessionData").split(",")[1];
@@ -17,7 +17,7 @@ async function checkId(userId, sessionId){
     });
     if(!response.ok) {
         console.error(await response.json());
-        location.href = `http://127.0.0.1:5500/login/login.html`
+        location.href = `http://localhost:5500/login/login.html`
         console.log("error")
     } else {
         console.log("OK")
@@ -53,6 +53,7 @@ function showContent(contentId) {
     'home',
     'dashboard',
     'stock',
+    'register',
     'order',
     'inspect',
     'stockManagement',

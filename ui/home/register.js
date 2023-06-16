@@ -3,7 +3,7 @@ async function getInventoryList() {
   try {
     const response = await fetch('http://localhost:8080/register');
     const data = await response.json();
-    const tableBody = document.getElementById('registertable');
+    const tableBody = document.getElementById('registerTable');
 
     // テーブルの内容をクリア
     tableBody.innerHTML = '';

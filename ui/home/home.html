@@ -21,7 +21,7 @@
     <button onclick="showContent('home')">ホーム</button>
     <button onclick="showContent('dashboard')">ダッシュボード</button>
     <button onclick="showContent('stock')">在庫一覧</button>
-    <button onclick="showContent('register')">在庫登録</button>
+    <button onclick="showContent('register');getInventoryList()">在庫登録</button>
     <button onclick="showContent('order');getOrderTable()">発注</button>
     <button onclick="showContent('inspect')">検品</button>
     <button onclick="showContent('reports')">棚卸</button>
@@ -79,6 +79,19 @@
   
   <section id="register" class="content">
     <h2>在庫登録</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>単位</th>
+          <th>単価</th>
+          <th>消費期間</th>
+          <th>仕入れ店</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody id="registerTable"></tbody>
+    </table>
     <script src="register.js"></script>
   </section>
   
