@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>棚卸情報入力画面</title>
+  <script src="addreport.js"></script>
+</head>
+
+<!-- 棚卸確定ボタン -->
+<button id="inventoryConfirmBtn" onclick="confirmInventory()">棚卸確定</button>
+
+<!-- 売上入力ボックス -->
+<label for="salesInput">売上:</label>
+<input type="number" id="salesInput">
+
+<!-- 食材名表示 -->
+<p id="foodName"></p>
+
+<!-- 消費期間表示 -->
+<p id="expiryPeriod"></p>
+
+<!-- 在庫数入力ボックス -->
+<label for="stockInput">在庫数:</label>
+<input type="number" id="stockInput">
+
+<!-- 補填数入力ボックス -->
+<label for="supplementInput">補填数:</label>
+<input type="number" id="supplementInput">
+
+<!-- 補填額入力ボックス -->
+<label for="supplementCostInput">補填額:</label>
+<input type="number" id="supplementCostInput">
+
+<!-- 廃棄数入力ボックス -->
+<label for="wasteInput">廃棄数:</label>
+<input type="number" id="wasteInput">
+
+<!-- 消費数表示 -->
+<p id="consumption"></p>
+
+<!-- 廃棄額表示 -->
+<p id="wasteCost"></p>
+
+<!-- ロス率表示 -->
+<p id="lossRate"></p>
+
+<!-- 原価表示 -->
+<p id="cost"></p>
+
+<!-- 必要数表示 -->
+<p id="requiredAmount"></p>
+
+<!-- 不足数表示 -->
+<p id="shortage"></p>
+</body>
+</html>

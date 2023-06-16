@@ -58,6 +58,7 @@ function showContent(contentId) {
     'stockManagement',
     'finditem',
     'reports',
+    'addreport',
     'settings'
   ];
 

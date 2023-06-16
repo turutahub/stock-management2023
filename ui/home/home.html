@@ -125,23 +125,77 @@
   
   <section id="reports" class="content">
     <h2>棚卸</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>食材名</th>
-          <th>消費数</th>
-          <th>原価</th>
-          <th>廃棄数</th>
-          <th>廃棄額</th>
-          <th>ロス率（％）</th>
-        </tr>
-      </thead>
-      <tbody id="reportsTable"></tbody>
-    </table>
-    <script src="reports.js"></script>
+    <head>
+      <title>経営情報表示画面</title>
+    </head>
+    <body>
+      <h1>経営情報表示画面</h1>
+      <p id="managementDate"></p>
+      <!-- 経営情報の表示領域 -->
+      <div id="managementInfo"></div>
+      
+      <!-- 棚卸情報入力ボタン -->
+      <button onclick="showContent('addreport')">棚卸情報入力ボタン</button>
+  
+      <script src="report.js"></script>
+    </body>
+  </section>
+
+  <section id="addreport" class="content">
+    <h2>棚卸情報入力画面<h2>
+    <script src="addreport.js"></script>
+  </head>
+  
+  <!-- 棚卸確定ボタン -->
+  <button id="inventoryConfirmBtn" onclick="confirmInventory()">棚卸確定</button>
+  
+  <!-- 売上入力ボックス -->
+  <label for="salesInput">売上:</label>
+  <input type="number" id="salesInput">
+  
+  <!-- 食材名表示 -->
+  <p id="foodName"></p>
+  
+  <!-- 消費期間表示 -->
+  <p id="expiryPeriod"></p>
+  
+  <!-- 在庫数入力ボックス -->
+  <label for="stockInput">在庫数:</label>
+  <input type="number" id="stockInput">
+  
+  <!-- 補填数入力ボックス -->
+  <label for="supplementInput">補填数:</label>
+  <input type="number" id="supplementInput">
+  
+  <!-- 補填額入力ボックス -->
+  <label for="supplementCostInput">補填額:</label>
+  <input type="number" id="supplementCostInput">
+  
+  <!-- 廃棄数入力ボックス -->
+  <label for="wasteInput">廃棄数:</label>
+  <input type="number" id="wasteInput">
+  
+  <!-- 消費数表示 -->
+  <p id="consumption"></p>
+  
+  <!-- 廃棄額表示 -->
+  <p id="wasteCost"></p>
+  
+  <!-- ロス率表示 -->
+  <p id="lossRate"></p>
+  
+  <!-- 原価表示 -->
+  <p id="cost"></p>
+  
+  <!-- 必要数表示 -->
+  <p id="requiredAmount"></p>
+  
+  <!-- 不足数表示 -->
+  <p id="shortage"></p>
   </section>
 
   <section id="finditem" class="content">
+
     <h2>検索</h2>
     <!-- 検索フォーム -->
     <div>
