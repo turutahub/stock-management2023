@@ -22,7 +22,7 @@
     <button onclick="showContent('dashboard')">ダッシュボード</button>
     <button onclick="showContent('stock')">在庫一覧</button>
     <button onclick="showContent('register')">在庫登録</button>
-    <button onclick="showContent('order')">発注</button>
+    <button onclick="showContent('order');getOrderTable()">発注</button>
     <button onclick="showContent('inspect')">検品</button>
     <button onclick="showContent('reports')">棚卸</button>
     <button onclick="showContent('finditem')">検索</button>
@@ -95,7 +95,6 @@
           <th>備考</th>
           <th>発注数</th>
           <th>納品予定日</th>
-
         </tr>
       </thead>
       <tbody id="orderTable"></tbody>

@@ -12,7 +12,7 @@ public class OrderService {
     public List<OrderModel> getAll() {
         return repository.getAll();
     }
-    public void insertOrder(OrderModel model) {
+    /*public void insertOrder(OrderModel model) {
         repository.insertOrder(model);
     }
     public OrderModel getById(int foodId) {
@@ -23,7 +23,8 @@ public class OrderService {
     }
     public void deleteOrder(int foodId) {
         repository.deleteOrder(foodId);
-    }
+    }*/
+
     public OrderService(OrderRepository repository) {
         this.repository = repository;
     }
