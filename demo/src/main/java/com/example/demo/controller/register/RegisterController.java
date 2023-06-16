@@ -22,10 +22,10 @@ public class RegisterController {
         return service.getAll();
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@RequestBody RegisterModel request) {
-        service.registerFood(request);
+    public void register(@RequestBody RegisterRequest request) {
+        service.registerFood(request.toRegisterModel());
     }
 
     @GetMapping(value = "/{foodId}", produces = "application/json")

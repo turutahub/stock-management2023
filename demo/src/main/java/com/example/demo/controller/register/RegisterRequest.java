@@ -10,11 +10,11 @@ public class RegisterRequest {
     private final String supplier;
     private final String note;
 
-    public RegisterModel toResisterModel() {
-        return toResisterModel(0);
+    public RegisterModel toRegisterModel() {
+        return toRegisterModel(0);
     }
 
-    public RegisterModel toResisterModel(int foodId) {
+    public RegisterModel toRegisterModel(int foodId) {
         return new RegisterModel(foodId, foodName, unit, cost, expDays, supplier, note);
     }
 

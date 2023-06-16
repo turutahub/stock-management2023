@@ -28,8 +28,17 @@ public class OrderDataSource implements OrderRepository {
 
     @Override
     public void insertOrder(int foodId, OrderRequest request) {
-        String sql = "INSERT INTO impire_history";
+        String sql = "INSERT INTO impire_history (food_id, day, imp_num, delivery_day)\n" +
+                "VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(
+                sql,
+                foodId,
+                request.getDay(),
+                request.getImpNum(),
+                request.getDeliveryDay()
+        );
     }
+
 
     private OrderModel toModel(Map<String, Object> record) {
         Date day = (Date) record.get("day");

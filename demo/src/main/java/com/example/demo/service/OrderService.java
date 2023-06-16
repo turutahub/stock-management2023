@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.controller.order.OrderRequest;
 import com.example.demo.model.OrderModel;
 import com.example.demo.repository.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -12,17 +13,14 @@ public class OrderService {
     public List<OrderModel> getAll() {
         return repository.getAll();
     }
-    /*public void insertOrder(OrderModel model) {
-        repository.insertOrder(model);
+    public void insertOrder(int foodId, OrderRequest request) {
+        repository.insertOrder(foodId, request);
     }
-    public OrderModel getById(int foodId) {
+    /*public OrderModel getById(int foodId) {
         return repository.getById(foodId);
     }
     public void updateOrder(OrderModel model) {
         repository.updateOrder(model);
-    }
-    public void deleteOrder(int foodId) {
-        repository.deleteOrder(foodId);
     }*/
 
     public OrderService(OrderRepository repository) {

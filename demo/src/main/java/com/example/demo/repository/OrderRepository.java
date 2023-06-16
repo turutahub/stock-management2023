@@ -10,5 +10,4 @@ public interface OrderRepository {
     void insertOrder(int foodId, OrderRequest request);
     //OrderModel getById(int foodId);
     //void updateOrder(OrderModel model);
-    //void deleteOrder(int foodId);
 }

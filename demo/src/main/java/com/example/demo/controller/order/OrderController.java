@@ -18,6 +18,13 @@ public class OrderController {
         return service.getAll();
     }
 
+    @PostMapping(value = "/{foodId}", produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void insert(@PathVariable int foodId, @RequestBody OrderRequest request) {
+        service.insertOrder(foodId, request);
+    }
+
+
     public OrderController(OrderService service) {
         this.service = service;
     }
