@@ -1,5 +1,6 @@
 package com.example.demo.datasource;
 
+import com.example.demo.controller.order.OrderRequest;
 import com.example.demo.model.OrderModel;
 import com.example.demo.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,26 @@ public class OrderDataSource implements OrderRepository {
 
     @Override
     public List<OrderModel> getAll() {
-        String sql = "SELECT * FROM impire_history";
+        String sql = "SELECT *\n" +
+                "FROM food_mst\n" +
+                "FULL OUTER JOIN impire_history ON food_mst.food_id = impire_history.food_id;\n";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
         return records.stream().map(this::toModel).collect(Collectors.toList());
     }
+
+    @Override
+    public void insertOrder(int foodId, OrderRequest request) {
+        String sql = "INSERT INTO impire_history (food_id, day, imp_num, delivery_day)\n" +
+                "VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(
+                sql,
+                foodId,
+                request.getDay(),
+                request.getImpNum(),
+                request.getDeliveryDay()
+        );
+    }
+
 
     private OrderModel toModel(Map<String, Object> record) {
         Date day = (Date) record.get("day");
@@ -29,45 +46,16 @@ public class OrderDataSource implements OrderRepository {
         return new OrderModel(
                 (int) record.get("food_id"),
                 day.toLocalDate(),
+                (String) record.get("food_name"),
+                (String) record.get("unit"),
+                (int) record.get("cost"),
+                (int) record.get("expdays"),
+                (String) record.get("supplier"),
+                (String) record.get("note"),
                 (int) record.get("imp_num"),
                 deliveryDay.toLocalDate()
         );
     }
 
-    @Override
-    public void insertOrder(OrderModel model) {
-        String sql = "INSERT INTO impire_history(food_id, day, imp_num, delivery_day) VALUES(?, ?, ?, ?)";
-        jdbcTemplate.update(
-                sql,
-                model.getFoodId(),
-                model.getDay(),
-                model.getImpNum(),
-                model.getDeliveryDay()
-        );
-    }
 
-    @Override
-    public OrderModel getById(int foodId) {
-        String sql = "SELECT * FROM impire_history WHERE food_id = ?";
-        List<Map<String, Object>> record = jdbcTemplate.queryForList(sql, foodId);
-        return toModel(record.get(0));
-    }
-
-    @Override
-    public void updateOrder(OrderModel model) {
-        String sql = "UPDATE impire_history SET day = ?, imp_num = ?, delivery_day = ? WHERE food_id = ?";
-        jdbcTemplate.update(
-                sql,
-                model.getDay(),
-                model.getImpNum(),
-                model.getDeliveryDay(),
-                model.getFoodId()
-        );
-    }
-
-    @Override
-    public void deleteOrder(int foodId) {
-        String sql = "DELETE FROM impire_history WHERE food_id = ?";
-        jdbcTemplate.update(sql, foodId);
-    }
 }

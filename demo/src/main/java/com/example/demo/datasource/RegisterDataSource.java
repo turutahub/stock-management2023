@@ -39,10 +39,9 @@ public class RegisterDataSource implements RegisterRepository {
 
     @Override
     public void registerFood(RegisterModel model) {
-        String sql = "INSERT INTO food_mst(food_id, food_name, unit, cost, expdays, supplier, note) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO food_mst(food_name, unit, cost, expdays, supplier, note) VALUES (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(
                 sql,
-                model.getFoodId(),
                 model.getFoodName(),
                 model.getUnit(),
                 model.getCost(),

@@ -1,3 +1,54 @@
+// 発注テーブル表示
+async function getOrderTable() {
+  try {
+    const response = await fetch('http://localhost:8080/order');
+    const data = await response.json();
+    console.log(data);
+    const tableBody = document.getElementById('orderTable');
+
+    // テーブルの内容をクリア
+    tableBody.innerHTML = '';
+
+    data.forEach(item => {
+      const row = document.createElement('tr');
+      //const foodIdCell = document.createElement('td');
+      //const dayCell = document.createElement('td');
+      const foodNameCell = document.createElement('td');
+      const unitCell = document.createElement('td');
+      const costCell = document.createElement('td');
+      const expdaysCell = document.createElement('td');
+      const supplierCell = document.createElement('td');
+      const noteCell = document.createElement('td');
+      const impNumCell = document.createElement('td');
+      const deliveryDayCell = document.createElement('td');
+
+      //foodIdCell.textContent = item.foodId;
+      //dayCell = item.day;
+      foodNameCell.textContent = item.foodName;
+      unitCell.textContent = item.unit;
+      costCell.textContent = item.cost;
+      expdaysCell.textContent = item.expdays;
+      supplierCell.textContent = item.supplier;
+      noteCell.textContent = item.note;
+      impNumCell.textContent = item.impNum;
+      deliveryDayCell.textContent = item.deliveryDay;
+
+      //row.appendChild(foodIdCell);
+      //row.appendChild(dayCell);
+      row.appendChild(foodNameCell);
+      row.appendChild(unitCell);
+      row.appendChild(costCell);
+      row.appendChild(expdaysCell);
+      row.appendChild(supplierCell);
+      row.appendChild(noteCell);
+      row.appendChild(impNumCell);
+      row.appendChild(deliveryDayCell);
+      tableBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 // 発注処理を実行する関数
 async function registerOrder(productName, quantity, price) {

@@ -3,10 +3,14 @@ async function getInventoryList() {
   try {
     const response = await fetch('http://localhost:8080/register');
     const data = await response.json();
-    const tableBody = document.getElementById('registertable');
+    const tableBody = document.getElementById('registerTable');
 
     // テーブルの内容をクリア
     tableBody.innerHTML = '';
+
+    document.querySelectorAll("#register form input").forEach((input) => {
+      input.value = "";
+    });
 
     // 取得したデータをテーブルに追加
     data.forEach((item) => {
@@ -45,33 +49,34 @@ async function getInventoryList() {
 }
 
 // 商品登録処理を実行する関数
-async function registerProduct(productName, productCode, quantity, price, category, location) {
+async function registerProduct(form) {
   try {
-    const response = await fetch('/register', {
+    const response = await fetch('http://localhost:8080/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        foodName: productName,
-        unit: productCode,
-        cost: price,
-        expdays: quantity,
-        supplier: category,
-        note: location
+        foodName: form.foodName.value,
+        unit: form.unit.value,
+        cost: parseInt(form.cost.value),
+        expDays: parseInt(form.expDays.value),
+        supplier: form.supplier.value,
+        note: form.note.value
       })
     });
 
-    if (response.ok) {
+    /*if (response.ok) {
       const data = await response.json();
       console.log('商品が登録されました:', data);
       // 登録成功時の処理
     } else {
       console.error('商品登録エラー:', response.status);
       // エラー処理
-    }
+    }*/
   } catch (error) {
     console.error('商品登録エラー:', error);
     // エラー処理
   }
+  getInventoryList();
 }
