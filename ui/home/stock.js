@@ -1,5 +1,5 @@
 // 在庫一覧を取得して表示する関数
-async function getInventoryList() {
+/*async function getInventoryList() {
   try {
     const response = await fetch('http://localhost:8080/stock');
     const data = await response.json();
@@ -48,4 +48,4 @@ async function getInventoryList() {
 }
 
 // 在庫一覧を取得して表示
-getInventoryList();
+getInventoryList();*/

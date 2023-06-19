@@ -1,6 +1,7 @@
 package com.example.demo.controller.order;
 
 import com.example.demo.model.OrderModel;
+import com.example.demo.model.RegisterModel;
 import com.example.demo.service.MainService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class OrderController {
 
     @GetMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderModel> getOrder() {
+    public List<OrderModel> getOrdered() {
         return service.getAllOrder();
     }
 
@@ -22,6 +23,12 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     public void insert(@PathVariable int foodId, @RequestBody OrderRequest request) {
         service.insertOrder(foodId, request);
+    }
+
+    @GetMapping(value = "/get", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RegisterModel> getOrder() {
+        return service.getOrder();
     }
 
 

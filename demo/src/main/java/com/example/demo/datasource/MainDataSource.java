@@ -86,9 +86,18 @@ public class MainDataSource implements MainRepository {
     public List<OrderModel> getAllOrder() {
         String sql = "SELECT *\n" +
                 "FROM food_mst\n" +
-                "FULL OUTER JOIN impire_history ON food_mst.food_id = impire_history.food_id;\n";
+                "INNER JOIN impire_history ON food_mst.food_id = impire_history.food_id;\n";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
         return records.stream().map(this::toOrderModel).collect(Collectors.toList());
+    }
+    @Override
+    public List<RegisterModel> getOrder() {
+        String sql = "SELECT *\n" +
+                "FROM food_mst\n" +
+                "LEFT JOIN impire_history ON food_mst.food_id = impire_history.food_id\n" +
+                "WHERE impire_history.food_id IS NULL";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
+        return records.stream().map(this::toRegisterModel).collect(Collectors.toList());
     }
 
     @Override

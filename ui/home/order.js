@@ -3,7 +3,6 @@ async function getOrderTable() {
   try {
     const response = await fetch('http://localhost:8080/order');
     const data = await response.json();
-    console.log(data);
     const tableBody = document.getElementById('orderTable');
 
     // テーブルの内容をクリア
@@ -11,8 +10,7 @@ async function getOrderTable() {
 
     data.forEach(item => {
       const row = document.createElement('tr');
-      //const foodIdCell = document.createElement('td');
-      //const dayCell = document.createElement('td');
+
       const foodNameCell = document.createElement('td');
       const unitCell = document.createElement('td');
       const costCell = document.createElement('td');
@@ -21,20 +19,23 @@ async function getOrderTable() {
       const noteCell = document.createElement('td');
       const impNumCell = document.createElement('td');
       const deliveryDayCell = document.createElement('td');
+      const foodIdCell = document.createElement('td');
+      //const dayCell = document.createElement('td');
 
-      //foodIdCell.textContent = item.foodId;
-      //dayCell = item.day;
+
       foodNameCell.textContent = item.foodName;
       unitCell.textContent = item.unit;
       costCell.textContent = item.cost;
-      expdaysCell.textContent = item.expdays;
+      expdaysCell.textContent = item.expDays;
       supplierCell.textContent = item.supplier;
       noteCell.textContent = item.note;
       impNumCell.textContent = item.impNum;
       deliveryDayCell.textContent = item.deliveryDay;
+      foodIdCell.textContent = item.foodId;
+      foodIdCell.style.display = "none";
+      //dayCell = item.day;
 
-      //row.appendChild(foodIdCell);
-      //row.appendChild(dayCell);
+
       row.appendChild(foodNameCell);
       row.appendChild(unitCell);
       row.appendChild(costCell);
@@ -43,6 +44,8 @@ async function getOrderTable() {
       row.appendChild(noteCell);
       row.appendChild(impNumCell);
       row.appendChild(deliveryDayCell);
+      row.appendChild(foodIdCell);
+      //row.appendChild(dayCell);
       tableBody.appendChild(row);
     });
   } catch (error) {
@@ -124,5 +127,63 @@ async function deleteOrder(orderId) {
   } catch (error) {
     console.error('発注削除エラー:', error);
     // エラーを追加
+  }
+}
+
+
+// 発注テーブル表示
+async function getOrder() {
+  try {
+    const response = await fetch('http://localhost:8080/order/get');
+    const data = await response.json();
+    const tableBody = document.getElementById('newOrderTable');
+
+    // テーブルの内容をクリア
+    tableBody.innerHTML = '';
+
+    data.forEach(item => {
+      const row = document.createElement('tr');
+
+      const foodNameCell = document.createElement('td');
+      const unitCell = document.createElement('td');
+      const costCell = document.createElement('td');
+      const expdaysCell = document.createElement('td');
+      const supplierCell = document.createElement('td');
+      const noteCell = document.createElement('td');
+      const impNumCell = document.createElement('td');
+      const deliveryDayCell = document.createElement('td');
+      const foodIdCell = document.createElement('td');
+      //const dayCell = document.createElement('td');
+
+
+      foodNameCell.textContent = item.foodName;
+      unitCell.textContent = item.unit;
+      costCell.textContent = item.cost;
+      expdaysCell.textContent = item.expDays;
+      supplierCell.textContent = item.supplier;
+      noteCell.textContent = item.note;
+      impNumCell.textContent = item.impNum;
+      impNumCell.contentEditable = "true"
+      deliveryDayCell.textContent = item.deliveryDay;
+      deliveryDayCell.contentEditable = "true"
+      foodIdCell.textContent = item.foodId;
+      foodIdCell.style.display = "none";
+      //dayCell = item.day;
+
+
+      row.appendChild(foodNameCell);
+      row.appendChild(unitCell);
+      row.appendChild(costCell);
+      row.appendChild(expdaysCell);
+      row.appendChild(supplierCell);
+      row.appendChild(noteCell);
+      row.appendChild(impNumCell);
+      row.appendChild(deliveryDayCell);
+      row.appendChild(foodIdCell);
+      //row.appendChild(dayCell);
+      tableBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error('Error:', error);
   }
 }

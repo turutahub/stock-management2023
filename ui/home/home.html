@@ -107,6 +107,8 @@
   
   <section id="order" class="content">
     <h2>発注</h2>
+    <button id="newOrderButton" onclick="showContent('newOrder');getOrder()">新規発注</button>
+    <h3>発注履歴</h3>
     <table>
       <thead>
         <tr>
@@ -121,6 +123,26 @@
         </tr>
       </thead>
       <tbody id="orderTable"></tbody>
+    </table>
+    <script src="order.js"></script>
+  </section>
+
+  <section id="newOrder" class="content">
+    <h2>新規発注</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>単位</th>
+          <th>単価</th>
+          <th>消費期間</th>
+          <th>仕入れ店</th>
+          <th>備考</th>
+          <th>発注数</th>
+          <th>納品予定日</th>
+        </tr>
+      </thead>
+      <tbody id="newOrderTable"></tbody>
     </table>
     <script src="order.js"></script>
   </section>
