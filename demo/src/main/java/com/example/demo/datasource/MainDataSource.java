@@ -101,12 +101,12 @@ public class MainDataSource implements MainRepository {
     }
 
     @Override
-    public void insertOrder(int foodId, OrderRequest request) {
+    public void insertOrder(OrderRequest request) {
         String sql = "INSERT INTO impire_history (food_id, day, imp_num, delivery_day)\n" +
                 "VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(
                 sql,
-                foodId,
+                request.getFoodId(),
                 request.getDay(),
                 request.getImpNum(),
                 request.getDeliveryDay()

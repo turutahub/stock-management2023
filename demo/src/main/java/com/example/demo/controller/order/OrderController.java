@@ -19,10 +19,10 @@ public class OrderController {
         return service.getAllOrder();
     }
 
-    @PostMapping(value = "/{foodId}", produces = "application/json")
+    @PostMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void insert(@PathVariable int foodId, @RequestBody OrderRequest request) {
-        service.insertOrder(foodId, request);
+    public void insert(@RequestBody OrderRequest request) {
+        service.insertOrder(request);
     }
 
     @GetMapping(value = "/get", produces = "application/json")

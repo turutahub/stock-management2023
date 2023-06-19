@@ -18,7 +18,7 @@ public interface MainRepository {
 
     //発注機能
     List<OrderModel> getAllOrder();
-    void insertOrder(int foodId, OrderRequest request);
+    void insertOrder(OrderRequest request);
 
     List<RegisterModel> getOrder();
     //OrderModel getById(int foodId);

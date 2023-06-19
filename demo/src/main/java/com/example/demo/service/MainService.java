@@ -40,8 +40,8 @@ public class MainService {
     public List<OrderModel> getAllOrder() {
         return repository.getAllOrder();
     }
-    public void insertOrder(int foodId, OrderRequest request) {
-        repository.insertOrder(foodId, request);
+    public void insertOrder(OrderRequest request) {
+        repository.insertOrder(request);
     }
     public List<RegisterModel> getOrder() {
         return repository.getOrder();
