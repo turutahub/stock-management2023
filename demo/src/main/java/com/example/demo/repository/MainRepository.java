@@ -19,9 +19,9 @@ public interface MainRepository {
     void insertOrder(int foodId, OrderRequest request);
     //OrderModel getById(int foodId);
     //void updateOrder(OrderModel model);
-    List<StockModel> getAllStock();
+    /*List<StockModel> getAllStock();
 
     void deleteStock(int foodId);
-    List<InspectModel> getAllInspect();
+    List<InspectModel> getAllInspect();*/
 
 }

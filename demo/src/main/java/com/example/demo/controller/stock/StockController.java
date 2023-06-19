@@ -1,7 +1,7 @@
 package com.example.demo.controller.stock;
 
 import com.example.demo.model.StockModel;
-import com.example.demo.service.StockService;
+import com.example.demo.service.MainService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,15 +13,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/stock")
 public class StockController {
-    private final StockService service;
+    private final MainService service;
 
-    public StockController(StockService service) {
+    public StockController(MainService service) {
         this.service = service;
     }
 
-    @GetMapping(produces = "application/json")
+    /*@GetMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public List<StockModel> getAllStock() {
         return service.getAllStock();
-    }
+    }*/
 }
