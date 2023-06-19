@@ -36,6 +36,7 @@ public class MainService {
         repository.deleteFood(foodId);
     }
 
+
     public List<OrderModel> getAllOrder() {
         return repository.getAllOrder();
     }
@@ -49,9 +50,11 @@ public class MainService {
         repository.updateOrder(model);
     }*/
 
+
     public List<StockModel> getAllStock() {
         return repository.getAllStock();
     }
+
 
     public List<InspectModel> getAllInspect() {
         return repository.getAllInspect();
