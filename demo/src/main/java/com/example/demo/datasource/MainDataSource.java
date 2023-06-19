@@ -122,7 +122,7 @@ public class MainDataSource implements MainRepository {
         );
     }
 
-    @Override
+    /*@Override
     public List<StockModel> getAllStock() {
         String sql = "SELECT * FROM stock_history";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
@@ -150,7 +150,7 @@ public class MainDataSource implements MainRepository {
         );
     }
 
-    @Override
+    /*@Override
     public List<InspectModel> getAllInspect() {
         String sql = "SELECT * FROM inspection_history";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
@@ -165,5 +165,5 @@ public class MainDataSource implements MainRepository {
                 (int) record.get("ins_num"),
                 (int) record.get("ins_insufficient")
         );
-    }
+    }*/
 }

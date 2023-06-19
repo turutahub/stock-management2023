@@ -51,12 +51,12 @@ public class MainService {
     }*/
 
 
-    public List<StockModel> getAllStock() {
+    /*public List<StockModel> getAllStock() {
         return repository.getAllStock();
     }
 
 
     public List<InspectModel> getAllInspect() {
         return repository.getAllInspect();
-    }
+    }*/
 }
