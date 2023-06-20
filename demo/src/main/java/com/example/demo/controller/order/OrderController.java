@@ -15,7 +15,7 @@ public class OrderController {
 
     @GetMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderModel> getOrdered() {
+    public List<OrderModel> getOrder() {
         return service.getAllOrder();
     }
 
@@ -23,12 +23,13 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     public void insert(@RequestBody OrderRequest request) {
         service.insertOrder(request);
+        service.insertInspection(request);
     }
 
     @GetMapping(value = "/get", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public List<RegisterModel> getOrder() {
-        return service.getOrder();
+    public List<RegisterModel> getUnordered() {
+        return service.getUnordered();
     }
 
 

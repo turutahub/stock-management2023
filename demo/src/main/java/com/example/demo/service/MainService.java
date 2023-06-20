@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.controller.inspect.InspectRequest;
 import com.example.demo.controller.order.OrderRequest;
 import com.example.demo.model.InspectModel;
 import com.example.demo.model.OrderModel;
@@ -43,8 +44,8 @@ public class MainService {
     public void insertOrder(OrderRequest request) {
         repository.insertOrder(request);
     }
-    public List<RegisterModel> getOrder() {
-        return repository.getOrder();
+    public List<RegisterModel> getUnordered() {
+        return repository.getUnordered();
     }
     /*public OrderModel getById(int foodId) {
         return repository.getById(foodId);
@@ -56,10 +57,19 @@ public class MainService {
 
     /*public List<StockModel> getAllStock() {
         return repository.getAllStock();
-    }
-
-
-    public List<InspectModel> getAllInspect() {
-        return repository.getAllInspect();
     }*/
+
+
+    public List<InspectModel> getAllInspection() {
+        return repository.getAllInspection();
+    }
+    public void insertInspection(OrderRequest request) {
+        repository.insertInspection(request);
+    }
+    public InspectModel getByIdInspection(int foodId) {
+        return repository.getByIdInspection(foodId);
+    }
+    public void updateInspection(InspectRequest request) {
+        repository.updateInspection(request);
+    }
 }

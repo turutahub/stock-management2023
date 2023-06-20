@@ -1,5 +1,6 @@
 package com.example.demo.datasource;
 
+import com.example.demo.controller.inspect.InspectRequest;
 import com.example.demo.controller.order.OrderRequest;
 import com.example.demo.model.InspectModel;
 import com.example.demo.model.OrderModel;
@@ -91,7 +92,7 @@ public class MainDataSource implements MainRepository {
         return records.stream().map(this::toOrderModel).collect(Collectors.toList());
     }
     @Override
-    public List<RegisterModel> getOrder() {
+    public List<RegisterModel> getUnordered() {
         String sql = "SELECT *\n" +
                 "FROM food_mst\n" +
                 "LEFT JOIN impire_history ON food_mst.food_id = impire_history.food_id\n" +
@@ -157,11 +158,14 @@ public class MainDataSource implements MainRepository {
                 (int) record.get("waste_amt"),
                 (BigDecimal) record.get("loss_rate")
         );
-    }
+    }*/
 
-    /*@Override
-    public List<InspectModel> getAllInspect() {
-        String sql = "SELECT * FROM inspection_history";
+    @Override
+    public List<InspectModel> getAllInspection() {
+        String sql = "SELECT *\n" +
+                "FROM food_mst\n" +
+                "INNER JOIN impire_history ON food_mst.food_id = impire_history.food_id\n" +
+                "INNER JOIN inspection_history ON food_mst.food_id = inspection_history.food_id;\n";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
         return records.stream().map(this::toInspectModel).collect(Collectors.toList());
     }
@@ -171,8 +175,46 @@ public class MainDataSource implements MainRepository {
         return new InspectModel(
                 (int) record.get("food_id"),
                 day.toLocalDate(),
+                (String) record.get("food_name"),
+                (String) record.get("unit"),
+                (int) record.get("cost"),
+                (int) record.get("expdays"),
+                (String) record.get("supplier"),
+                (String) record.get("note"),
+                (int) record.get("imp_num"),
                 (int) record.get("ins_num"),
                 (int) record.get("ins_insufficient")
         );
-    }*/
+    }
+
+    @Override
+    public void insertInspection(OrderRequest request) {
+        String sql = "INSERT INTO inspection_history (food_id, day, ins_num, ins_insufficient) VALUES(?, ?, ?, ?)";
+        jdbcTemplate.update(
+                sql,
+                request.getFoodId(),
+                request.getDay(),
+                0,
+                request.getImpNum() - 0
+        );
+    }
+    @Override
+    public InspectModel getByIdInspection(int foodId) {
+        String sql = "SELECT *\n" +
+                "FROM food_mst\n" +
+                "INNER JOIN impire_history ON food_mst.food_id = impire_history.food_id\n" +
+                "INNER JOIN inspection_history ON food_mst.food_id = inspection_history.food_id\n" +
+                "WHERE food_mst.food_id = ?";
+        List<Map<String, Object>> record = jdbcTemplate.queryForList(sql, foodId);
+        return toInspectModel(record.get(0));
+    }
+    @Override
+    public void updateInspection(InspectRequest request) {
+        String sql = "UPDATE inspection_history SET ins_num = ?, ins_insufficient = ? WHERE food_id = ?";
+        jdbcTemplate.update(
+                sql,
+                request.getInsNum(),
+                request.getInsInsufficient(),
+                request.getFoodId());
+    }
 }

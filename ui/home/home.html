@@ -24,7 +24,7 @@
     <button onclick="showContent('stock')">在庫一覧</button>
     <button onclick="showContent('register');getInventoryList()">食材登録</button>
     <button onclick="showContent('order');getOrderTable()">発注</button>
-    <button onclick="showContent('inspect')">検品</button>
+    <button onclick="showContent('inspect');getInspectionTable()">検品</button>
     <button onclick="showContent('reports')">棚卸</button>
     <button onclick="showContent('finditem')">検索</button>
   </div>
@@ -149,6 +149,30 @@
   
   <section id="inspect" class="content">
     <h2>検品</h2>
+    <button id="newInspectButton" onclick="showContent('newInspect');getFoodId()">検品数入力</button>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>食材名</th>
+          <th>単位</th>
+          <th>単価</th>
+          <th>消費期間</th>
+          <th>仕入れ店</th>
+          <th>備考</th>
+          <th>発注数</th>
+          <th>検品数</th>
+          <th>過不足</th>
+        </tr>
+      </thead>
+      <tbody id="inspectionTable"></tbody>
+    </table>
+    <script src="inspect.js"></script>
+  </section>
+  
+  <section id="newInspect" class="content">
+    <h2>検品数入力</h2>
+    <button onclick="showContent('inspect');insertInspection()">検品数確定</button>
     <table>
       <thead>
         <tr>
@@ -162,7 +186,7 @@
           <th>検品数</th>
         </tr>
       </thead>
-      <tbody id="inspectTable"></tbody>
+      <tbody id="newInspectionTable"></tbody>
     </table>
     <script src="inspect.js"></script>
   </section>
