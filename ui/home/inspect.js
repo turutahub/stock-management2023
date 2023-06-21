@@ -156,7 +156,7 @@ async function insertInspection() {
     console.error()
   }
   document.getElementById('newInspectionTable').innerHTML = ""
-  getInspectionTable()
+  getInspectionTable();
 }
 
 

@@ -22,20 +22,20 @@ public interface MainRepository {
     List<OrderModel> getAllOrder();
     void insertOrder(OrderRequest request);
     List<RegisterModel> getUnordered();
-    //OrderModel getById(int foodId);
-    //void updateOrder(OrderModel model);
+    OrderModel getByIdOrder(int foodId);
+    void updateOrder(OrderRequest request);
 
 
     //在庫一覧機能
     /*List<StockModel> getAllStock();
     void deleteStock(int foodId);*/
 
+
     //検品機能
     List<InspectModel> getAllInspection();
-
     void insertInspection(OrderRequest request);
-
     InspectModel getByIdInspection(int foodId);
-
     void updateInspection(InspectRequest request);
+    int getByIdInsNum(int foodId);
+    void updateIns(int insNum, int insInsufficient, int foodId);
 }

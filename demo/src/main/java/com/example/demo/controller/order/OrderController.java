@@ -32,6 +32,19 @@ public class OrderController {
         return service.getUnordered();
     }
 
+    @GetMapping(value = "/{foodId}", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public OrderModel getById(@PathVariable int foodId) {
+        return service.getByIdOrder(foodId);
+    }
+
+    @PutMapping(produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody OrderRequest request) {
+        service.updateOrder(request);
+        int insInsufficient = request.getImpNum() - service.getByIdInsNum(request.getFoodId());
+        service.updateIns(service.getByIdInsNum(request.getFoodId()), insInsufficient, request.getFoodId());
+    }
 
     public OrderController(MainService service) {
         this.service = service;

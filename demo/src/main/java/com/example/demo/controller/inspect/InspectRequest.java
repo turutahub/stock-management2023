@@ -8,11 +8,9 @@ public class InspectRequest {
     public int getFoodId() {
         return foodId;
     }
-
     public int getInsNum() {
         return insNum;
     }
-
     public int getInsInsufficient() {
         return insInsufficient;
     }

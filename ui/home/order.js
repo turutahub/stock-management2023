@@ -11,6 +11,7 @@ async function getOrderTable() {
     data.forEach(item => {
       const row = document.createElement('tr');
 
+      const checkBox = document.createElement('input');
       const foodNameCell = document.createElement('td');
       const unitCell = document.createElement('td');
       const costCell = document.createElement('td');
@@ -22,6 +23,8 @@ async function getOrderTable() {
       const foodIdCell = document.createElement('td');
       //const dayCell = document.createElement('td');
 
+      checkBox.type = "checkbox"
+      checkBox.setAttribute("id", "checkBox");
       foodNameCell.textContent = item.foodName;
       unitCell.textContent = item.unit;
       costCell.textContent = item.cost;
@@ -32,8 +35,10 @@ async function getOrderTable() {
       deliveryDayCell.textContent = item.deliveryDay;
       foodIdCell.textContent = item.foodId;
       foodIdCell.style.display = "none";
+      foodIdCell.setAttribute("id", "foodID");
       //dayCell = item.day;
 
+      row.appendChild(checkBox)
       row.appendChild(foodNameCell);
       row.appendChild(unitCell);
       row.appendChild(costCell);
@@ -44,12 +49,14 @@ async function getOrderTable() {
       row.appendChild(deliveryDayCell);
       row.appendChild(foodIdCell);
       //row.appendChild(dayCell);
+
       tableBody.appendChild(row);
     });
   } catch (error) {
     console.error('Error:', error);
   }
 }
+
 // 新規発注テーブル表示
 async function getOrder() {
   try {
@@ -75,29 +82,24 @@ async function getOrder() {
       const orderButton = document.createElement("button");
       //const dayCell = document.createElement('td');
 
-
       foodNameCell.textContent = item.foodName;
       unitCell.textContent = item.unit;
       costCell.textContent = item.cost;
       expdaysCell.textContent = item.expDays;
       supplierCell.textContent = item.supplier;
       noteCell.textContent = item.note;
-
-      //impNumCell.textContent = item.impNum;
       impNumCell.appendChild(document.createElement("input"));
-
-      //deliveryDayCell.textContent = item.deliveryDay;
       deliveryDayCell.appendChild(document.createElement("input"));
       deliveryDayCell.querySelector('input').type = 'date'
-
       foodIdCell.textContent = item.foodId;
       foodIdCell.style.display = "none";
+      //dayCell = item.day;
 
       orderButton.innerHTML = "発注";
       orderButton.onclick = function() {
         registerOrder(foodIdCell.innerHTML, impNumCell.querySelector('input').value, deliveryDayCell.querySelector('input').value);
       }
-      //dayCell = item.day;
+      
 
       row.appendChild(foodNameCell);
       row.appendChild(unitCell);
@@ -110,6 +112,7 @@ async function getOrder() {
       row.appendChild(foodIdCell);
       row.appendChild(orderButton)
       //row.appendChild(dayCell);
+
       tableBody.appendChild(row);
     });
   } catch (error) {
@@ -118,7 +121,6 @@ async function getOrder() {
 }
 
 async function registerOrder(foodId, impNum, deliveryDay) {
-  //console.log(foodId, impNum, deliveryDay);
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -143,87 +145,102 @@ async function registerOrder(foodId, impNum, deliveryDay) {
     console.error()
   }
 }
-  
 
-
-/*
-// 発注処理を実行する関数
-async function registerOrder() {
-  try {
-    // データベースへの接続と発注情報の登録
-    const response = await fetch('/order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        productName: productName,
-        quantity: quantity,
-        price: price
-      })
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('発注が登録されました:', data);
-      // 登録成功時の処理
-    } else {
-      console.error('発注登録エラー:', response.status);
-      // エラーを追加
+function checkOrder() {
+  document.querySelectorAll("#checkBox").forEach(checkbox => {
+    if (checkbox.checked) {
+      const row = checkbox.closest("tr");
+      //console.log(row.querySelector("#foodId").textContent);
+      modifyOrder(row.querySelector("#foodId").textContent)
     }
-  } catch (error) {
-    console.error('発注登録エラー:', error);
-    // エラーを追加
-  }
-}*/
+  });
+}
 
-/*
-// 発注情報をデータベースで更新する関数
-async function updateOrder(orderId, updatedData) {
+async function modifyOrder(foodId) {
   try {
-    // データベースで発注情報を更新
-    const response = await fetch(`/api/orders/${orderId}`, {
+    const response = await fetch(`http://localhost:8080/order/${foodId}`);
+    const data = await response.json();
+    const tableBody = document.getElementById("modifyOrderTable");
+  
+    const row = document.createElement('tr');
+
+    const foodNameCell = document.createElement('td');
+    const unitCell = document.createElement('td');
+    const costCell = document.createElement('td');
+    const expdaysCell = document.createElement('td');
+    const supplierCell = document.createElement('td');
+    const noteCell = document.createElement('td');
+    const impNumCell = document.createElement('td');
+    const deliveryDayCell = document.createElement('td');
+    const foodIdCell = document.createElement('td');
+    //const dayCell = document.createElement('td');
+
+    foodNameCell.textContent = data.foodName;
+    unitCell.textContent = data.unit;
+    costCell.textContent = data.cost;
+    expdaysCell.textContent = data.expDays;
+    supplierCell.textContent = data.supplier;
+    noteCell.textContent = data.note;
+    impNumCell.appendChild(document.createElement("input"));
+    impNumCell.querySelector('input').value = data.impNum;
+    impNumCell.querySelector('input').setAttribute("id", "impNum");
+    deliveryDayCell.appendChild(document.createElement("input"));
+    deliveryDayCell.querySelector('input').type = 'date'
+    deliveryDayCell.querySelector('input').value = data.deliveryDay;
+    deliveryDayCell.querySelector('input').setAttribute("id", "deliveryDay");
+    foodIdCell.textContent = data.foodId;
+    foodIdCell.style.display = "none";
+    foodIdCell.setAttribute("id", "foodId");
+    //dayCell = item.day;
+
+      
+    row.appendChild(foodNameCell);
+    row.appendChild(unitCell);
+    row.appendChild(costCell);
+    row.appendChild(expdaysCell);
+    row.appendChild(supplierCell);
+    row.appendChild(noteCell);
+    row.appendChild(impNumCell);
+    row.appendChild(deliveryDayCell);
+    row.appendChild(foodIdCell);
+    //row.appendChild(dayCell);
+
+    tableBody.appendChild(row);
+    
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+async function submitOrderMod() {
+  const tableBody = document.getElementById('modifyOrderTable');
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+  try {
+    for(i=0;i<tableBody.children.length;i++){
+    // データベースへの接続と発注情報の登録
+    //console.log(tableBody.children[i].querySelector("#foodId").textContent)
+    //console.log(tableBody.children[i].querySelector("#impNum").value)
+    //console.log(tableBody.children[i].querySelector("#deliveryDay").value)
+    const response = await fetch('http://localhost:8080/order', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(updatedData)
+      body: JSON.stringify({
+        foodId: tableBody.children[i].querySelector("#foodId").textContent,
+        day: formattedDate,
+        impNum: tableBody.children[i].querySelector("#impNum").value,
+        deliveryDay: tableBody.children[i].querySelector("#deliveryDay").value
+      })
     });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('発注が更新されました:', data);
-      // 更新成功時の処理
-    } else {
-      console.error('発注更新エラー:', response.status);
-      // エラー
-    }
-  } catch (error) {
-    console.error('発注更新エラー:', error);
-    // エラーを追加
   }
-}*/
-
-/*
-// 発注情報をデータベースから削除する関数
-async function deleteOrder(orderId) {
-  try {
-    // データベースから発注情報を削除
-    const response = await fetch(`/api/orders/${orderId}`, {
-      method: 'DELETE'
-    });
-
-    if (response.ok) {
-      console.log('発注が削除されました');
-      // 削除成功時の処理
-    } else {
-      console.error('発注削除エラー:', response.status);
-      // エラーを追加
-    }
-  } catch (error) {
-    console.error('発注削除エラー:', error);
-    // エラーを追加
+  } catch(e) {
+    console.error()
   }
-}*/
-
-
+  document.getElementById('modifyOrderTable').innerHTML = "";
+  getOrderTable();
+}

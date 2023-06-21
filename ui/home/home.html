@@ -108,18 +108,12 @@
   <section id="order" class="content">
     <h2>発注</h2>
     <button id="newOrderButton" onclick="showContent('newOrder');getOrder()">新規発注</button>
+    <button onclick="showContent('modifyOrder');checkOrder()">修正</button>
     <h3>発注履歴</h3>
     <table>
       <thead>
         <tr>
-          <th>食材名</th>
-          <th>単位</th>
-          <th>単価</th>
-          <th>消費期間</th>
-          <th>仕入れ店</th>
-          <th>備考</th>
-          <th>発注数</th>
-          <th>納品予定日</th>
+          <th></th><th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>納品予定日</th>
         </tr>
       </thead>
       <tbody id="orderTable"></tbody>
@@ -132,17 +126,24 @@
     <table>
       <thead>
         <tr>
-          <th>食材名</th>
-          <th>単位</th>
-          <th>単価</th>
-          <th>消費期間</th>
-          <th>仕入れ店</th>
-          <th>備考</th>
-          <th>発注数</th>
-          <th>納品予定日</th>
+          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>納品予定日</th>
         </tr>
       </thead>
       <tbody id="newOrderTable"></tbody>
+    </table>
+    <script src="order.js"></script>
+  </section>
+
+  <section id="modifyOrder" class="content">
+    <h2>修正</h2>
+    <button onclick="showContent('order');submitOrderMod()">修正確定</button>
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>納品予定日</th>
+        </tr>
+      </thead>
+      <tbody id="modifyOrderTable"></tbody>
     </table>
     <script src="order.js"></script>
   </section>

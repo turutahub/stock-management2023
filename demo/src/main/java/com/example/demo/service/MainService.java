@@ -47,12 +47,12 @@ public class MainService {
     public List<RegisterModel> getUnordered() {
         return repository.getUnordered();
     }
-    /*public OrderModel getById(int foodId) {
-        return repository.getById(foodId);
+    public OrderModel getByIdOrder(int foodId) {
+        return repository.getByIdOrder(foodId);
     }
-    public void updateOrder(OrderModel model) {
-        repository.updateOrder(model);
-    }*/
+    public void updateOrder(OrderRequest request) {
+        repository.updateOrder(request);
+    }
 
 
     /*public List<StockModel> getAllStock() {
@@ -71,5 +71,11 @@ public class MainService {
     }
     public void updateInspection(InspectRequest request) {
         repository.updateInspection(request);
+    }
+    public int getByIdInsNum(int foodId) {
+        return repository.getByIdInsNum(foodId);
+    }
+    public void updateIns(int insNum, int insInsufficient, int foodId) {
+        repository.updateIns(insNum, insInsufficient, foodId);
     }
 }

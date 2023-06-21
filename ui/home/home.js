@@ -56,6 +56,7 @@ function showContent(contentId) {
     'register',
     'order',
     'newOrder',
+    'modifyOrder',
     'inspect',
     'newInspect',
     'stockManagement',
