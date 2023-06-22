@@ -2,13 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.controller.inspect.InspectRequest;
 import com.example.demo.controller.order.OrderRequest;
-import com.example.demo.model.InspectModel;
-import com.example.demo.model.OrderModel;
-import com.example.demo.model.RegisterModel;
-import com.example.demo.model.StockModel;
+import com.example.demo.model.*;
 import com.example.demo.repository.MainRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 @Service
 public class MainService {
@@ -47,8 +46,8 @@ public class MainService {
     public List<RegisterModel> getUnordered() {
         return repository.getUnordered();
     }
-    public OrderModel getByIdOrder(int foodId) {
-        return repository.getByIdOrder(foodId);
+    public OrderModel getCheckedOrder(int foodId, LocalDate day) {
+        return repository.getCheckedOrder(foodId, day);
     }
     public void updateOrder(OrderRequest request) {
         repository.updateOrder(request);
@@ -63,19 +62,36 @@ public class MainService {
     public List<InspectModel> getAllInspection() {
         return repository.getAllInspection();
     }
-    public void insertInspection(OrderRequest request) {
+    public List<OrderModel> getUnInspected() {
+        return repository.getUnInspected();
+    }
+    public void insertInspection(InspectRequest request) {
         repository.insertInspection(request);
     }
-    public InspectModel getByIdInspection(int foodId) {
-        return repository.getByIdInspection(foodId);
+    /*public void insertInspection(OrderRequest request) {
+        repository.insertInspection(request);
+    }*/
+
+    public InspectModel getCheckedInspection(int foodId, LocalDate day) {
+        return repository.getCheckedInspection(foodId, day);
     }
+
     public void updateInspection(InspectRequest request) {
         repository.updateInspection(request);
     }
-    public int getByIdInsNum(int foodId) {
-        return repository.getByIdInsNum(foodId);
+
+    public int getByIdInsNum(int foodId, LocalDate day) {
+        return repository.getByIdInsNum(foodId, day);
     }
-    public void updateIns(int insNum, int insInsufficient, int foodId) {
-        repository.updateIns(insNum, insInsufficient, foodId);
+    public void updateIns(int insNum, int insInsufficient, int foodId, LocalDate day) {
+        repository.updateIns(insNum, insInsufficient, foodId, day);
+    }
+
+    //棚卸し
+    public List<InventoryModel> getAllInventory() {
+        return repository.getAllInventory();
+    }
+    public List<RegisterModel> getUnInventoried() {
+        return repository.getUnInventoried();
     }
 }

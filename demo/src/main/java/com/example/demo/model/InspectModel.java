@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 public class InspectModel {
     private final int foodId;
-    private final LocalDate day;
     private final String foodName;
     private final String unit;
     private final int cost;
@@ -12,15 +11,13 @@ public class InspectModel {
     private final String supplier;
     private final String note;
     private final int impNum;
+    private final LocalDate impDay;
     private final int insNum;
     private final int insInsufficient;
+    private final LocalDate insDay;
 
     public int getFoodId() {
         return foodId;
-    }
-
-    public LocalDate getDay() {
-        return day;
     }
 
     public String getFoodName() {
@@ -51,6 +48,10 @@ public class InspectModel {
         return impNum;
     }
 
+    public LocalDate getImpDay() {
+        return impDay;
+    }
+
     public int getInsNum() {
         return insNum;
     }
@@ -59,9 +60,12 @@ public class InspectModel {
         return insInsufficient;
     }
 
-    public InspectModel(int foodId, LocalDate day, String foodName, String unit, int cost, int expDays, String supplier, String note, int impNum, int insNum, int insInsufficient) {
+    public LocalDate getInsDay() {
+        return insDay;
+    }
+
+    public InspectModel(int foodId, String foodName, String unit, int cost, int expDays, String supplier, String note, int impNum, LocalDate impDay, int insNum, int insInsufficient, LocalDate insDay) {
         this.foodId = foodId;
-        this.day = day;
         this.foodName = foodName;
         this.unit = unit;
         this.cost = cost;
@@ -69,7 +73,9 @@ public class InspectModel {
         this.supplier = supplier;
         this.note = note;
         this.impNum = impNum;
+        this.impDay = impDay;
         this.insNum = insNum;
         this.insInsufficient = insInsufficient;
+        this.insDay = insDay;
     }
 }

@@ -59,6 +59,7 @@ function showContent(contentId) {
     'modifyOrder',
     'inspect',
     'newInspect',
+    'unInspected',
     'stockManagement',
     'finditem',
     'reports',

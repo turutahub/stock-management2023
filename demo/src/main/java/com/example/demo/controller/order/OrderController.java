@@ -6,6 +6,9 @@ import com.example.demo.service.MainService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,7 +26,6 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     public void insert(@RequestBody OrderRequest request) {
         service.insertOrder(request);
-        service.insertInspection(request);
     }
 
     @GetMapping(value = "/get", produces = "application/json")
@@ -32,18 +34,20 @@ public class OrderController {
         return service.getUnordered();
     }
 
-    @GetMapping(value = "/{foodId}", produces = "application/json")
+    @GetMapping(value = "/{foodId}/{day}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public OrderModel getById(@PathVariable int foodId) {
-        return service.getByIdOrder(foodId);
+    public OrderModel getCheckedOrder(@PathVariable int foodId, @PathVariable String day) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(day, formatter);
+        return service.getCheckedOrder(foodId, date);
     }
 
     @PutMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody OrderRequest request) {
         service.updateOrder(request);
-        int insInsufficient = request.getImpNum() - service.getByIdInsNum(request.getFoodId());
-        service.updateIns(service.getByIdInsNum(request.getFoodId()), insInsufficient, request.getFoodId());
+        int insInsufficient = request.getImpNum() - service.getByIdInsNum(request.getFoodId(), request.getDay());
+        service.updateIns(service.getByIdInsNum(request.getFoodId(), request.getDay()), insInsufficient, request.getFoodId(), request.getDay());
     }
 
     public OrderController(MainService service) {

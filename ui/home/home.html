@@ -25,7 +25,7 @@
     <button onclick="showContent('register');getInventoryList()">食材登録</button>
     <button onclick="showContent('order');getOrderTable()">発注</button>
     <button onclick="showContent('inspect');getInspectionTable()">検品</button>
-    <button onclick="showContent('reports')">棚卸</button>
+    <button onclick="showContent('reports');getInventoryTable()">棚卸</button>
     <button onclick="showContent('finditem')">検索</button>
   </div>
 
@@ -108,12 +108,12 @@
   <section id="order" class="content">
     <h2>発注</h2>
     <button id="newOrderButton" onclick="showContent('newOrder');getOrder()">新規発注</button>
-    <button onclick="showContent('modifyOrder');checkOrder()">修正</button>
+    <button onclick="showContent('modifyOrder');displayCheckedOrder()">修正</button>
     <h3>発注履歴</h3>
     <table>
       <thead>
         <tr>
-          <th></th><th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>納品予定日</th>
+          <th></th><th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>納品予定日</th><th>発注日</th>
         </tr>
       </thead>
       <tbody id="orderTable"></tbody>
@@ -123,6 +123,7 @@
 
   <section id="newOrder" class="content">
     <h2>新規発注</h2>
+    <button onclick="showContent('order');getOrderTable()">戻る</button>
     <table>
       <thead>
         <tr>
@@ -136,11 +137,11 @@
 
   <section id="modifyOrder" class="content">
     <h2>修正</h2>
-    <button onclick="showContent('order');submitOrderMod()">修正確定</button>
+    <button onclick="showContent('order');modifyOrder()">修正確定</button>
     <table>
       <thead>
         <tr>
-          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>納品予定日</th>
+          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>納品予定日</th><th>発注日</th>
         </tr>
       </thead>
       <tbody id="modifyOrderTable"></tbody>
@@ -150,7 +151,8 @@
   
   <section id="inspect" class="content">
     <h2>検品</h2>
-    <button id="newInspectButton" onclick="showContent('newInspect');getFoodId()">検品数入力</button>
+    <button onclick="showContent('unInspected');getUnInspectedTable()">検品数入力</button>
+    <button id="newInspectButton" onclick="showContent('newInspect');displayCheckedIns()">修正</button>
     <table>
       <thead>
         <tr>
@@ -162,18 +164,19 @@
           <th>仕入れ店</th>
           <th>備考</th>
           <th>発注数</th>
+          <th>発注日</th>
           <th>検品数</th>
           <th>過不足</th>
+          <th>検品日</th>
         </tr>
       </thead>
       <tbody id="inspectionTable"></tbody>
     </table>
     <script src="inspect.js"></script>
   </section>
-  
-  <section id="newInspect" class="content">
+
+  <section id="unInspected" class="content">
     <h2>検品数入力</h2>
-    <button onclick="showContent('inspect');insertInspection()">検品数確定</button>
     <table>
       <thead>
         <tr>
@@ -184,7 +187,33 @@
           <th>仕入れ店</th>
           <th>備考</th>
           <th>発注数</th>
+          <th>発注日</th>
           <th>検品数</th>
+          <th>過不足</th>
+        </tr>
+      </thead>
+      <tbody id="unInspectedTable"></tbody>
+    </table>
+    <script src="inspect.js"></script>
+  </section>
+  
+  <section id="newInspect" class="content">
+    <h2>修正</h2>
+    <button onclick="showContent('inspect');modifyInspection()">修正</button>
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>単位</th>
+          <th>単価</th>
+          <th>消費期間</th>
+          <th>仕入れ店</th>
+          <th>備考</th>
+          <th>発注数</th>
+          <th>発注日</th>
+          <th>検品数</th>
+          <th>過不足</th>
+          <th>検品日</th>
         </tr>
       </thead>
       <tbody id="newInspectionTable"></tbody>
@@ -204,10 +233,24 @@
       <div id="managementInfo"></div>
       
       <!-- 棚卸情報入力ボタン -->
-      <button onclick="showContent('addreport')">棚卸情報入力ボタン</button>
-  
-      <script src="report.js"></script>
+      <button onclick="showContent('addreport');getNewInventory()">棚卸情報入力ボタン</button>
+      <table>
+        <thead>
+          <tr>
+            <th>食材名</th>
+            <th>消費数</th>
+            <th>原価</th>
+            <th>廃棄数</th>
+            <th>廃棄額</th>
+            <th>ロス率（％）</th>
+          </tr>
+        </thead>
+        <tbody id="inventoryTable"></tbody>
+      </table>
+
     </body>
+    <script src="report.js"></script>
+    <script src="addreport.js"></script>
   </section>
 
   <section id="addreport" class="content">
@@ -216,12 +259,13 @@
   </head>
   
   <!-- 棚卸確定ボタン -->
-  <button id="inventoryConfirmBtn" onclick="confirmInventory()">棚卸確定</button>
+  <button id="inventoryConfirmBtn" onclick="showContent('reports');confirmInventory()">棚卸確定</button>
   
   <!-- 売上入力ボックス -->
   <label for="salesInput">売上:</label>
-  <input type="number" id="salesInput">
+  <input type="number" id="salesInput" value="0">
   
+  <style>/*
   <!-- 食材名表示 -->
   <p id="foodName"></p>
   
@@ -261,6 +305,31 @@
   
   <!-- 不足数表示 -->
   <p id="shortage"></p>
+  */</style>
+
+  <table>
+    <thead>
+      <tr>
+        <th>食材名</th>
+        <th>消費期間</th>
+        <th>在庫数</th>
+        <th>補填数</th>
+        <th>補填額</th>
+        <th>廃棄数</th>
+        <th>消費数</th>
+        <th>廃棄額</th>
+        <th>ロス率（％）</th>
+        <th>原価</th>
+        <th>必要数</th>
+        <th>不足数</th>
+      </tr>
+    </thead>
+    <tbody id="newInventoryTable"></tbody>
+  </table>
+
+
+
+
   </section>
 
   <section id="finditem" class="content">

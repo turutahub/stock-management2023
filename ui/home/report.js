@@ -67,3 +67,52 @@ function displayreportDate(date) {
     orientation: 'vertical',
     // その他の設定オプション
   });
+
+
+  async function getInventoryTable() {
+    try {
+      const response = await fetch('http://localhost:8080/inventory');
+      const data = await response.json();
+      const tableBody = document.getElementById('inventoryTable');
+  
+      // テーブルの内容をクリア
+      tableBody.innerHTML = '';
+  
+      data.forEach(item => {
+        const row = document.createElement('tr');
+  
+        const foodNameCell = document.createElement('td');
+        const consumedNumCell = document.createElement('td');
+        const costCell = document.createElement('td');
+        const wasteNumCell = document.createElement('td');
+        const wasteAmtCell = document.createElement('td');
+        const lossRateCell = document.createElement('td');
+        const foodIdCell = document.createElement('td');
+        //const dayCell = document.createElement('td');
+  
+        foodNameCell.textContent = item.foodName;
+        consumedNumCell.textContent = item.unit;
+        costCell.textContent = item.cost;
+        wasteNumCell.textContent = item.expDays;
+        wasteAmtCell.textContent = item.supplier;
+        lossRateCell.textContent = item.note;
+        foodIdCell.textContent = item.foodId;
+        foodIdCell.style.display = "none";
+        foodIdCell.setAttribute("id", "foodID");
+        //dayCell = item.day;
+  
+        row.appendChild(foodNameCell);
+        row.appendChild(consumedNumCell);
+        row.appendChild(costCell);
+        row.appendChild(wasteNumCell);
+        row.appendChild(wasteAmtCell);
+        row.appendChild(lossRateCell);
+        row.appendChild(foodIdCell);
+        //row.appendChild(dayCell);
+  
+        tableBody.appendChild(row);
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }

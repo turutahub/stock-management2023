@@ -2,12 +2,11 @@ package com.example.demo.repository;
 
 import com.example.demo.controller.inspect.InspectRequest;
 import com.example.demo.controller.order.OrderRequest;
-import com.example.demo.model.InspectModel;
-import com.example.demo.model.OrderModel;
-import com.example.demo.model.RegisterModel;
-import com.example.demo.model.StockModel;
+import com.example.demo.model.*;
 import org.springframework.core.annotation.Order;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface MainRepository {
@@ -22,7 +21,7 @@ public interface MainRepository {
     List<OrderModel> getAllOrder();
     void insertOrder(OrderRequest request);
     List<RegisterModel> getUnordered();
-    OrderModel getByIdOrder(int foodId);
+    OrderModel getCheckedOrder(int foodId, LocalDate day);
     void updateOrder(OrderRequest request);
 
 
@@ -33,9 +32,16 @@ public interface MainRepository {
 
     //検品機能
     List<InspectModel> getAllInspection();
-    void insertInspection(OrderRequest request);
-    InspectModel getByIdInspection(int foodId);
+    List<OrderModel> getUnInspected();
+    void insertInspection(InspectRequest request);
+    //void insertInspection(OrderRequest request);
+    InspectModel getCheckedInspection(int foodId, LocalDate day);
     void updateInspection(InspectRequest request);
-    int getByIdInsNum(int foodId);
-    void updateIns(int insNum, int insInsufficient, int foodId);
+    int getByIdInsNum(int foodId, LocalDate day);
+    void updateIns(int insNum, int insInsufficient, int foodId, LocalDate day);
+
+
+    //棚卸し機能
+    List<InventoryModel> getAllInventory();
+    List<RegisterModel> getUnInventoried();
 }

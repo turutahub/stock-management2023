@@ -1,4 +1,4 @@
-// 発注テーブル表示
+// 発注済み商品テーブル表示
 async function getOrderTable() {
   try {
     const response = await fetch('http://localhost:8080/order');
@@ -20,8 +20,8 @@ async function getOrderTable() {
       const noteCell = document.createElement('td');
       const impNumCell = document.createElement('td');
       const deliveryDayCell = document.createElement('td');
+      const dayCell = document.createElement('td');
       const foodIdCell = document.createElement('td');
-      //const dayCell = document.createElement('td');
 
       checkBox.type = "checkbox"
       checkBox.setAttribute("id", "checkBox");
@@ -33,10 +33,12 @@ async function getOrderTable() {
       noteCell.textContent = item.note;
       impNumCell.textContent = item.impNum;
       deliveryDayCell.textContent = item.deliveryDay;
+      dayCell.textContent = item.day;
+      dayCell.setAttribute("id", "day")
       foodIdCell.textContent = item.foodId;
       foodIdCell.style.display = "none";
       foodIdCell.setAttribute("id", "foodID");
-      //dayCell = item.day;
+
 
       row.appendChild(checkBox)
       row.appendChild(foodNameCell);
@@ -47,8 +49,9 @@ async function getOrderTable() {
       row.appendChild(noteCell);
       row.appendChild(impNumCell);
       row.appendChild(deliveryDayCell);
+      row.appendChild(dayCell);
       row.appendChild(foodIdCell);
-      //row.appendChild(dayCell);
+
 
       tableBody.appendChild(row);
     });
@@ -57,7 +60,7 @@ async function getOrderTable() {
   }
 }
 
-// 新規発注テーブル表示
+// 未発注テーブル表示
 async function getOrder() {
   try {
     const response = await fetch('http://localhost:8080/order/get');
@@ -100,7 +103,6 @@ async function getOrder() {
         registerOrder(foodIdCell.innerHTML, impNumCell.querySelector('input').value, deliveryDayCell.querySelector('input').value);
       }
       
-
       row.appendChild(foodNameCell);
       row.appendChild(unitCell);
       row.appendChild(costCell);
@@ -120,6 +122,7 @@ async function getOrder() {
   }
 }
 
+// 発注メソッド
 async function registerOrder(foodId, impNum, deliveryDay) {
   const today = new Date();
   const year = today.getFullYear();
@@ -146,19 +149,20 @@ async function registerOrder(foodId, impNum, deliveryDay) {
   }
 }
 
-function checkOrder() {
+// チェックされたレコードのfoodId取得
+function displayCheckedOrder() {
   document.querySelectorAll("#checkBox").forEach(checkbox => {
     if (checkbox.checked) {
       const row = checkbox.closest("tr");
-      //console.log(row.querySelector("#foodId").textContent);
-      modifyOrder(row.querySelector("#foodId").textContent)
+      fetchCheckedOrder(row.querySelector("#foodId").textContent, row.querySelector("#day").textContent)
     }
   });
 }
 
-async function modifyOrder(foodId) {
+// チェックされたレコードをDBから取得
+async function fetchCheckedOrder(foodId, day) {
   try {
-    const response = await fetch(`http://localhost:8080/order/${foodId}`);
+    const response = await fetch(`http://localhost:8080/order/${foodId}/${day}`);
     const data = await response.json();
     const tableBody = document.getElementById("modifyOrderTable");
   
@@ -173,7 +177,7 @@ async function modifyOrder(foodId) {
     const impNumCell = document.createElement('td');
     const deliveryDayCell = document.createElement('td');
     const foodIdCell = document.createElement('td');
-    //const dayCell = document.createElement('td');
+    const dayCell = document.createElement('td');
 
     foodNameCell.textContent = data.foodName;
     unitCell.textContent = data.unit;
@@ -191,9 +195,9 @@ async function modifyOrder(foodId) {
     foodIdCell.textContent = data.foodId;
     foodIdCell.style.display = "none";
     foodIdCell.setAttribute("id", "foodId");
-    //dayCell = item.day;
+    dayCell.textContent = data.day;
+    dayCell.setAttribute("id", "day")
 
-      
     row.appendChild(foodNameCell);
     row.appendChild(unitCell);
     row.appendChild(costCell);
@@ -203,7 +207,7 @@ async function modifyOrder(foodId) {
     row.appendChild(impNumCell);
     row.appendChild(deliveryDayCell);
     row.appendChild(foodIdCell);
-    //row.appendChild(dayCell);
+    row.appendChild(dayCell);
 
     tableBody.appendChild(row);
     
@@ -212,19 +216,17 @@ async function modifyOrder(foodId) {
   }
 }
 
-async function submitOrderMod() {
+// 発注修正メソッド
+async function modifyOrder() {
   const tableBody = document.getElementById('modifyOrderTable');
-  const today = new Date();
+  /*const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, '0');
   const day = String(today.getDate()).padStart(2, '0');
-  const formattedDate = `${year}-${month}-${day}`;
+  const formattedDate = `${year}-${month}-${day}`;*/
   try {
     for(i=0;i<tableBody.children.length;i++){
     // データベースへの接続と発注情報の登録
-    //console.log(tableBody.children[i].querySelector("#foodId").textContent)
-    //console.log(tableBody.children[i].querySelector("#impNum").value)
-    //console.log(tableBody.children[i].querySelector("#deliveryDay").value)
     const response = await fetch('http://localhost:8080/order', {
       method: 'PUT',
       headers: {
@@ -232,7 +234,7 @@ async function submitOrderMod() {
       },
       body: JSON.stringify({
         foodId: tableBody.children[i].querySelector("#foodId").textContent,
-        day: formattedDate,
+        day: tableBody.children[i].querySelector("#day").textContent,
         impNum: tableBody.children[i].querySelector("#impNum").value,
         deliveryDay: tableBody.children[i].querySelector("#deliveryDay").value
       })
