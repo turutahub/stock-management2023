@@ -54,11 +54,6 @@ public class MainService {
     }
 
 
-    /*public List<StockModel> getAllStock() {
-        return repository.getAllStock();
-    }*/
-
-
     public List<InspectModel> getAllInspection() {
         return repository.getAllInspection();
     }
@@ -94,4 +89,23 @@ public class MainService {
     public List<RegisterModel> getUnInventoried() {
         return repository.getUnInventoried();
     }
+
+    public int getTodayInsNum(int foodId) {
+        return repository.getTodayInsNum(foodId);
+    }
+
+    public List<InformationModel> getInfo(LocalDate day) {
+        return repository.getInfo(day);
+    }
+
+    /*public List<StockModel> getAllStock() {
+        return repository.getAllStock();
+    }*/
+
+    public int getPastConsumedNum(int foodId, LocalDate day) {
+        return repository.getPastConsumedNum(foodId, day);
+    }
+
+
+
 }

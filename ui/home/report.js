@@ -68,6 +68,55 @@ function displayreportDate(date) {
     // その他の設定オプション
   });
 
+  async function getInformationTable() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
+    try {
+      const response = await fetch(`http://localhost:8080/inventory/info/${formattedDate}`);
+      const data = await response.json();
+      const tableBody = document.getElementById("informationTable")
+
+      tableBody.innerHTML = '';
+
+      data.forEach(item => {
+        const row = document.createElement('tr');
+  
+        const totalCell = document.createElement('td');
+        const costCell = document.createElement('td');
+        const costRateCell = document.createElement('td');
+        const wasteAmtCell = document.createElement('td');
+        const lossRateCell = document.createElement('td');
+        const balanceCell = document.createElement('td');
+        //const dayCell = document.createElement('td');
+  
+
+        totalCell.textContent = "総計"
+        costCell.textContent = item.cost;
+        costRateCell.textContent = item.costRate;
+        wasteAmtCell.textContent = item.wasteAmt;
+        lossRateCell.textContent = item.lossRate;
+        balanceCell.textContent = item.balance;
+        //dayCell = item.day;
+  
+        row.appendChild(totalCell);
+        row.appendChild(costCell);
+        row.appendChild(costRateCell);
+        row.appendChild(wasteAmtCell);
+        row.appendChild(lossRateCell);
+        row.appendChild(balanceCell);
+        //row.appendChild(dayCell);
+  
+        tableBody.appendChild(row);
+      });
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    
+  }
+
 
   async function getInventoryTable() {
     try {
@@ -91,11 +140,11 @@ function displayreportDate(date) {
         //const dayCell = document.createElement('td');
   
         foodNameCell.textContent = item.foodName;
-        consumedNumCell.textContent = item.unit;
+        consumedNumCell.textContent = item.consumedNum;
         costCell.textContent = item.cost;
-        wasteNumCell.textContent = item.expDays;
-        wasteAmtCell.textContent = item.supplier;
-        lossRateCell.textContent = item.note;
+        wasteNumCell.textContent = item.wasteNum;
+        wasteAmtCell.textContent = item.wasteAmt;
+        lossRateCell.textContent = item.lossRate;
         foodIdCell.textContent = item.foodId;
         foodIdCell.style.display = "none";
         foodIdCell.setAttribute("id", "foodID");

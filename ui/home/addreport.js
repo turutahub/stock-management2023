@@ -1,3 +1,4 @@
+//棚卸情報登録済みの食材データ取得
 async function getNewInventory() {
   try {
   const response = await fetch('http://localhost:8080/inventory');
@@ -71,6 +72,9 @@ getUnInventoried();
 
 
 
+
+
+//棚卸情報未登録の食材データ取得
 async function getUnInventoried() {
   try {
   const response = await fetch('http://localhost:8080/inventory/get');
@@ -83,23 +87,18 @@ async function getUnInventoried() {
   data.forEach(item => {
     const row = document.createElement('tr');
 
+    //食材名
     const foodNameCell = document.createElement('td');
-    const expdaysCell = document.createElement('td');
-    const stockCell = document.createElement('td');
-    const spplmNumCell = document.createElement('td');
-    const spplmAmtCell = document.createElement('td');
-    const wasteNumCell = document.createElement('td');
-    const consumedNumCell = document.createElement('td');
-    const wasteAmtCell = document.createElement('td');
-    const lossRateCell = document.createElement('td');
-    const costCell = document.createElement('td');
-    const requiredNumCell = document.createElement('td');
-    const insufficientNumCell = document.createElement('td');
-    const foodIdCell = document.createElement('td');
-    //const dayCell = document.createElement('td');
-
     foodNameCell.textContent = item.foodName;
+    row.appendChild(foodNameCell);
+
+    //消費期間
+    const expdaysCell = document.createElement('td');
     expdaysCell.textContent = item.expDays;
+    row.appendChild(expdaysCell);
+
+    //在庫数
+    const stockCell = document.createElement('td');
     stockCell.appendChild(document.createElement("input"));
     stockCell.querySelector('input').type = "number";
     stockCell.querySelector('input').value = 0;
@@ -107,15 +106,27 @@ async function getUnInventoried() {
       calculateConsumedNum(item.foodId, stockCell.querySelector('input').value,  wasteNumCell.querySelector('input').value, consumedNumCell)
       calculateCost(consumedNumCell.textContent, item.cost, spplmAmtCell.querySelector('input').value, costCell)
     })
+    row.appendChild(stockCell);
+
+    //補填数
+    const spplmNumCell = document.createElement('td');
     spplmNumCell.appendChild(document.createElement("input"));
     spplmNumCell.querySelector('input').type = "number";
     spplmNumCell.querySelector('input').value = 0;
+    row.appendChild(spplmNumCell);
+
+    //補填額
+    const spplmAmtCell = document.createElement('td');
     spplmAmtCell.appendChild(document.createElement("input"));
     spplmAmtCell.querySelector('input').type = "number";
     spplmAmtCell.querySelector('input').value = 0;
     spplmAmtCell.querySelector('input').addEventListener("input", function() {
       calculateCost(consumedNumCell.textContent, item.cost, spplmAmtCell.querySelector('input').value, costCell)
     })
+    row.appendChild(spplmAmtCell);
+
+    //廃棄数
+    const wasteNumCell = document.createElement('td');
     wasteNumCell.appendChild(document.createElement("input"));
     wasteNumCell.querySelector('input').type = "number";
     wasteNumCell.querySelector('input').value = 0;
@@ -123,31 +134,44 @@ async function getUnInventoried() {
       calculateWasteAmt(item.cost, wasteNumCell.querySelector('input').value, wasteAmtCell)
       calculateConsumedNum(item.foodId, stockCell.querySelector('input').value,  wasteNumCell.querySelector('input').value, consumedNumCell)
       calculateLossRate(item.foodId, wasteNumCell.querySelector('input').value, lossRateCell)
+      calculateCost(consumedNumCell.textContent, item.cost, spplmAmtCell.querySelector('input').value, costCell)
     });
-    //consumedNumCell.textContent = item.consumedNum;
-    //wasteAmtCell.textContent = item.wasteAmt;
-    //lossRateCell.textContent = item.lossRate;
-    //costCell.textContent = item.cost;
-    //requiredNumCell.textContent = item.requiredNum;
-    //insufficientNumCell.textContent = item.insufficientNum;
+    row.appendChild(wasteNumCell);
+
+    //消費数
+    const consumedNumCell = document.createElement('td');
+    consumedNumCell.textContent = calculateConsumedNum(item.foodId, stockCell.querySelector('input').value,  wasteNumCell.querySelector('input').value, consumedNumCell)
+    row.appendChild(consumedNumCell);
+    //廃棄額
+    const wasteAmtCell = document.createElement('td');
+    wasteAmtCell.textContent = calculateWasteAmt(item.cost, wasteNumCell.querySelector('input').value, wasteAmtCell)
+    row.appendChild(wasteAmtCell);
+    //ロス率
+    const lossRateCell = document.createElement('td');
+    lossRateCell.textContent = calculateLossRate(item.foodId, wasteNumCell.querySelector('input').value, lossRateCell)
+    row.appendChild(lossRateCell);
+    //原価
+    const costCell = document.createElement('td');
+    costCell.textContent = calculateCost(consumedNumCell.textContent, item.cost, spplmAmtCell.querySelector('input').value, costCell)
+    row.appendChild(costCell);
+    //必要数   
+    const requiredNumCell = document.createElement('td');
+    //requiredNumCell.textContent = calculateRequiredNum(item.foodId)
+    row.appendChild(requiredNumCell);
+    //不足数
+    const insufficientNumCell = document.createElement('td');
+    row.appendChild(insufficientNumCell);
+    
+
+    //食材ID（非表示）
+    const foodIdCell = document.createElement('td');
     foodIdCell.textContent = item.foodId;
     foodIdCell.style.display = "none";
     foodIdCell.setAttribute("id", "foodID");
-    //dayCell = item.day;
-
-    row.appendChild(foodNameCell);
-    row.appendChild(expdaysCell);
-    row.appendChild(stockCell);
-    row.appendChild(spplmNumCell);
-    row.appendChild(spplmAmtCell);
-    row.appendChild(wasteNumCell);
-    row.appendChild(consumedNumCell);
-    row.appendChild(wasteAmtCell);
-    row.appendChild(lossRateCell);
-    row.appendChild(costCell);
-    row.appendChild(requiredNumCell);
-    row.appendChild(insufficientNumCell);
     row.appendChild(foodIdCell);
+
+    //const dayCell = document.createElement('td');
+    //dayCell = item.day;
     //row.appendChild(dayCell);
 
     tableBody.appendChild(row);
@@ -157,33 +181,122 @@ async function getUnInventoried() {
 }
 }
 
-function calculateWasteAmt(cost, wasteNum, wasteAmtCell) {
-  wasteAmtCell.textContent = wasteNum * cost
-}
 
-async function calculateConsumedNum(foodId, stock, wasteNum, consumedNumCell) {
+
+//消費数計算
+async function calculateConsumedNum(foodId, stock, wasteNum, cell) {
   const insNum = await fetchInsNum(foodId);
-  consumedNumCell.textContent = insNum - stock - wasteNum
+  cell.textContent = insNum - stock - wasteNum
 }
 
-async function calculateLossRate(foodId, wasteNum, lossRateCell) {
+//廃棄額計算
+function calculateWasteAmt(cost, wasteNum, cell) {
+  cell.textContent = wasteNum * cost
+}
+
+//ロス率計算
+async function calculateLossRate(foodId, wasteNum, cell) {
   const insNum = await fetchInsNum(foodId);
-  lossRateCell.textContent = wasteNum/insNum
-}
-
-async function fetchInsNum(foodId) {
-  try {
-    const response = await fetch(`http://localhost:8080/inventory/${foodId}`);
-    const data = await response.json();
-    return data
-  } catch (error) {
-    console.error('Error', error);
+  if (insNum !== 0) {
+    cell.textContent = wasteNum / insNum;
+  } else {
+    cell.textContent = 0 ; // ゼロで割り算が発生する場合の代替値
   }
 }
 
+//原価計算
 function calculateCost(consumedNum, cost, spplmAmt, costCell) {
   costCell.textContent = (consumedNum * cost + parseInt(spplmAmt));
 }
+
+//必要数計算
+
+
+//当日の検品数取得（DBから)
+async function fetchInsNum(foodId) {
+  try {
+    const response = await fetch(`http://localhost:8080/inventory/${foodId}`);
+    // レスポンスが正常な場合はデータを取得
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      // エラーレスポンスが返ってきた場合は例外をスロー
+      throw new Error('Error in fetch');
+    }
+  } catch (error) {
+    // エラーレスポンスまたは例外が発生した場合は0を返す
+    //console.error('Error', error);
+    return 0;
+  }
+}
+
+//前日の在庫取得(DBから)
+async function fetchPreviousInv(foodId) {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  const year = yesterday.getFullYear();
+  const month = String(yesterday.getMonth() + 1).padStart(2, '0');
+  const day = String(yesterday.getDate()).padStart(2, '0');
+  const date = `${year}-${month}-${day}`;
+  try {
+
+  } catch (error) {
+
+  }
+}
+
+
+async function calculateRequiredNum(foodId) {
+  function getFormattedDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  function getPastWeekDates() {
+    const today = new Date();
+    const pastWeekDates = [];
+    for (let i = 1; i <= 4; i++) {
+      const pastDate = new Date(today.getTime() - i * 7 * 24 * 60 * 60 * 1000);
+      const formattedDate = getFormattedDate(pastDate);
+      pastWeekDates.push(formattedDate);
+    }
+    return pastWeekDates;
+  }
+  const pastWeekDates = getPastWeekDates();
+  pastWeekDates.forEach((date) => {
+    fetchPastRequiredNum(foodId, date)
+  })
+}
+
+async function fetchPastRequiredNum(foodId, date) {
+  try {
+    const response = await fetch(`http://localhost:8080/stock/${foodId}/${date}`)
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      // エラーレスポンスが返ってきた場合は例外をスロー
+      throw new Error('Error in fetch');
+    }
+  } catch (error) {
+    // エラーレスポンスまたは例外が発生した場合は0を返す
+    console.error('Error', error);
+    return 0;
+  }
+}
+
+
+
+
+
+
+
+
+
 
 
 

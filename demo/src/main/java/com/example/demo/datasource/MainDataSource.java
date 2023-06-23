@@ -241,7 +241,7 @@ public class MainDataSource implements MainRepository {
     @Override
     public int getByIdInsNum(int foodId, LocalDate day) {
         String sql = "SELECT ins_num FROM inspection_history WHERE food_id = ? AND day = ?";
-        return jdbcTemplate.queryForObject(sql, int.class, foodId, day);
+        return jdbcTemplate.queryForObject(sql, int.class, foodId);
     }
     @Override
     public void updateIns(int insNum, int insInsufficient, int foodId, LocalDate day) {
@@ -260,8 +260,8 @@ public class MainDataSource implements MainRepository {
     public List<InventoryModel> getAllInventory() {
         String sql = "SELECT *\n" +
                 "FROM food_mst\n" +
-                "INNER JOIN stock_history ON food_mst.food_id = stock_history.food_id\n" +
-                "INNER JOIN inventory_history ON food_mst.food_id = inventory_history.food_id";
+                "INNER JOIN inventory_history ON food_mst.food_id = inventory_history.food_id\n" +
+                "INNER JOIN impire_history ON inventory_history.food_id = impire_history.food_id AND inventory_history.day = impire_history.day;\n";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
         return records.stream().map(this::toInventoryModel).collect(Collectors.toList());
     }
@@ -297,6 +297,35 @@ public class MainDataSource implements MainRepository {
         return records.stream().map(this::toRegisterModel).collect(Collectors.toList());
     }
 
+    @Override
+    public int getTodayInsNum(int foodId) {
+        String sql = "SELECT SUM(inspection_history.ins_num) AS total_ins_num\n" +
+                "FROM impire_history\n" +
+                "INNER JOIN inspection_history ON impire_history.food_id = inspection_history.food_id AND impire_history.day = inspection_history.day\n" +
+                "WHERE impire_history.delivery_day = CURRENT_DATE AND impire_history.food_id = ?;\n";
+        return jdbcTemplate.queryForObject(sql, int.class, foodId);
+    }
+
+    @Override
+    public List<InformationModel> getInfo(LocalDate day) {
+        String sql = "SELECT * FROM informations_history WHERE day = ?";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql, day);
+        return records.stream().map(this::toInformationModel).collect(Collectors.toList());
+    }
+
+    private InformationModel toInformationModel(Map<String, Object> record) {
+        Date day = (Date) record.get("day");
+        return new InformationModel(
+                day.toLocalDate(),
+                (int) record.get("cost"),
+                (BigDecimal) record.get("cost_rate"),
+                (int) record.get("waste_amt"),
+                (BigDecimal) record.get("loss_rate"),
+                (int) record.get("sales"),
+                (int) record.get("balance")
+        );
+    }
+
 
     //在庫一覧
     /*@Override
@@ -309,7 +338,7 @@ public class MainDataSource implements MainRepository {
     public void deleteStock(int foodId) {
         // 在庫を削除する処理を実装する
         // foodIdを使用してデータベースから在庫を削除するなどの処理を追加
-    }
+    }*/
     private StockModel toStockModel(Map<String, Object> record) {
         Date day = (Date) record.get("day");
         return new StockModel(
@@ -323,5 +352,12 @@ public class MainDataSource implements MainRepository {
                 (int) record.get("waste_amt"),
                 (BigDecimal) record.get("loss_rate")
         );
-    }*/
+    }
+    public int getPastConsumedNum(int foodId, LocalDate day) {
+        String sql = "SELECT consumed_num FROM stock_history WHERE food_id = ? AND day = ?";
+        return jdbcTemplate.queryForObject(sql, int.class, foodId, day);
+    }
+
+
+
 }

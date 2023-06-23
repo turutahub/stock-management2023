@@ -25,7 +25,7 @@
     <button onclick="showContent('register');getInventoryList()">食材登録</button>
     <button onclick="showContent('order');getOrderTable()">発注</button>
     <button onclick="showContent('inspect');getInspectionTable()">検品</button>
-    <button onclick="showContent('reports');getInventoryTable()">棚卸</button>
+    <button onclick="showContent('reports');getInventoryTable();getInformationTable()">棚卸</button>
     <button onclick="showContent('finditem')">検索</button>
   </div>
 
@@ -156,18 +156,7 @@
     <table>
       <thead>
         <tr>
-          <th></th>
-          <th>食材名</th>
-          <th>単位</th>
-          <th>単価</th>
-          <th>消費期間</th>
-          <th>仕入れ店</th>
-          <th>備考</th>
-          <th>発注数</th>
-          <th>発注日</th>
-          <th>検品数</th>
-          <th>過不足</th>
-          <th>検品日</th>
+          <th></th><th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>発注日</th><th>検品数</th><th>過不足</th><th>検品日</th>
         </tr>
       </thead>
       <tbody id="inspectionTable"></tbody>
@@ -180,16 +169,7 @@
     <table>
       <thead>
         <tr>
-          <th>食材名</th>
-          <th>単位</th>
-          <th>単価</th>
-          <th>消費期間</th>
-          <th>仕入れ店</th>
-          <th>備考</th>
-          <th>発注数</th>
-          <th>発注日</th>
-          <th>検品数</th>
-          <th>過不足</th>
+          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>発注日</th><th>検品数</th><th>過不足</th>
         </tr>
       </thead>
       <tbody id="unInspectedTable"></tbody>
@@ -203,17 +183,7 @@
     <table>
       <thead>
         <tr>
-          <th>食材名</th>
-          <th>単位</th>
-          <th>単価</th>
-          <th>消費期間</th>
-          <th>仕入れ店</th>
-          <th>備考</th>
-          <th>発注数</th>
-          <th>発注日</th>
-          <th>検品数</th>
-          <th>過不足</th>
-          <th>検品日</th>
+          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>発注日</th><th>検品数</th><th>過不足</th><th>検品日</th>
         </tr>
       </thead>
       <tbody id="newInspectionTable"></tbody>
@@ -237,6 +207,19 @@
       <table>
         <thead>
           <tr>
+            <th></th>
+            <th>食材名</th>
+            <th>原価率(%)</th>
+            <th>廃棄額</th>
+            <th>ロス率(%)</th>
+            <th>収支</th>
+          </tr>
+        </thead>
+        <tbody id="informationTable"></tbody>
+      </table>
+      <table>
+        <thead>
+          <tr>
             <th>食材名</th>
             <th>消費数</th>
             <th>原価</th>
@@ -255,8 +238,7 @@
 
   <section id="addreport" class="content">
     <h2>棚卸情報入力画面<h2>
-    <script src="addreport.js"></script>
-  </head>
+
   
   <!-- 棚卸確定ボタン -->
   <button id="inventoryConfirmBtn" onclick="showContent('reports');confirmInventory()">棚卸確定</button>
@@ -264,49 +246,22 @@
   <!-- 売上入力ボックス -->
   <label for="salesInput">売上:</label>
   <input type="number" id="salesInput" value="0">
-  
-  <style>/*
-  <!-- 食材名表示 -->
-  <p id="foodName"></p>
-  
-  <!-- 消費期間表示 -->
-  <p id="expiryPeriod"></p>
-  
-  <!-- 在庫数入力ボックス -->
-  <label for="stockInput">在庫数:</label>
-  <input type="number" id="stockInput">
-  
-  <!-- 補填数入力ボックス -->
-  <label for="supplementInput">補填数:</label>
-  <input type="number" id="supplementInput">
-  
-  <!-- 補填額入力ボックス -->
-  <label for="supplementCostInput">補填額:</label>
-  <input type="number" id="supplementCostInput">
-  
-  <!-- 廃棄数入力ボックス -->
-  <label for="wasteInput">廃棄数:</label>
-  <input type="number" id="wasteInput">
-  
-  <!-- 消費数表示 -->
-  <p id="consumption"></p>
-  
-  <!-- 廃棄額表示 -->
-  <p id="wasteCost"></p>
-  
-  <!-- ロス率表示 -->
-  <p id="lossRate"></p>
-  
-  <!-- 原価表示 -->
-  <p id="cost"></p>
-  
-  <!-- 必要数表示 -->
-  <p id="requiredAmount"></p>
-  
-  <!-- 不足数表示 -->
-  <p id="shortage"></p>
-  */</style>
 
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>原価</th>
+        <th>原価率(%)</th>
+        <th>廃棄額</th>
+        <th>ロス率(%)</th>
+        <th>収支</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  
+  
   <table>
     <thead>
       <tr>
@@ -325,12 +280,11 @@
       </tr>
     </thead>
     <tbody id="newInventoryTable"></tbody>
+    
   </table>
-
-
-
-
+  <script src="addreport.js"></script>
   </section>
+
 
   <section id="finditem" class="content">
 

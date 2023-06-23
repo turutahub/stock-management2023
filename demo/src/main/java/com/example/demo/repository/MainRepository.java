@@ -24,12 +24,6 @@ public interface MainRepository {
     OrderModel getCheckedOrder(int foodId, LocalDate day);
     void updateOrder(OrderRequest request);
 
-
-    //在庫一覧機能
-    /*List<StockModel> getAllStock();
-    void deleteStock(int foodId);*/
-
-
     //検品機能
     List<InspectModel> getAllInspection();
     List<OrderModel> getUnInspected();
@@ -44,4 +38,13 @@ public interface MainRepository {
     //棚卸し機能
     List<InventoryModel> getAllInventory();
     List<RegisterModel> getUnInventoried();
+    int getTodayInsNum(int foodId);
+    List<InformationModel> getInfo(LocalDate day);
+
+
+    //在庫一覧機能
+    /*List<StockModel> getAllStock();
+    void deleteStock(int foodId);*/
+    int getPastConsumedNum(int foodId, LocalDate day);
+
 }
