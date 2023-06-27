@@ -12,46 +12,52 @@ async function getOrderTable() {
       const row = document.createElement('tr');
 
       const checkBox = document.createElement('input');
-      const foodNameCell = document.createElement('td');
-      const unitCell = document.createElement('td');
-      const costCell = document.createElement('td');
-      const expdaysCell = document.createElement('td');
-      const supplierCell = document.createElement('td');
-      const noteCell = document.createElement('td');
-      const impNumCell = document.createElement('td');
-      const deliveryDayCell = document.createElement('td');
-      const dayCell = document.createElement('td');
-      const foodIdCell = document.createElement('td');
-
       checkBox.type = "checkbox"
       checkBox.setAttribute("id", "checkBox");
+      row.appendChild(checkBox)
+
+      const foodNameCell = document.createElement('td');
       foodNameCell.textContent = item.foodName;
+      row.appendChild(foodNameCell);
+
+      const unitCell = document.createElement('td');
       unitCell.textContent = item.unit;
+      row.appendChild(unitCell);
+      
+      const costCell = document.createElement('td');
       costCell.textContent = item.cost;
+      row.appendChild(costCell);
+
+      const expdaysCell = document.createElement('td');
       expdaysCell.textContent = item.expDays;
+      row.appendChild(expdaysCell);
+
+      const supplierCell = document.createElement('td');
       supplierCell.textContent = item.supplier;
+      row.appendChild(supplierCell);
+
+      const noteCell = document.createElement('td');
       noteCell.textContent = item.note;
+      row.appendChild(noteCell);
+
+      const impNumCell = document.createElement('td');
       impNumCell.textContent = item.impNum;
+      row.appendChild(impNumCell);
+
+      const deliveryDayCell = document.createElement('td');
       deliveryDayCell.textContent = item.deliveryDay;
+      row.appendChild(deliveryDayCell);
+
+      const dayCell = document.createElement('td');
       dayCell.textContent = item.day;
       dayCell.setAttribute("id", "day")
+      row.appendChild(dayCell);
+
+      const foodIdCell = document.createElement('td');
       foodIdCell.textContent = item.foodId;
       foodIdCell.style.display = "none";
       foodIdCell.setAttribute("id", "foodID");
-
-
-      row.appendChild(checkBox)
-      row.appendChild(foodNameCell);
-      row.appendChild(unitCell);
-      row.appendChild(costCell);
-      row.appendChild(expdaysCell);
-      row.appendChild(supplierCell);
-      row.appendChild(noteCell);
-      row.appendChild(impNumCell);
-      row.appendChild(deliveryDayCell);
-      row.appendChild(dayCell);
       row.appendChild(foodIdCell);
-
 
       tableBody.appendChild(row);
     });
@@ -74,45 +80,52 @@ async function getOrder() {
       const row = document.createElement('tr');
 
       const foodNameCell = document.createElement('td');
-      const unitCell = document.createElement('td');
-      const costCell = document.createElement('td');
-      const expdaysCell = document.createElement('td');
-      const supplierCell = document.createElement('td');
-      const noteCell = document.createElement('td');
-      const impNumCell = document.createElement('td');
-      const deliveryDayCell = document.createElement('td');
-      const foodIdCell = document.createElement('td');
-      const orderButton = document.createElement("button");
-      //const dayCell = document.createElement('td');
-
       foodNameCell.textContent = item.foodName;
+      row.appendChild(foodNameCell);
+
+      const unitCell = document.createElement('td');
       unitCell.textContent = item.unit;
+      row.appendChild(unitCell);
+
+      const costCell = document.createElement('td');
       costCell.textContent = item.cost;
+      row.appendChild(costCell);
+
+      const expdaysCell = document.createElement('td');
       expdaysCell.textContent = item.expDays;
+      row.appendChild(expdaysCell);
+
+      const supplierCell = document.createElement('td');
       supplierCell.textContent = item.supplier;
+      row.appendChild(supplierCell);
+
+      const noteCell = document.createElement('td');
       noteCell.textContent = item.note;
+      row.appendChild(noteCell);
+
+      const impNumCell = document.createElement('td');
       impNumCell.appendChild(document.createElement("input"));
+      row.appendChild(impNumCell);
+
+      const deliveryDayCell = document.createElement('td');
       deliveryDayCell.appendChild(document.createElement("input"));
       deliveryDayCell.querySelector('input').type = 'date'
+      row.appendChild(deliveryDayCell);
+
+      const foodIdCell = document.createElement('td');
       foodIdCell.textContent = item.foodId;
       foodIdCell.style.display = "none";
-      //dayCell = item.day;
+      row.appendChild(foodIdCell);
 
+      const orderButton = document.createElement("button");
       orderButton.innerHTML = "発注";
       orderButton.onclick = function() {
         registerOrder(foodIdCell.innerHTML, impNumCell.querySelector('input').value, deliveryDayCell.querySelector('input').value);
       }
-      
-      row.appendChild(foodNameCell);
-      row.appendChild(unitCell);
-      row.appendChild(costCell);
-      row.appendChild(expdaysCell);
-      row.appendChild(supplierCell);
-      row.appendChild(noteCell);
-      row.appendChild(impNumCell);
-      row.appendChild(deliveryDayCell);
-      row.appendChild(foodIdCell);
       row.appendChild(orderButton)
+
+      //const dayCell = document.createElement('td');
+      //dayCell = item.day;
       //row.appendChild(dayCell);
 
       tableBody.appendChild(row);
@@ -124,11 +137,6 @@ async function getOrder() {
 
 // 発注メソッド
 async function registerOrder(foodId, impNum, deliveryDay) {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  const formattedDate = `${year}-${month}-${day}`;
   try {
     // データベースへの接続と発注情報の登録
     const response = await fetch('http://localhost:8080/order', {
@@ -138,7 +146,7 @@ async function registerOrder(foodId, impNum, deliveryDay) {
       },
       body: JSON.stringify({
         foodId: foodId,
-        day: formattedDate,
+        day: today(),
         impNum: impNum,
         deliveryDay: deliveryDay
       })
@@ -151,6 +159,7 @@ async function registerOrder(foodId, impNum, deliveryDay) {
 
 // チェックされたレコードのfoodId取得
 function displayCheckedOrder() {
+  document.getElementById("modifyOrderTable").innerHTML = "";
   document.querySelectorAll("#checkBox").forEach(checkbox => {
     if (checkbox.checked) {
       const row = checkbox.closest("tr");
@@ -169,44 +178,51 @@ async function fetchCheckedOrder(foodId, day) {
     const row = document.createElement('tr');
 
     const foodNameCell = document.createElement('td');
-    const unitCell = document.createElement('td');
-    const costCell = document.createElement('td');
-    const expdaysCell = document.createElement('td');
-    const supplierCell = document.createElement('td');
-    const noteCell = document.createElement('td');
-    const impNumCell = document.createElement('td');
-    const deliveryDayCell = document.createElement('td');
-    const foodIdCell = document.createElement('td');
-    const dayCell = document.createElement('td');
-
     foodNameCell.textContent = data.foodName;
+    row.appendChild(foodNameCell);
+
+    const unitCell = document.createElement('td');
     unitCell.textContent = data.unit;
+    row.appendChild(unitCell);
+
+    const costCell = document.createElement('td');
     costCell.textContent = data.cost;
+    row.appendChild(costCell);
+
+    const expdaysCell = document.createElement('td');
     expdaysCell.textContent = data.expDays;
+    row.appendChild(expdaysCell);
+
+    const supplierCell = document.createElement('td');
     supplierCell.textContent = data.supplier;
+    row.appendChild(supplierCell);
+
+    const noteCell = document.createElement('td');
     noteCell.textContent = data.note;
+    row.appendChild(noteCell);
+
+    const impNumCell = document.createElement('td');
     impNumCell.appendChild(document.createElement("input"));
     impNumCell.querySelector('input').value = data.impNum;
     impNumCell.querySelector('input').setAttribute("id", "impNum");
+    row.appendChild(impNumCell);
+
+    const deliveryDayCell = document.createElement('td');
     deliveryDayCell.appendChild(document.createElement("input"));
     deliveryDayCell.querySelector('input').type = 'date'
     deliveryDayCell.querySelector('input').value = data.deliveryDay;
     deliveryDayCell.querySelector('input').setAttribute("id", "deliveryDay");
+    row.appendChild(deliveryDayCell);
+
+    const foodIdCell = document.createElement('td');
     foodIdCell.textContent = data.foodId;
     foodIdCell.style.display = "none";
     foodIdCell.setAttribute("id", "foodId");
+    row.appendChild(foodIdCell);
+
+    const dayCell = document.createElement('td');
     dayCell.textContent = data.day;
     dayCell.setAttribute("id", "day")
-
-    row.appendChild(foodNameCell);
-    row.appendChild(unitCell);
-    row.appendChild(costCell);
-    row.appendChild(expdaysCell);
-    row.appendChild(supplierCell);
-    row.appendChild(noteCell);
-    row.appendChild(impNumCell);
-    row.appendChild(deliveryDayCell);
-    row.appendChild(foodIdCell);
     row.appendChild(dayCell);
 
     tableBody.appendChild(row);
@@ -219,11 +235,6 @@ async function fetchCheckedOrder(foodId, day) {
 // 発注修正メソッド
 async function modifyOrder() {
   const tableBody = document.getElementById('modifyOrderTable');
-  /*const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  const formattedDate = `${year}-${month}-${day}`;*/
   try {
     for(i=0;i<tableBody.children.length;i++){
     // データベースへの接続と発注情報の登録
