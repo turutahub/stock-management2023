@@ -149,7 +149,7 @@ async function getNewInventory() {
       stockCell.querySelector('input').value = item.stock;
       stockCell.querySelector('input').addEventListener("input", function() {
         calculateConsumedNum(item.foodId, stockCell.querySelector('input').value,  wasteNumCell.querySelector('input').value, consumedNumCell)
-        calculateCost(consumedNumCell.textContent, item.cost, spplmAmtCell.querySelector('input').value, costCell)
+        calculateCost(consumedNumCell.textContent, item.unitPrice, spplmAmtCell.querySelector('input').value, costCell)
         calculateCostInfo(document.getElementById("costInfo"))
         calculateInsSuf(requiredNumCell.textContent, stockCell.querySelector('input').value, insufficientNumCell)
         calculateBalanceInfo(document.getElementById("salesInput").value, document.getElementById("costInfo").textContent, document.getElementById("wasteAmtInfo").textContent, document.getElementById("balanceInfo"))
@@ -167,7 +167,7 @@ async function getNewInventory() {
       spplmAmtCell.querySelector('input').type = "number";
       spplmAmtCell.querySelector('input').value = item.spplmAmt;
       spplmAmtCell.querySelector('input').addEventListener("input", function() {
-        calculateCost(consumedNumCell.textContent, item.cost, spplmAmtCell.querySelector('input').value, costCell)
+        calculateCost(consumedNumCell.textContent, item.unitPrice, spplmAmtCell.querySelector('input').value, costCell)
         calculateCostInfo(document.getElementById("costInfo"))
         calculateBalanceInfo(document.getElementById("salesInput").value, document.getElementById("costInfo").textContent, document.getElementById("wasteAmtInfo").textContent, document.getElementById("balanceInfo"))
       })
@@ -182,7 +182,7 @@ async function getNewInventory() {
         calculateLossRateInfo(document.getElementById("wasteAmtInfo").textContent, document.getElementById("salesInput").value, document.getElementById("lossRateInfo"))
         calculateConsumedNum(item.foodId, stockCell.querySelector('input').value,  wasteNumCell.querySelector('input').value, consumedNumCell)
         calculateLossRate(item.foodId, wasteNumCell.querySelector('input').value, lossRateCell)
-        calculateCost(consumedNumCell.textContent, item.cost, spplmAmtCell.querySelector('input').value, costCell)
+        calculateCost(consumedNumCell.textContent, item.unitPrice, spplmAmtCell.querySelector('input').value, costCell)
         calculateWasteAmtInfo(document.getElementById("wasteAmtInfo"))
         calculateBalanceInfo(document.getElementById("salesInput").value, document.getElementById("costInfo").textContent, document.getElementById("wasteAmtInfo").textContent, document.getElementById("balanceInfo"))
       });
@@ -203,7 +203,7 @@ async function getNewInventory() {
 
       const costCell = document.createElement('td');
       costCell.setAttribute("id", "cost");
-      costCell.textContent = item.cost;
+      costCell.textContent = item.costPrice;
       row.appendChild(costCell);
 
       const requiredNumCell = document.createElement('td');

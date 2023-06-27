@@ -12,52 +12,64 @@ async function getInspectionTable() {
       const row = document.createElement('tr');
 
       const checkBox = document.createElement('input');
-      const foodNameCell = document.createElement('td');
-      const unitCell = document.createElement('td');
-      const costCell = document.createElement('td');
-      const expdaysCell = document.createElement('td');
-      const supplierCell = document.createElement('td');
-      const noteCell = document.createElement('td');
-      const impNumCell = document.createElement('td');
-      const insNumCell = document.createElement('td');
-      const insInsufficientCell = document.createElement('td');
-      const orderDayCell = document.createElement('td');
-      const insDayCell = document.createElement('td');
-      const foodIdCell = document.createElement('td');
-      //const dayCell = document.createElement('td');
-
       checkBox.type = "checkbox";
       checkBox.setAttribute("class", "checkbox");
+      row.appendChild(checkBox)
+
+      const foodNameCell = document.createElement('td');
       foodNameCell.textContent = item.foodName;
+      row.appendChild(foodNameCell);
+
+      const unitCell = document.createElement('td');
       unitCell.textContent = item.unit;
+      row.appendChild(unitCell);
+
+      const costCell = document.createElement('td');
       costCell.textContent = item.cost;
+      row.appendChild(costCell);
+
+      const expdaysCell = document.createElement('td');
       expdaysCell.textContent = item.expDays;
+      row.appendChild(expdaysCell);
+
+      const supplierCell = document.createElement('td');
       supplierCell.textContent = item.supplier;
+      row.appendChild(supplierCell);
+
+      const noteCell = document.createElement('td');
       noteCell.textContent = item.note;
+      row.appendChild(noteCell);
+
+      const impNumCell = document.createElement('td');
       impNumCell.textContent = item.impNum;
+      row.appendChild(impNumCell);
+
+      const insNumCell = document.createElement('td');
+      insNumCell.textContent = item.insNum;
+      row.appendChild(insNumCell);
+
+      const insInsufficientCell = document.createElement('td');
+      insInsufficientCell.textContent = item.insInsufficient;
+      row.appendChild(insInsufficientCell);
+
+      const orderDayCell = document.createElement('td');
       orderDayCell.textContent = item.impDay;
       orderDayCell.setAttribute("id", "day")
-      insNumCell.textContent = item.insNum;
-      insInsufficientCell.textContent = item.insInsufficient;
+      row.appendChild(orderDayCell);
+
+      const insDayCell = document.createElement('td');
       insDayCell.textContent = item.insDay;
+      row.appendChild(insDayCell);
+
+      const foodIdCell = document.createElement('td');
       foodIdCell.textContent = item.foodId;
       foodIdCell.setAttribute("id", "foodId");
       foodIdCell.style.display = "none";
+      row.appendChild(foodIdCell);
+
+      //const dayCell = document.createElement('td');
       //dayCell = item.day;
 
-      row.appendChild(checkBox)
-      row.appendChild(foodNameCell);
-      row.appendChild(unitCell);
-      row.appendChild(costCell);
-      row.appendChild(expdaysCell);
-      row.appendChild(supplierCell);
-      row.appendChild(noteCell);
-      row.appendChild(impNumCell);
-      row.appendChild(orderDayCell);
-      row.appendChild(insNumCell);
-      row.appendChild(insInsufficientCell);
-      row.appendChild(insDayCell);
-      row.appendChild(foodIdCell);
       tableBody.appendChild(row);
     });
   } catch (error) {
@@ -79,56 +91,68 @@ async function getUnInspectedTable() {
       const row = document.createElement('tr');
 
       const foodNameCell = document.createElement('td');
-      const unitCell = document.createElement('td');
-      const costCell = document.createElement('td');
-      const expdaysCell = document.createElement('td');
-      const supplierCell = document.createElement('td');
-      const noteCell = document.createElement('td');
-      const impNumCell = document.createElement('td');
-      const dayCell = document.createElement('td');
-      const insNumCell = document.createElement('td');
-      const insInsufficientCell = document.createElement('td');
-      const foodIdCell = document.createElement('td');
-      const button = document.createElement('button');
-
       foodNameCell.textContent = item.foodName;
+      row.appendChild(foodNameCell);
+
+      const unitCell = document.createElement('td');
       unitCell.textContent = item.unit;
+      row.appendChild(unitCell);
+
+      const costCell = document.createElement('td');
       costCell.textContent = item.cost;
+      row.appendChild(costCell);
+
+      const expdaysCell = document.createElement('td');
       expdaysCell.textContent = item.expDays;
+      row.appendChild(expdaysCell);
+
+      const supplierCell = document.createElement('td');
       supplierCell.textContent = item.supplier;
+      row.appendChild(supplierCell);
+
+      const noteCell = document.createElement('td');
       noteCell.textContent = item.note;
+      row.appendChild(noteCell);
+
+      const impNumCell = document.createElement('td');
       impNumCell.textContent = item.impNum;
+      row.appendChild(impNumCell);
+
+      const dayCell = document.createElement('td');
       dayCell.textContent = item.day;
+      row.appendChild(dayCell);
+
+      const insNumCell = document.createElement('td');
       insNumCell.appendChild(document.createElement("input"))
       insNumCell.querySelector("input").type = "number"
       insNumCell.querySelector("input").value = 0
       insNumCell.addEventListener("input", function() {
         calculateInsSuf(item.impNum, insNumCell.querySelector("input").value, insInsufficientCell)
       })
+      row.appendChild(insNumCell);
+
+
+      const insInsufficientCell = document.createElement('td');
       //insInsufficientCell.textContent = calculateInsSuf(item.impNum, insNumCell.querySelector("input").value, insInsufficientCell)
+      row.appendChild(insInsufficientCell);
+
+
+      const foodIdCell = document.createElement('td');
       foodIdCell.textContent = item.foodId;
       foodIdCell.setAttribute("id", "foodId");
       foodIdCell.style.display = "none";
+      row.appendChild(foodIdCell);
+
+
+      const button = document.createElement('button');
       button.textContent = "決定"
       button.onclick = function() {
         submitInspection(item.foodId, insNumCell.querySelector("input").value, insInsufficientCell.textContent)
       }
-      
-
-      row.appendChild(foodNameCell);
-      row.appendChild(unitCell);
-      row.appendChild(costCell);
-      row.appendChild(expdaysCell);
-      row.appendChild(supplierCell);
-      row.appendChild(noteCell);
-      row.appendChild(impNumCell);
-      row.appendChild(dayCell);
-      row.appendChild(insNumCell);
-      row.appendChild(insInsufficientCell);
-      row.appendChild(foodIdCell);
       row.appendChild(button)
-      
+
       tableBody.appendChild(row);
+
       calculateInsSuf(item.impNum, insNumCell.querySelector("input").value, insInsufficientCell)
     });
   } catch (error) {
@@ -170,6 +194,7 @@ async function submitInspection(foodId, insNum, insInsufficient) {
 
 // チェックされたレコードのfoodId取得
 function displayCheckedIns() {
+  document.getElementById('newInspectionTable').innerHTML = "";
   document.querySelectorAll(".checkbox").forEach(checkbox => {
     if (checkbox.checked) {
       const row = checkbox.closest("tr");

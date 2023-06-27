@@ -36,8 +36,8 @@ public class RegisterController {
 
     @PutMapping(value = "/{foodId}", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable int foodId, @RequestBody RegisterModel request) {
-        service.updateFood(request);
+    public void update(@PathVariable int foodId, @RequestBody RegisterRequest request) {
+        service.updateFood(request.toRegisterModel(foodId));
     }
 
     @DeleteMapping(value = "/{foodId}")

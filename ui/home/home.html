@@ -74,6 +74,7 @@
   
   <section id="register" class="content">
     <h2>食材登録</h2>
+    <button onclick="showContent('modifyRegister');showSelectedInventory()">修正</button>
     <form onsubmit="event.preventDefault();registerProduct(this)">
       <input name="foodName">
       <input name="unit">
@@ -86,6 +87,7 @@
     <table>
       <thead>
         <tr>
+          <th></th>
           <th>食材名</th>
           <th>単位</th>
           <th>単価</th>
@@ -95,6 +97,25 @@
         </tr>
       </thead>
       <tbody id="registerTable"></tbody>
+    </table>
+    <script src="register.js"></script>
+  </section>
+
+  <section id="modifyRegister" class="content">
+    <h2>修正</h2>
+    <button onclick="modify();showContent('register')">確定</button>
+    <table>
+      <thead>
+        <tr>
+          <th>食材名</th>
+          <th>単位</th>
+          <th>単価</th>
+          <th>消費期間</th>
+          <th>仕入れ店</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody id="modifyRegisterTable"></tbody>
     </table>
     <script src="register.js"></script>
   </section>

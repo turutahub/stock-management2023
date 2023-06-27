@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     if(document.cookie === "") {
-        location.href = `http://localhost:5500/login/login.html`
+        //location.href = `http://localhost:5500/login/login.html`
     } else {
     const userId = $.cookie("sessionData").split(",")[0];
     const sessionId = $.cookie("sessionData").split(",")[1];
@@ -54,6 +54,7 @@ function showContent(contentId) {
     'dashboard',
     'stock',
     'register',
+    'modifyRegister',
     'order',
     'newOrder',
     'modifyOrder',
@@ -131,4 +132,14 @@ function updateDashboard() {
 
 // ページ読み込み時にダッシュボードを更新
 window.addEventListener('load', updateDashboard);
+}
+
+
+function today() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate
 }
