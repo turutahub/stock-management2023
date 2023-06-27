@@ -213,29 +213,40 @@ async function fetchCheckedIns(foodId, day) {
       const row = document.createElement('tr');
 
       const foodNameCell = document.createElement('td');
-      const unitCell = document.createElement('td');
-      const costCell = document.createElement('td');
-      const expdaysCell = document.createElement('td');
-      const supplierCell = document.createElement('td');
-      const noteCell = document.createElement('td');
-      const impNumCell = document.createElement('td');
-      const impDayCell = document.createElement('td');
-      const insNumCell = document.createElement('td');
-      const insInsufficientCell = document.createElement('td');
-      const insDayCell = document.createElement('td');
-      const foodIdCell = document.createElement('td');
-      //const dayCell = document.createElement('td');
-
       foodNameCell.textContent = data.foodName;
+      row.appendChild(foodNameCell);
+
+      const unitCell = document.createElement('td');
       unitCell.textContent = data.unit;
+      row.appendChild(unitCell);
+
+      const costCell = document.createElement('td');
       costCell.textContent = data.cost;
+      row.appendChild(costCell);
+
+      const expdaysCell = document.createElement('td');
       expdaysCell.textContent = data.expDays;
+      row.appendChild(expdaysCell);
+
+      const supplierCell = document.createElement('td');
       supplierCell.textContent = data.supplier;
+      row.appendChild(supplierCell);
+
+      const noteCell = document.createElement('td');
       noteCell.textContent = data.note;
+      row.appendChild(noteCell);
+
+      const impNumCell = document.createElement('td');
       impNumCell.textContent = data.impNum;
       impNumCell.setAttribute("id", "impNum");
+      row.appendChild(impNumCell);
+
+      const impDayCell = document.createElement('td');
       impDayCell.textContent = data.impDay;
       impDayCell.setAttribute("id", "impDay")
+      row.appendChild(impDayCell);
+
+      const insNumCell = document.createElement('td');
       insNumCell.appendChild(document.createElement("input"));
       insNumCell.querySelector('input').value = data.insNum;
       insNumCell.querySelector('input').setAttribute("id", "insNum");
@@ -243,29 +254,28 @@ async function fetchCheckedIns(foodId, day) {
       insNumCell.addEventListener("input", function() {
         calculateInsSuf(data.impNum, insNumCell.querySelector("input").value, insInsufficientCell)
       })
+      row.appendChild(insNumCell);
 
+      const insInsufficientCell = document.createElement('td');
       insInsufficientCell.textContent = data.insInsufficient;
       insInsufficientCell.setAttribute("id", "insInsufficient")
+      row.appendChild(insInsufficientCell);
+
+      const insDayCell = document.createElement('td');
       insDayCell.textContent = data.insDay;
       insDayCell.setAttribute("id", "insDay")
+      row.appendChild(insDayCell);
+
+      const foodIdCell = document.createElement('td');
       foodIdCell.textContent = data.foodId;
       foodIdCell.setAttribute("id", "foodId");
       foodIdCell.style.display = "none";
-      //dayCell = item.day;
-
-      row.appendChild(foodNameCell);
-      row.appendChild(unitCell);
-      row.appendChild(costCell);
-      row.appendChild(expdaysCell);
-      row.appendChild(supplierCell);
-      row.appendChild(noteCell);
-      row.appendChild(impNumCell);
-      row.appendChild(impDayCell);
-      row.appendChild(insNumCell);
-      row.appendChild(insInsufficientCell);
-      row.appendChild(insDayCell);
       row.appendChild(foodIdCell);
+
+      //const dayCell = document.createElement('td');
+      //dayCell = item.day;
       //row.appendChild(dayCell);
+      
       tableBody.appendChild(row);
   } catch (error) {
     console.error('Error:', error);

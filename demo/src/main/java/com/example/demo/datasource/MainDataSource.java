@@ -171,7 +171,7 @@ public class MainDataSource implements MainRepository {
     }
     @Override
     public void insertInspection(InspectRequest request) {
-        String sql = "INSERT INTO inspection_history (food_id, day, ins_num, ins_insufficient) VALUES(?, ?, ?, ?);";
+        String sql = "INSERT INTO inspection_history (food_id, day, ins_num, ins_insufficient) VALUES(?, ?, ?, ?)";
         jdbcTemplate.update(
                 sql,
                 request.getFoodId(),
@@ -186,7 +186,7 @@ public class MainDataSource implements MainRepository {
                 "FROM inspection_history ins\n" +
                 "LEFT JOIN food_mst fm ON ins.food_id = fm.food_id\n" +
                 "LEFT JOIN impire_history imp ON ins.food_id = imp.food_id AND ins.day = imp.delivery_day\n" +
-                "WHERE ins.food_id = ? AND imp.day = ?;\n";
+                "WHERE ins.food_id = ? AND imp.day = ?";
         List<Map<String, Object>> record = jdbcTemplate.queryForList(sql, foodId, day);
         return toInspectModel(record.get(0));
     }

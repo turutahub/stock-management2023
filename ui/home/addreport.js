@@ -71,11 +71,7 @@ function confirmInfo() {
 
 //　informations_historyテーブルに追加
 async function submitInfo(cost, costRate, wasteAmt, lossRate, sales, balance) {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  const formattedDate = `${year}-${month}-${day}`;
+
   try {
     const response = await fetch(`http://localhost:8080/inventory/info`, {
       method: 'POST',
@@ -83,7 +79,7 @@ async function submitInfo(cost, costRate, wasteAmt, lossRate, sales, balance) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        day: formattedDate,
+        day: today(),
         cost: cost,
         costRate: costRate,
         wasteAmt: wasteAmt,
@@ -104,7 +100,7 @@ async function submitInfo(cost, costRate, wasteAmt, lossRate, sales, balance) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          day: formattedDate,
+          day: today(),
           cost: cost,
           costRate: costRate,
           wasteAmt: wasteAmt,
@@ -367,11 +363,6 @@ async function confirmInventory() {
 
 //　inventory_historyテーブルに追加
 async function submitInventory(foodId, spplmNum, spplmAmt, wasteNum) {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  const formattedDate = `${year}-${month}-${day}`;
   try {
     const response = await fetch(`http://localhost:8080/inventory`, {
       method: 'POST',
@@ -380,7 +371,7 @@ async function submitInventory(foodId, spplmNum, spplmAmt, wasteNum) {
       },
       body: JSON.stringify({
         foodId: foodId,
-        day: formattedDate,
+        day: today(),
         spplmNum: spplmNum,
         spplmAmt: spplmAmt,
         wasteNum: wasteNum
@@ -399,7 +390,7 @@ async function submitInventory(foodId, spplmNum, spplmAmt, wasteNum) {
         },
         body: JSON.stringify({
           foodId: foodId,
-          day: formattedDate,
+          day: today(),
           spplmNum: spplmNum,
           spplmAmt: spplmAmt,
           wasteNum: wasteNum
@@ -431,11 +422,6 @@ async function confirmStock() {
 }
 
 async function submitStock(foodId, stock, consumedNum, insufficientNum, requiredNum, cost, wasteAmt, lossRate) {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  const formattedDate = `${year}-${month}-${day}`;
   try {
     const response = await fetch(`http://localhost:8080/stock`, {
       method: 'POST',
@@ -444,7 +430,7 @@ async function submitStock(foodId, stock, consumedNum, insufficientNum, required
       },
       body: JSON.stringify({
         foodId: foodId,
-        day: formattedDate,
+        day: today(),
         stock: stock,
         consumedNum: consumedNum,
         insufficientNum: insufficientNum,
@@ -466,7 +452,7 @@ async function submitStock(foodId, stock, consumedNum, insufficientNum, required
         },
         body: JSON.stringify({
           foodId: foodId,
-          day: formattedDate,
+          day: today(),
           stock: stock,
           consumedNum: consumedNum,
           insufficientNum: insufficientNum,
