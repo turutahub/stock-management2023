@@ -31,17 +31,6 @@ public class MainDataSource implements MainRepository {
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
         return records.stream().map(this::toRegisterModel).collect(Collectors.toList());
     }
-    private RegisterModel toRegisterModel(Map<String, Object> record) {
-        return new RegisterModel(
-                (int) record.get("food_id"),
-                (String) record.get("food_name"),
-                (String) record.get("unit"),
-                (int) record.get("cost"),
-                (int) record.get("expdays"),
-                (String) record.get("supplier"),
-                (String) record.get("note")
-        );
-    }
     @Override
     public void registerFood(RegisterModel model) {
         String sql = "INSERT INTO food_mst(food_name, unit, cost, expdays, supplier, note) VALUES (?, ?, ?, ?, ?, ?)";
@@ -81,18 +70,29 @@ public class MainDataSource implements MainRepository {
         jdbcTemplate.update(sql, foodId);
     }
 
+    private RegisterModel toRegisterModel(Map<String, Object> record) {
+        return new RegisterModel(
+                (int) record.get("food_id"),
+                (String) record.get("food_name"),
+                (String) record.get("unit"),
+                (int) record.get("cost"),
+                (int) record.get("expdays"),
+                (String) record.get("supplier"),
+                (String) record.get("note")
+        );
+    }
+
 
     //発注
-    @Override
+    @Override//impire_historyレコード全表示(food_mst結合)
     public List<OrderModel> getAllOrder() {
         String sql = "SELECT *\n" +
-                "FROM food_mst\n" +
-                "LEFT JOIN impire_history ON food_mst.food_id = impire_history.food_id\n" +
-                "WHERE impire_history.food_id IS NOT NULL";
+                "FROM impire_history imp\n" +
+                "LEFT JOIN food_mst fm ON imp.food_id = fm.food_id";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
         return records.stream().map(this::toOrderModel).collect(Collectors.toList());
     }
-    @Override
+    @Override//dayカラムに今日の日付が入っているfood_id(impire_history参照)を除いたfood_idをfood_mstから表示
     public List<RegisterModel> getUnordered() {
         String sql = "SELECT *\n" +
                 "FROM food_mst\n" +
@@ -102,14 +102,33 @@ public class MainDataSource implements MainRepository {
     }
     @Override
     public void insertOrder(OrderRequest request) {
-        String sql = "INSERT INTO impire_history (food_id, day, imp_num, delivery_day)\n" +
-                "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO impire_history (food_id, day, imp_num, delivery_day) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(
                 sql,
                 request.getFoodId(),
                 request.getDay(),
                 request.getImpNum(),
                 request.getDeliveryDay()
+        );
+    }
+    @Override//チェックされたレコードのfoodIdとdayを受け取り、その値を持つレコードをimpire_historyより取得
+    public OrderModel getCheckedOrder(int foodId, LocalDate day) {
+        String sql = "SELECT *\n" +
+                "FROM impire_history imp\n" +
+                "LEFT JOIN food_mst fm ON imp.food_id = fm.food_id\n" +
+                "WHERE imp.food_id = ? AND imp.day = ?";
+        List<Map<String, Object>> record = jdbcTemplate.queryForList(sql, foodId, day);
+        return toOrderModel(record.get(0));
+    }
+    @Override
+    public void updateOrder(OrderRequest request) {
+        String sql = "UPDATE impire_history SET imp_num = ?, delivery_day = ? WHERE food_id = ? AND day = ?";
+        jdbcTemplate.update(
+                sql,
+                request.getImpNum(),
+                request.getDeliveryDay(),
+                request.getFoodId(),
+                request.getDay()
         );
     }
     private OrderModel toOrderModel(Map<String, Object> record) {
@@ -128,44 +147,81 @@ public class MainDataSource implements MainRepository {
                 deliveryDay.toLocalDate()
         );
     }
-    @Override
-    public OrderModel getCheckedOrder(int foodId, LocalDate day) {
+
+
+    //検品
+    @Override//inspection_historyレコード全表示(food_mst、impire_history結合)
+    public List<InspectModel> getAllInspection() {
+        String sql = "SELECT ins.day AS inspection_day, imp.day AS impire_day, *\n" +
+                "FROM inspection_history ins\n" +
+                "LEFT JOIN food_mst fm ON ins.food_id = fm.food_id\n" +
+                "LEFT JOIN impire_history imp ON ins.food_id = imp.food_id AND ins.day = imp.delivery_day";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
+        return records.stream().map(this::toInspectModel).collect(Collectors.toList());
+    }
+    @Override//inspection_historyからfood_idとdayの組み合わせを取得し、その組み合わせ以外のレコードをimpire_historyから取得する
+    public List<OrderModel> getUnInspected() {
         String sql = "SELECT *\n" +
-                "FROM food_mst\n" +
-                "INNER JOIN impire_history ON food_mst.food_id = impire_history.food_id\n" +
-                "WHERE food_mst.food_id = ? AND impire_history.day = ?";
-        List<Map<String, Object>> record = jdbcTemplate.queryForList(sql, foodId, day);
-        return toOrderModel(record.get(0));
+                "FROM impire_history imp\n" +
+                "LEFT JOIN food_mst fm ON imp.food_id = fm.food_id\n" +
+                "WHERE (imp.food_id, imp.delivery_day) NOT IN (SELECT food_id, day FROM inspection_history)";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
+        return records.stream().map(this::toOrderModel).collect(Collectors.toList());
+
     }
     @Override
-    public void updateOrder(OrderRequest request) {
-        String sql = "UPDATE impire_history SET imp_num = ?, delivery_day = ? WHERE food_id = ? AND day = ?";
+    public void insertInspection(InspectRequest request) {
+        String sql = "INSERT INTO inspection_history (food_id, day, ins_num, ins_insufficient) VALUES(?, ?, ?, ?);";
         jdbcTemplate.update(
                 sql,
-                request.getImpNum(),
-                request.getDeliveryDay(),
+                request.getFoodId(),
+                request.getDay(),
+                request.getInsNum(),
+                request.getInsInsufficient()
+        );
+    }
+    @Override//チェックされたレコードのfoodIdとdayを受け取り、その値を持つレコードをinspection_historyより取得
+    public InspectModel getCheckedInspection(int foodId, LocalDate day) {
+        String sql = "SELECT ins.day AS inspection_day, imp.day AS impire_day, *\n" +
+                "FROM inspection_history ins\n" +
+                "LEFT JOIN food_mst fm ON ins.food_id = fm.food_id\n" +
+                "LEFT JOIN impire_history imp ON ins.food_id = imp.food_id AND ins.day = imp.delivery_day\n" +
+                "WHERE ins.food_id = ? AND imp.day = ?;\n";
+        List<Map<String, Object>> record = jdbcTemplate.queryForList(sql, foodId, day);
+        return toInspectModel(record.get(0));
+    }
+    @Override
+    public void updateInspection(InspectRequest request) {
+        String sql = "UPDATE inspection_history SET ins_num = ?, ins_insufficient = ? WHERE food_id = ? AND day = ?";
+        jdbcTemplate.update(
+                sql,
+                request.getInsNum(),
+                request.getInsInsufficient(),
                 request.getFoodId(),
                 request.getDay()
         );
     }
-
-
-
-
-
-
-
-    //検品
     @Override
-    public List<InspectModel> getAllInspection() {
-        String sql = "SELECT inspection_history.day AS inspection_day, impire_history.day AS impire_day, inspection_history.*, impire_history.*, food_mst.*\n" +
-                "FROM inspection_history\n" +
-                "LEFT JOIN food_mst ON inspection_history.food_id = food_mst.food_id\n" +
-                "LEFT JOIN impire_history ON inspection_history.food_id = impire_history.food_id AND inspection_history.day = impire_history.delivery_day;\n";
-        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
-        return records.stream().map(this::toInspectModel).collect(Collectors.toList());
+    public LocalDate getByIdDeliveryDay(int foodId, LocalDate day) {
+        String sql = "SELECT delivery_day FROM impire_history WHERE food_id = ? AND day = ?";
+        return jdbcTemplate.queryForObject(sql, LocalDate.class, foodId, day);
     }
-
+    @Override
+    public int getByIdInsNum(int foodId, LocalDate DeliveryDay) {
+        String sql = "SELECT ins_num FROM inspection_history WHERE food_id = ? AND day = ?";
+        return jdbcTemplate.queryForObject(sql, int.class, foodId, DeliveryDay);
+    }
+    @Override
+    public void updateIns(int insNum, int insInsufficient, int foodId, LocalDate DeliveryDay) {
+        String sql = "UPDATE inspection_history SET ins_num = ?, ins_insufficient = ? WHERE food_id = ? AND day = ?";
+        jdbcTemplate.update(
+                sql,
+                insNum,
+                insInsufficient,
+                foodId,
+                DeliveryDay
+        );
+    }
     private InspectModel toInspectModel(Map<String, Object> record) {
         Date impDay = (Date) record.get("impire_day");
         Date insDay = (Date) record.get("inspection_day");
@@ -184,87 +240,19 @@ public class MainDataSource implements MainRepository {
                 insDay.toLocalDate()
         );
     }
-    @Override
-    public List<OrderModel> getUnInspected() {
-        String sql = "SELECT *\n" +
-                "FROM impire_history\n" +
-                "LEFT JOIN food_mst ON impire_history.food_id = food_mst.food_id\n" +
-                "WHERE (impire_history.food_id, impire_history.delivery_day) NOT IN (SELECT food_id, day FROM inspection_history)";
-        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
-        return records.stream().map(this::toOrderModel).collect(Collectors.toList());
-
-    }
-
-    @Override
-    public void insertInspection(InspectRequest request) {
-        String sql = "INSERT INTO inspection_history (food_id, day, ins_num, ins_insufficient) VALUES(?, ?, ?, ?);";
-        jdbcTemplate.update(
-                sql,
-                request.getFoodId(),
-                request.getDay(),
-                request.getInsNum(),
-                request.getInsInsufficient()
-        );
-    }
-    @Override
-    public InspectModel getCheckedInspection(int foodId, LocalDate day) {
-        String sql = "SELECT inspection_history.day AS inspection_day, impire_history.day AS impire_day, inspection_history.*, impire_history.*, food_mst.*\n" +
-                "FROM inspection_history\n" +
-                "LEFT JOIN food_mst ON inspection_history.food_id = food_mst.food_id\n" +
-                "LEFT JOIN impire_history ON inspection_history.food_id = impire_history.food_id AND inspection_history.day = impire_history.delivery_day\n" +
-                "WHERE food_mst.food_id = ? AND impire_history.day = ?;\n";
-        List<Map<String, Object>> record = jdbcTemplate.queryForList(sql, foodId, day);
-        return toInspectModel(record.get(0));
-    }
-
-    @Override
-    public void updateInspection(InspectRequest request) {
-        String sql = "UPDATE inspection_history SET ins_num = ?, ins_insufficient = ? WHERE food_id = ? AND day = ?";
-        jdbcTemplate.update(
-                sql,
-                request.getInsNum(),
-                request.getInsInsufficient(),
-                request.getFoodId(),
-                request.getDay()
-        );
-    }
-
-    @Override
-    public LocalDate getByIdDeliveryDay(int foodId, LocalDate day) {
-        String sql = "SELECT delivery_day FROM impire_history WHERE food_id = ? AND day = ?";
-        return jdbcTemplate.queryForObject(sql, LocalDate.class, foodId, day);
-    }
-    @Override
-    public int getByIdInsNum(int foodId, LocalDate DeliveryDay) {
-        String sql = "SELECT ins_num FROM inspection_history WHERE food_id = ? AND day = ?";
-        return jdbcTemplate.queryForObject(sql, int.class, foodId, DeliveryDay);
-    }
-
-    @Override
-    public void updateIns(int insNum, int insInsufficient, int foodId, LocalDate DeliveryDay) {
-        String sql = "UPDATE inspection_history SET ins_num = ?, ins_insufficient = ? WHERE food_id = ? AND day = ?";
-        jdbcTemplate.update(
-                sql,
-                insNum,
-                insInsufficient,
-                foodId,
-                DeliveryDay
-        );
-    }
 
 
     //棚卸し
+    @Override//今日の日付を持つレコードをinventory_historyから表示
     public List<InventoryModel> getAllInventory(LocalDate day) {
-        String sql = "SELECT food_mst.cost AS food_cost, stock_history.cost AS stock_cost, food_mst.*, stock_history.*, inventory_history.*\n" +
-                "FROM food_mst\n" +
-                "INNER JOIN inventory_history ON food_mst.food_id = inventory_history.food_id\n" +
-                "INNER JOIN stock_history ON inventory_history.food_id = stock_history.food_id AND inventory_history.day = stock_history.day\n" +
-                "WHERE inventory_history.day = ?";
+        String sql = "SELECT fm.cost AS food_cost, stk.cost AS stock_cost, *\n" +
+                "FROM inventory_history inv\n" +
+                "LEFT JOIN food_mst fm ON inv.food_id = fm.food_id\n" +
+                "LEFT JOIN stock_history stk ON inv.food_id = stk.food_id AND inv.day = stk.day\n" +
+                "WHERE inv.day = ?";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql, day);
         return records.stream().map(this::toInventoryModel).collect(Collectors.toList());
     }
-
-
     private InventoryModel toInventoryModel(Map<String, Object> record) {
         Date day = (Date) record.get("day");
         return new InventoryModel(
@@ -280,62 +268,35 @@ public class MainDataSource implements MainRepository {
                 (int) record.get("waste_amt"),
                 (BigDecimal) record.get("loss_rate"),
                 (int) record.get("stock_cost"),
+                (int) record.get("food_cost"),
                 (int) record.get("required_num"),
                 (int) record.get("insufficient_num")
         );
     }
-    @Override
+    @Override//今日の日付を持つレコードをinventory_historyから表示
     public List<InventoryModel> getDoneInventory() {
-        String sql = "SELECT *\n" +
+        String sql = "SELECT fm.cost AS food_cost, stk.cost AS stock_cost, *\n" +
                 "FROM inventory_history inv\n" +
-                "JOIN food_mst fm ON inv.food_id = fm.food_id\n" +
-                "JOIN stock_history stk ON inv.food_id = stk.food_id AND inv.day = stk.day\n" +
+                "LEFT JOIN food_mst fm ON inv.food_id = fm.food_id\n" +
+                "LEFT JOIN stock_history stk ON inv.food_id = stk.food_id AND inv.day = stk.day\n" +
                 "WHERE inv.day = CURRENT_DATE";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
-        return records.stream().map(this::toDoneInventoryModel).collect(Collectors.toList());
+        return records.stream().map(this::toInventoryModel).collect(Collectors.toList());
     }
-    private InventoryModel toDoneInventoryModel(Map<String, Object> record) {
-        Date day = (Date) record.get("day");
-        return new InventoryModel(
-                (int) record.get("food_id"),
-                day.toLocalDate(),
-                (String) record.get("food_name"),
-                (int) record.get("expdays"),
-                (int) record.get("stock"),
-                (int) record.get("spplm_num"),
-                (int) record.get("spplm_amt"),
-                (int) record.get("waste_num"),
-                (int) record.get("consumed_num"),
-                (int) record.get("waste_amt"),
-                (BigDecimal) record.get("loss_rate"),
-                (int) record.get("cost"),
-                (int) record.get("required_num"),
-                (int) record.get("insufficient_num")
-        );
-    }
-    @Override
+    @Override//inventory_historyの今日の日付を持つfood_id以外のものをfood_mstから表示
     public List<RegisterModel> getUnInventoried() {
-        String sql = "SELECT DISTINCT food_mst.*\n" +
-                "FROM food_mst\n" +
-                "LEFT JOIN stock_history ON food_mst.food_id = stock_history.food_id\n" +
-                "LEFT JOIN inventory_history ON food_mst.food_id = inventory_history.food_id AND stock_history.day = inventory_history.day\n" +
-                "WHERE food_mst.food_id NOT IN (\n" +
-                "  SELECT food_id\n" +
-                "  FROM inventory_history\n" +
-                "  WHERE day = CURRENT_DATE\n" +
-                ");\n";
+        String sql = "SELECT DISTINCT fm.*\n" +
+                "FROM food_mst fm\n" +
+                "WHERE fm.food_id NOT IN (SELECT food_id FROM inventory_history WHERE day = CURRENT_DATE)";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
         return records.stream().map(this::toRegisterModel).collect(Collectors.toList());
     }
-
-
-
-    @Override
+    @Override//本日の検品数を表示(複数あった場合は合計)
     public int getTodayInsNum(int foodId) {
-        String sql = "SELECT SUM(inspection_history.ins_num) AS total_ins_num\n" +
-                "FROM impire_history\n" +
-                "INNER JOIN inspection_history ON impire_history.food_id = inspection_history.food_id AND impire_history.day = inspection_history.day\n" +
-                "WHERE impire_history.delivery_day = CURRENT_DATE AND impire_history.food_id = ?;\n";
+        String sql = "SELECT SUM(ins.ins_num) AS total_ins_num\n" +
+                "FROM inspection_history ins\n" +
+                "LEFT JOIN impire_history imp ON ins.food_id = imp.food_id AND ins.day = imp.day\n" +
+                "WHERE imp.delivery_day = CURRENT_DATE AND imp.food_id = ?";
         return jdbcTemplate.queryForObject(sql, int.class, foodId);
     }
 
@@ -414,20 +375,13 @@ public class MainDataSource implements MainRepository {
 
 
     //在庫一覧
-    @Override
+    @Override//impire_historyのfood_idごとに最新のdayを持つレコードを抽出し、impとする
     public List<StockModel> getAllStock() {
-        String sql = "SELECT imp.*, stk.*, fm.*, imp.day AS imp_day, stk.day AS stk_day\n" +
-                "FROM (\n" +
-                "  SELECT *\n" +
-                "  FROM impire_history\n" +
-                "  WHERE (food_id, day) IN (\n" +
-                "    SELECT food_id, MAX(day)\n" +
-                "    FROM impire_history\n" +
-                "    GROUP BY food_id\n" +
-                "  )\n" +
-                ") imp\n" +
-                "JOIN stock_history stk ON imp.food_id = stk.food_id\n" +
-                "JOIN food_mst fm ON imp.food_id = fm.food_id\n" +
+        String sql = "SELECT imp.day AS imp_day, stk.day AS stk_day, *\n" +
+                "FROM (SELECT * FROM impire_history WHERE (food_id, day) IN (\n" +
+                "SELECT food_id, MAX(day) FROM impire_history GROUP BY food_id)) imp\n" +
+                "LEFT JOIN stock_history stk ON imp.food_id = stk.food_id\n" +
+                "LEFT JOIN food_mst fm ON imp.food_id = fm.food_id\n" +
                 "WHERE stk.day = CURRENT_DATE";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
         return records.stream().map(this::toStockModel).collect(Collectors.toList());

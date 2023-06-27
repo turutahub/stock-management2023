@@ -15,7 +15,8 @@ public class InventoryModel {
     private final int consumedNum;
     private final int wasteAmt;
     private final BigDecimal lossRate;
-    private final int cost;
+    private final int costPrice;
+    private final int unitPrice;
     private final int requiredNum;
     private final int insufficientNum;
 
@@ -63,8 +64,11 @@ public class InventoryModel {
         return lossRate;
     }
 
-    public int getCost() {
-        return cost;
+    public int getCostPrice() {
+        return costPrice;
+    }
+    public int getUnitPrice() {
+        return unitPrice;
     }
 
     public int getRequiredNum() {
@@ -75,7 +79,7 @@ public class InventoryModel {
         return insufficientNum;
     }
 
-    public InventoryModel(int foodId, LocalDate day, String foodName, int expDays, int stock, int spplmNum, int spplmAmt, int wasteNum, int consumedNum, int wasteAmt, BigDecimal lossRate, int cost, int requiredNum, int insufficientNum) {
+    public InventoryModel(int foodId, LocalDate day, String foodName, int expDays, int stock, int spplmNum, int spplmAmt, int wasteNum, int consumedNum, int wasteAmt, BigDecimal lossRate, int costPrice, int unitPrice, int requiredNum, int insufficientNum) {
         this.foodId = foodId;
         this.day = day;
         this.foodName = foodName;
@@ -87,7 +91,8 @@ public class InventoryModel {
         this.consumedNum = consumedNum;
         this.wasteAmt = wasteAmt;
         this.lossRate = lossRate;
-        this.cost = cost;
+        this.costPrice = costPrice;
+        this.unitPrice = unitPrice;
         this.requiredNum = requiredNum;
         this.insufficientNum = insufficientNum;
     }
