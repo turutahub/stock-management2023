@@ -46,8 +46,10 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody OrderRequest request) {
         service.updateOrder(request);
-        int insInsufficient = request.getImpNum() - service.getByIdInsNum(request.getFoodId(), request.getDay());
-        service.updateIns(service.getByIdInsNum(request.getFoodId(), request.getDay()), insInsufficient, request.getFoodId(), request.getDay());
+        LocalDate day = service.getByIdDeliveryDay(request.getFoodId(), request.getDay());
+        int insNum = service.getByIdInsNum(request.getFoodId(), day);
+        int insInsufficient = request.getImpNum() - insNum;
+        service.updateIns(insNum, insInsufficient, request.getFoodId(), day);
     }
 
     public OrderController(MainService service) {

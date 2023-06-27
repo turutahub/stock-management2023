@@ -21,11 +21,11 @@
   <div class="button-container">
     <button onclick="showContent('home')">ホーム</button>
     <button onclick="showContent('dashboard')">ダッシュボード</button>
-    <button onclick="showContent('stock')">在庫一覧</button>
+    <button onclick="showContent('stock');getStockTable()">在庫一覧</button>
     <button onclick="showContent('register');getInventoryList()">食材登録</button>
     <button onclick="showContent('order');getOrderTable()">発注</button>
     <button onclick="showContent('inspect');getInspectionTable()">検品</button>
-    <button onclick="showContent('reports');getInventoryTable();getInformationTable()">棚卸</button>
+    <button onclick="showContent('reports');getInformationTable()">棚卸</button>
     <button onclick="showContent('finditem')">検索</button>
   </div>
 
@@ -64,16 +64,10 @@
     <table>
       <thead>
         <tr>
-          <th>食材名</th>
-          <th>不足数</th>
-          <th>発注数</th>
-          <th>納品予定日</th>
-          <th>在庫数</th>
-          <th>必要数</th>
-          <th>消費期間</th>
+          <th>食材名</th><th>不足数</th><th>発注数</th><th>納品予定日</th><th>在庫数</th><th>必要数</th><th>消費期間</th>
         </tr>
       </thead>
-      <tbody id="tableBody"></tbody>
+      <tbody id="stockTable"></tbody>
     </table>
     <script src="stock.js"></script>
   </section>
@@ -241,7 +235,7 @@
 
   
   <!-- 棚卸確定ボタン -->
-  <button id="inventoryConfirmBtn" onclick="showContent('reports');confirmInventory()">棚卸確定</button>
+  <button id="inventoryConfirmBtn" onclick="showContent('reports');confirmInventory();confirmInfo();confirmStock();getInformationTable()">棚卸確定</button>
   
   <!-- 売上入力ボックス -->
   <label for="salesInput">売上:</label>
@@ -258,7 +252,7 @@
         <th>収支</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="calculateInfoTable"></tbody>
   </table>
   
   
@@ -280,9 +274,9 @@
       </tr>
     </thead>
     <tbody id="newInventoryTable"></tbody>
-    
   </table>
   <script src="addreport.js"></script>
+  <script src="calcReport.js"></script>
   </section>
 
 

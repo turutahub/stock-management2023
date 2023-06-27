@@ -1,7 +1,9 @@
 package com.example.demo.repository;
 
 import com.example.demo.controller.inspect.InspectRequest;
+import com.example.demo.controller.inventory.InventoryRequest;
 import com.example.demo.controller.order.OrderRequest;
+import com.example.demo.controller.stock.StockRequest;
 import com.example.demo.model.*;
 import org.springframework.core.annotation.Order;
 
@@ -28,23 +30,29 @@ public interface MainRepository {
     List<InspectModel> getAllInspection();
     List<OrderModel> getUnInspected();
     void insertInspection(InspectRequest request);
-    //void insertInspection(OrderRequest request);
     InspectModel getCheckedInspection(int foodId, LocalDate day);
     void updateInspection(InspectRequest request);
     int getByIdInsNum(int foodId, LocalDate day);
+    LocalDate getByIdDeliveryDay(int foodId, LocalDate day);
     void updateIns(int insNum, int insInsufficient, int foodId, LocalDate day);
 
 
     //棚卸し機能
-    List<InventoryModel> getAllInventory();
+    List<InventoryModel> getAllInventory(LocalDate day);
+    List<InventoryModel> getDoneInventory();
     List<RegisterModel> getUnInventoried();
     int getTodayInsNum(int foodId);
     List<InformationModel> getInfo(LocalDate day);
+    void insertInventory(InventoryRequest request);
+    void updateInventory(InventoryRequest request);
+    void insertInfo(InformationModel model);
+    void updateInfo(InformationModel model);
 
 
     //在庫一覧機能
-    /*List<StockModel> getAllStock();
-    void deleteStock(int foodId);*/
+    List<StockModel> getAllStock();
     int getPastConsumedNum(int foodId, LocalDate day);
+    void insertStock(StockRequest request);
+    void updateStock(StockRequest request);
 
 }

@@ -18,6 +18,11 @@ public class StockController {
         this.service = service;
     }
 
+    @GetMapping(produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<StockModel> getAllStock() {
+        return service.getAllStock();
+    }
     @GetMapping(value = "/{foodId}/{day}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public int getPastConsumedNum(@PathVariable int foodId, @PathVariable String day) {
@@ -25,9 +30,15 @@ public class StockController {
         LocalDate date = LocalDate.parse(day, formatter);
         return service.getPastConsumedNum(foodId, date);
     }
-    /*@GetMapping(produces = "application/json")
+    @PostMapping(produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void insert(@RequestBody StockRequest request) {
+        service.insertStock(request);
+    }
+
+    @PutMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public List<StockModel> getAllStock() {
-        return service.getAllStock();
-    }*/
+    public void update(@RequestBody StockRequest request) {
+        service.updatStock(request);
+    }
 }

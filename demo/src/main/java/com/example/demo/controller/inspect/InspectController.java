@@ -34,7 +34,6 @@ public class InspectController {
         service.insertInspection(request);
     }
 
-
     @GetMapping(value = "/{foodId}/{day}", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public InspectModel getById(@PathVariable int foodId, @PathVariable String day) {
@@ -42,7 +41,6 @@ public class InspectController {
         LocalDate date = LocalDate.parse(day, formatter);
         return service.getCheckedInspection(foodId, date);
     }
-
 
     @PutMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
