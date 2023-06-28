@@ -8,29 +8,9 @@
    font-size: 24px;
    margin-bottom: 10px;
  }
-
  .date {
    font-size: 18px;
  }
-
-/*
-.button-container {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  .button-container button {
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  .button-container button:hover {
-    background-color: #45a049;
-  }
-*/  
 
   /* 共通スタイル */
 body {
@@ -39,21 +19,18 @@ body {
   margin: 0;
   padding: 0;
 }
-
 h1, h2 {
   color: #333;
 }
-
 .content {
   display: none;
   background-color: #fff;
   padding: 20px;
   position: relative;
-  top: 40px;
+  top: 50px;
 }
 
-
-
+  /* ラジオボタン */
 .radio-container {
   position: relative;
   z-index: 1;
@@ -65,16 +42,18 @@ h1, h2 {
 	  display: block;
 	  float: left;
 	  cursor: pointer;
-	  width: 156.5px;
+    height: 30px;
+	  /*width: 156px;*/
+    width: 11.47%;
 	  margin: 0;
 	  padding: 12px 5px;
 	  border-right: 3px solid #abb2b7;
 	  background: #bdc3c7;
 	  color: #555e64;
-	  font-size: 14px;
+	  font-size: 15px;
 	  text-align: center;
-	  line-height: 1;
-	  transition: .2s;
+	  line-height: 30px;
+	  /*transition: .2s;*/
     }
   .radio-container label:first-of-type{
 	  border-radius: 3px 0 0 3px;
@@ -88,16 +67,7 @@ h1, h2 {
 	  color: #fff;
   }
 
-
-.input-form {
-  position: relative;
-  margin-top: 20px;
-  }
-  .input-form label {
-    position: absolute;
-    top:-20px;
-  }
-  
+  /* テーブル */
 table {
   width: 100%;
   background: #fff;
@@ -118,6 +88,7 @@ table {
     padding-bottom: 0.75em;
     padding-left: 0.5em;
     padding-right: 0.5em;
+    border-right: 1px solid black;
     border-left: 1px solid black; 
     border-bottom: 1px solid black;
   }
@@ -133,15 +104,98 @@ table {
     padding-right: 0.5em;
     border-left: 1px solid black; 
   }
-
   input[type="checkbox"] {
     width: 30px;
     height: 30px;
   }
 
+  /* 各ボタン */
 button {
-  width: 100px;
-  height: 30px;
-  border: 1px solid black;
-  background-color: white;
+  width: 200px;
+  margin:0 auto;
+  padding: .9em 2em;
+  border: none;
+  border-radius: 5px;
+  background-color: #8cc75c;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1em;
+  }
+  button:hover {
+    background-color: #7cb74c;
+  }
+
+section#register button:first-of-type {
+  margin-left: 280px;
+  margin-bottom: 10px;
 }
+
+section#register button:last-of-type {
+  margin-left: 300px;
+}
+
+section#registerFood button {
+  margin-top: 10px;
+  display: block;
+}
+
+section#order button:first-of-type {
+  margin-left: 280px;
+  margin-bottom: 10px;
+}
+
+section#order button:last-of-type {
+  margin-left: 300px;
+}
+
+section#inspect button:first-of-type {
+  margin-left: 280px;
+  margin-bottom: 10px;
+}
+
+section#inspect button:last-of-type {
+  margin-left: 300px;
+}
+
+#newOrderTable button {
+  width: 100px;
+}
+
+#unInspectedTable button {
+  width: 100px;
+}
+
+section#addreport  button {
+  font-size: 17px;
+  height: 50px;
+  line-height: 0px;
+}
+
+
+  /*食材登録入力フォーム*/
+.input-form {
+  position: relative;
+  margin-top: 50px;
+  left: 50px;
+  }
+  .input-form label {
+    position: absolute;
+    top:-20px;
+  }
+  .input-form input {
+    height: 30px;
+    border: 2px solid black;
+  }
+  .input-form input:last-of-type {
+    width: 450px;
+  }
+
+.sales-wrapper {
+  text-align: right;
+  margin-right: 100px;
+  }
+  .sales-wrapper input {
+    height: 30px;
+    width: 200px;
+    border: 1px solid black;
+  }

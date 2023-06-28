@@ -37,19 +37,6 @@
     <label for="select8">検索</label>
   </div>
 
-  <!--
-  <div class="button-container">
-    <button onclick="showContent('home')">ホーム</button>
-    <button onclick="showContent('dashboard')">ダッシュボード</button>
-    <button onclick="showContent('stock');getStockTable()">在庫一覧</button>
-    <button onclick="showContent('register');getInventoryList()">食材登録</button>
-    <button onclick="showContent('order');getOrderTable()">発注</button>
-    <button onclick="showContent('inspect');getInspectionTable()">検品</button>
-    <button onclick="showContent('reports');getInformationTable()">棚卸</button>
-    <button onclick="showContent('finditem')">検索</button>
-  </div>
-  -->
-
   <section id="home" class="content">
     <h2>ホーム</h2>
     <div id="stockSummary">
@@ -95,8 +82,23 @@
   
   <section id="register" class="content">
     <h2>食材登録</h2>
+    <button onclick="showContent('registerFood');getRegisterList()">新規登録</button>
     <button onclick="showContent('modifyRegister');showSelectedInventory()">修正</button>
-    <form onsubmit="event.preventDefault();registerProduct(this)" class="input-form">
+    <h3>食材一覧</h3>
+    <table>
+      <thead>
+        <tr>
+          <th></th><th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th>
+        </tr>
+      </thead>
+      <tbody id="registerTable"></tbody>
+    </table>
+    <script src="register.js"></script>
+  </section>
+
+  <section id="registerFood" class="content">
+    <h2>新規登録</h2>
+    <form onsubmit="event.preventDefault();registerProduct(this);showContent('register')" class="input-form">
       <label for="foodName">食材名</label>
       <input id="foodName" name="foodName">
 
@@ -120,13 +122,14 @@
     <table>
       <thead>
         <tr>
-          <th></th><th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th>
+          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th>
         </tr>
       </thead>
-      <tbody id="registerTable"></tbody>
+      <tbody id="registerFoodTable"></tbody>
     </table>
     <script src="register.js"></script>
   </section>
+
 
   <section id="modifyRegister" class="content">
     <h2>修正</h2>
@@ -164,7 +167,7 @@
     <table>
       <thead>
         <tr>
-          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>納品予定日</th>
+          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>納品予定日</th><th></th>
         </tr>
       </thead>
       <tbody id="newOrderTable"></tbody>
@@ -190,6 +193,7 @@
     <h2>検品</h2>
     <button onclick="showContent('unInspected');getUnInspectedTable()">検品数入力</button>
     <button id="newInspectButton" onclick="showContent('newInspect');displayCheckedIns()">修正</button>
+    <h3>検品完了</h2>
     <table>
       <thead>
         <tr>
@@ -206,7 +210,7 @@
     <table>
       <thead>
         <tr>
-          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>発注日</th><th>検品数</th><th>過不足</th>
+          <th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th><th>発注数</th><th>発注日</th><th>検品数</th><th>過不足</th><th></th>
         </tr>
       </thead>
       <tbody id="unInspectedTable"></tbody>
@@ -234,13 +238,13 @@
       <title>経営情報表示画面</title>
     </head>
     <body>
-      <h1>経営情報表示画面</h1>
       <p id="managementDate"></p>
       <!-- 経営情報の表示領域 -->
       <div id="managementInfo"></div>
       
       <!-- 棚卸情報入力ボタン -->
       <button onclick="showContent('addreport');getNewInventory()">棚卸情報入力ボタン</button>
+      <h3>経営情報</h3>
       <table>
         <thead>
           <tr>
@@ -249,6 +253,7 @@
         </thead>
         <tbody id="informationTable"></tbody>
       </table>
+      <h3>食材情報</h3>
       <table>
         <thead>
           <tr>
@@ -267,8 +272,11 @@
   <!-- 棚卸確定ボタン -->
   <button id="inventoryConfirmBtn" onclick="showContent('reports');confirmInventory();confirmInfo();confirmStock();getInformationTable()">棚卸確定</button>
   <!-- 売上入力ボックス -->
+  <div class="sales-wrapper">
   <label for="salesInput">売上:</label>
   <input type="number" id="salesInput" value="0">
+  </div>
+  <h3>経営情報</h3>
   <table>
     <thead>
       <tr>
@@ -277,6 +285,7 @@
     </thead>
     <tbody id="calculateInfoTable"></tbody>
   </table>
+  <h3>食材情報</h3>
   <table>
     <thead>
       <tr>

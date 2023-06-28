@@ -144,12 +144,14 @@ async function getUnInspectedTable() {
       row.appendChild(foodIdCell);
 
 
+      const buttonCell = document.createElement("td")
       const button = document.createElement('button');
       button.textContent = "決定"
       button.onclick = function() {
         submitInspection(item.foodId, insNumCell.querySelector("input").value, insInsufficientCell.textContent)
       }
-      row.appendChild(button)
+      buttonCell.appendChild(button)
+      row.appendChild(buttonCell)
 
       tableBody.appendChild(row);
 

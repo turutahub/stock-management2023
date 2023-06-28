@@ -117,12 +117,14 @@ async function getOrder() {
       foodIdCell.style.display = "none";
       row.appendChild(foodIdCell);
 
+      const buttonCell = document.createElement("td")
       const orderButton = document.createElement("button");
       orderButton.innerHTML = "発注";
       orderButton.onclick = function() {
         registerOrder(foodIdCell.innerHTML, impNumCell.querySelector('input').value, deliveryDayCell.querySelector('input').value);
       }
-      row.appendChild(orderButton)
+      buttonCell.appendChild(orderButton)
+      row.appendChild(buttonCell)
 
       //const dayCell = document.createElement('td');
       //dayCell = item.day;
