@@ -37,35 +37,44 @@
     <label for="select8">検索</label>
   </div>
 
-  <section id="home" class="content">
-    <h2>ホーム</h2>
-    <div id="stockSummary">
-      <h3>在庫概要</h3>
-      <p>総在庫数: <span id="totalStock"></span></p>
-      <div id="categoryStock">
-        <h4>カテゴリごとの在庫数</h4>
-        <!-- カテゴリごとの在庫数の表示 -->
-      </div>
+  <div id="menu">
+    <h>ホーム</h2>
+    <ul>
+      <button onclick="showContent('home')">ホーム</button>
+      <button onclick="showContent('dashboard')">ダッシュボード</button>
+      <button onclick="showContent('stock')">在庫一覧</button>
+      <button onclick="showContent('register');getInventoryList()">食材登録</button>
+      <button onclick="showContent('order');getOrderTable()">発注</button>
+      <button onclick="showContent('inspect')">検品</button>
+      <button onclick="showContent('reports')">棚卸</button>
+      <button onclick="showContent('finditem')">検索</button>
+      <button onclick="showContent('setting')">設定</button>
+    </ul>
+  </div>
+</section>
 
-    <div id="importantAlerts">
-      <h3>重要なアラート</h3>
-      <ul>
-        <!-- 重要なアラートの表示 -->
-      </ul>
+<section id="dashboard" class="content">
+  <h2>ダッシュボード</h2>
+  <div id="stockSummary">
+    <h3>在庫概要</h3>
+    <p>総在庫数: <span id="totalStock"></span></p>
     </div>
 
-    <div id="latestShipments">
-      <h3>最新の発注情報</h3>
-      <ul>
-        <!-- 最新の発注情報の表示 -->
-      </ul>
-    </div>
-  </section>
+  <div id="importantAlerts">
+    <h3>重要なアラート</h3>
+    <ul>
+      <!-- 重要なアラートの表示 -->
+      <th>直近の期限日<th>
+   </ul>
+  </div>
 
-  <section id="dashboard" class="content">
-    <h2>ダッシュボード</h2>
-    <!-- ダッシュボードの内容を記述 -->
-  </section>
+  <div id="latestShipments">
+    <h3>最新の発注情報</h3>
+    <ul>
+      <!-- 最新の発注情報の表示 -->
+    </ul>
+  </div>
+</section>	
 
   <section id="stock" class="content">
     <h2>在庫一覧</h2>
