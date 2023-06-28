@@ -38,35 +38,48 @@ function getDisplayOptions() {
   return displayOptions;
 }
 
-// 検索ボタンがクリックされたときの処理
-function search() {
-  const keyword = document.getElementById('keyword').value;
-  const displayOptions = getDisplayOptions(); // 選択された表示項目の取得
-  searchProducts(keyword, displayOptions); // 検索関数の呼び出し
-}
+  // 日付期間の入力値を取得する関数
+  function getDateRange() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    return { startDate, endDate };
+  }
 
-// APIへの検索リクエストを送信する関数
-function searchProducts(keyword, displayOptions) {
-  fetch(`/search?keyword=${keyword}&displayOptions=${JSON.stringify(displayOptions)}`)
-    .then((response) => response.json())
-    .then((data) => {
-      displaySearchResults(data); // 検索結果の表示処理
-    })
-    .catch((error) => {
-      console.error('検索エラー:', error);
-      // エラー処理
+  // 検索ボタンがクリックされたときの処理
+  function search() {
+    const keyword = document.getElementById('keyword').value;
+    const displayOptions = getDisplayOptions(); // 選択された表示項目の取得
+    const dateRange = getDateRange(); // 日付期間の取得
+    searchProducts(keyword, displayOptions, dateRange); // 検索関数の呼び出し
+  }
+
+  // APIへの検索リクエストを送信する関数
+  function searchProducts(keyword, displayOptions, dateRange) {
+    const url = `/search?keyword=${keyword}&displayOptions=${JSON.stringify(displayOptions)}`;
+    // 日付期間をクエリパラメータとして追加
+    const startDate = encodeURIComponent(dateRange.startDate);
+    const endDate = encodeURIComponent(dateRange.endDate);
+    const dateRangeParam = `&startDate=${startDate}&endDate=${endDate}`;
+    fetch(url + dateRangeParam)
+      .then((response) => response.json())
+      .then((data) => {
+        displaySearchResults(data); // 検索結果の表示処理
+      })
+      .catch((error) => {
+        console.error('検索エラー:', error);
+        // エラー処理
+      });
+  }
+
+  // 検索結果を表示する関数
+  function displaySearchResults(results) {
+    const searchResultsElement = document.getElementById('searchResults');
+    searchResultsElement.innerHTML = '';
+
+    results.forEach((result) => {
+      const itemElement = document.createElement('div');
+      // 検索結果の表示内容を設定
+      itemElement.textContent = result.name;
+      searchResultsElement.appendChild(itemElement);
     });
-}
-
-// 検索結果を表示する関数
-function displaySearchResults(results) {
-  const searchResultsElement = document.getElementById('searchResults');
-  searchResultsElement.innerHTML = '';
-
-  results.forEach((result) => {
-    const itemElement = document.createElement('div');
-    // 検索結果の表示内容を設定
-    itemElement.textContent = result.name;
-    searchResultsElement.appendChild(itemElement);
-  });
-}
+  }

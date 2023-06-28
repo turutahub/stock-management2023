@@ -311,6 +311,12 @@
     <h2>検索</h2>
     <!-- 検索フォーム -->
     <div>
+      <label for="startDate">開始日:</label>
+      <input type="date" id="startDate">
+  
+      <label for="endDate">終了日:</label>
+      <input type="date" id="endDate">
+    <div>
       <!-- チェックボックス -->
       <label for="displayCost">原価</label>
       <input type="checkbox" id="displayCost">
@@ -365,19 +371,9 @@
         <option value="category2">カテゴリー2</option>
         <option value="category3">カテゴリー3</option>
       </select>
-      <button onclick="filter()">フィルタリング</button>
+      <button onclick="filter()">絞り込み</button>
     </div>
-    <div>
-      <label for="sortBy">ソート順:</label>
-      <select id="sortBy">
-        <option value="option1">オプション1</option>
-        <option value="option2">オプション2</option>
-        <option value="option3">オプション3</option>
-      </select>
-      <button onclick="sort()">ソート</button>
-    </div>
-    <button onclick="showStock()">在庫状況表示</button>
-  
+   
     <!-- 検索結果の表示領域 -->
     <div id="searchResults"></div>
   </section>
