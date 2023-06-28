@@ -8,7 +8,7 @@ async function getInventoryList() {
     // テーブルの内容をクリア
     tableBody.innerHTML = '';
 
-    document.querySelectorAll("#register form input").forEach((input) => {
+    document.querySelectorAll("#registerFood form input").forEach((input) => {
       input.value = "";
     });
 
@@ -49,6 +49,52 @@ async function getInventoryList() {
       tableBody.appendChild(row);
     });
     document.getElementById("modifyRegisterTable").innerHTML = ""
+  } catch (error) {
+    console.error('在庫一覧の取得エラー:', error);
+    // エラー処理
+  }
+}
+
+// 在庫マスタを取得して表示する関数
+async function getRegisterList() {
+  try {
+    const response = await fetch('http://localhost:8080/register');
+    const data = await response.json();
+    const tableBody = document.getElementById('registerFoodTable');
+
+    // テーブルの内容をクリア
+    tableBody.innerHTML = '';
+
+    // 取得したデータをテーブルに追加
+    data.forEach((item) => {
+      const row = document.createElement('tr');
+
+      const foodNameCell = document.createElement('td');
+      foodNameCell.textContent = item.foodName;
+      row.appendChild(foodNameCell);
+
+      const unitCell = document.createElement('td');
+      unitCell.textContent = item.unit;
+      row.appendChild(unitCell);
+
+      const costCell = document.createElement('td');
+      costCell.textContent = item.cost;
+      row.appendChild(costCell);
+
+      const expDaysCell = document.createElement('td');
+      expDaysCell.textContent = item.expDays;
+      row.appendChild(expDaysCell);
+
+      const supplierCell = document.createElement('td');
+      supplierCell.textContent = item.supplier;
+      row.appendChild(supplierCell);
+
+      const noteCell = document.createElement('td');
+      noteCell.textContent = item.note;
+      row.appendChild(noteCell);
+
+      tableBody.appendChild(row);
+    });
   } catch (error) {
     console.error('在庫一覧の取得エラー:', error);
     // エラー処理

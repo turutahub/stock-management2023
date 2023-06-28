@@ -58,6 +58,7 @@ function showContent(contentId) {
     'dashboard',
     'stock',
     'register',
+    'registerFood',
     'modifyRegister',
     'order',
     'newOrder',
