@@ -1,38 +1,4 @@
-// 検索を実行する関数
-function search() {
-  const keyword = document.getElementById('keyword').value;
-  // 検索キーワードを使用して検索結果を取得する処理を実装する
-
-  // ダミーの検索結果を表示する
-  const searchResults = [
-    { name: '商品1' },
-    { name: '商品2' },
-    { name: '商品3' }
-  ];
-  displaySearchResults(searchResults);
-}
-
-// 検索結果を表示する関数
-function displaySearchResults(results) {
-  // 検索結果を表示する処理
-  const searchResultsElement = document.getElementById('searchResults');
-  searchResultsElement.innerHTML = '';
-
-  results.forEach((result) => {
-    const itemElement = document.createElement('div');
-    itemElement.textContent = result.name; // 商品名などの表示項目を設定
-    searchResultsElement.appendChild(itemElement);
-  });
-}
-
-// 検索を実行する関数
-function search() {
-  const keyword = document.getElementById('keyword').value;
-  const displayOptions = getDisplayOptions(); // 選択された表示項目の取得
-  searchProducts(keyword, displayOptions); // 検索関数の呼び出し
-}
-
-// 選択された表示項目の取得
+// チェックボックスの状態を取得する関数
 function getDisplayOptions() {
   const displayOptions = {};
 
@@ -70,4 +36,37 @@ function getDisplayOptions() {
   displayOptions.sales = document.getElementById('displaySales').checked;
 
   return displayOptions;
+}
+
+// 検索ボタンがクリックされたときの処理
+function search() {
+  const keyword = document.getElementById('keyword').value;
+  const displayOptions = getDisplayOptions(); // 選択された表示項目の取得
+  searchProducts(keyword, displayOptions); // 検索関数の呼び出し
+}
+
+// APIへの検索リクエストを送信する関数
+function searchProducts(keyword, displayOptions) {
+  fetch(`/search?keyword=${keyword}&displayOptions=${JSON.stringify(displayOptions)}`)
+    .then((response) => response.json())
+    .then((data) => {
+      displaySearchResults(data); // 検索結果の表示処理
+    })
+    .catch((error) => {
+      console.error('検索エラー:', error);
+      // エラー処理
+    });
+}
+
+// 検索結果を表示する関数
+function displaySearchResults(results) {
+  const searchResultsElement = document.getElementById('searchResults');
+  searchResultsElement.innerHTML = '';
+
+  results.forEach((result) => {
+    const itemElement = document.createElement('div');
+    // 検索結果の表示内容を設定
+    itemElement.textContent = result.name;
+    searchResultsElement.appendChild(itemElement);
+  });
 }

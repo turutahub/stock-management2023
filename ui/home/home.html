@@ -26,7 +26,7 @@
     <button onclick="showContent('order');getOrderTable()">発注</button>
     <button onclick="showContent('inspect');getInspectionTable()">検品</button>
     <button onclick="showContent('reports');getInformationTable()">棚卸</button>
-    <button onclick="showContent('finditem')">検索</button>
+    <button onclick="showContent('Search')">検索</button>
   </div>
 
   <section id="home" class="content">
@@ -301,8 +301,7 @@
   </section>
 
 
-  <section id="finditem" class="content">
-
+  <section id="Search" class="content">
     <h2>検索</h2>
     <!-- 検索フォーム -->
     <div>
@@ -315,6 +314,33 @@
   
       <label for="displayProfit">収支</label>
       <input type="checkbox" id="displayProfit">
+  
+      <label for="displayOrderHistory">発注履歴</label>
+      <input type="checkbox" id="displayOrderHistory">
+  
+      <label for="displayDisposalQuantity">廃棄数</label>
+      <input type="checkbox" id="displayDisposalQuantity">
+  
+      <label for="displayDisposalAmount">廃棄額</label>
+      <input type="checkbox" id="displayDisposalAmount">
+  
+      <label for="displayLossRatio">ロス率</label>
+      <input type="checkbox" id="displayLossRatio">
+  
+      <label for="displayReplenishmentQuantity">補填数</label>
+      <input type="checkbox" id="displayReplenishmentQuantity">
+  
+      <label for="displayReplenishmentAmount">補填額</label>
+      <input type="checkbox" id="displayReplenishmentAmount">
+  
+      <label for="displayConsumptionQuantity">消費数</label>
+      <input type="checkbox" id="displayConsumptionQuantity">
+  
+      <label for="displaySales">売上</label>
+      <input type="checkbox" id="displaySales">
+    </div>
+  
+      </var>
   
       <!-- 他の表示項目のチェックボックスも同様に追加 -->
   
@@ -346,8 +372,9 @@
     </div>
     <button onclick="showStock()">在庫状況表示</button>
   
-    <!-- 検索結果の表示領域 -->
-    <div id="searchResults"></div>
-  </section>
+      <!-- 検索結果の表示領域 -->
+  <div id="searchResults"></div>
+</section>
+<script src="Search.js"></script>
 </body>
 </html>

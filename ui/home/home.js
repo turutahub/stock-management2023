@@ -62,7 +62,7 @@ function showContent(contentId) {
     'newInspect',
     'unInspected',
     'stockManagement',
-    'finditem',
+    'Search',
     'reports',
     'addreport',
     'settings'
