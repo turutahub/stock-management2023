@@ -29,10 +29,14 @@ async function checkId(userId, sessionId){
 function displayClock() {
   const now = new Date();
   const hour = now.getHours();
-  const minute = now.getMinutes();
-  const second = now.getSeconds();
+  const minute = formatDigits(now.getMinutes());
+  const second = formatDigits(now.getSeconds());
   const clock = document.querySelector("#clock");
   clock.textContent = `${hour}:${minute}:${second}`;
+}
+
+function formatDigits(value) {
+  return value.toString().padStart(2, "0");
 }
 
 function displayDate() {
@@ -143,3 +147,6 @@ function today() {
   const formattedDate = `${year}-${month}-${day}`;
   return formattedDate
 }
+
+
+

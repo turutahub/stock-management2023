@@ -1,24 +1,36 @@
+  /* ヘッダー */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ }
+ .clock {
+   font-size: 24px;
+   margin-bottom: 10px;
+ }
+
+ .date {
+   font-size: 18px;
+ }
+
+/*
 .button-container {
     display: flex;
+    margin-bottom: 20px;
   }
   .button-container button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     margin-right: 10px;
   }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .button-container button:hover {
+    background-color: #45a049;
   }
-
-  .clock {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-
-  .date {
-    font-size: 18px;
-  }
+*/  
 
   /* 共通スタイル */
 body {
@@ -32,75 +44,104 @@ h1, h2 {
   color: #333;
 }
 
-.button-container {
-  margin-bottom: 20px;
-}
-
-.button-container button {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-.button-container button:hover {
-  background-color: #45a049;
-}
-
 .content {
   display: none;
   background-color: #fff;
   padding: 20px;
+  position: relative;
+  top: 40px;
 }
 
-/* ホームページのスタイル */
-#home {
-  display: block;
-}
 
-/* ダッシュボードのスタイル */
-#dashboard {
-  display: none;
-}
 
-/* 在庫一覧のスタイル */
-#inventoryList {
-  display: none;
-}
+.radio-container {
+  position: relative;
+  z-index: 1;
+  }
+  .radio-container input{
+	  display: none;
+    }
+  .radio-container label{
+	  display: block;
+	  float: left;
+	  cursor: pointer;
+	  width: 156.5px;
+	  margin: 0;
+	  padding: 12px 5px;
+	  border-right: 3px solid #abb2b7;
+	  background: #bdc3c7;
+	  color: #555e64;
+	  font-size: 14px;
+	  text-align: center;
+	  line-height: 1;
+	  transition: .2s;
+    }
+  .radio-container label:first-of-type{
+	  border-radius: 3px 0 0 3px;
+    }
+  .radio-container label:last-of-type{
+	  border-right: 0px;
+	  border-radius: 0 3px 3px 0;
+  }
+  .radio-container input[type="radio"]:checked + label {
+  	background-color: #4caf50;
+	  color: #fff;
+  }
 
-/* 在庫登録のスタイル */
-#addItem {
-  display: none;
-}
 
-/* 発注のスタイル */
-#itemOrder {
-  display: none;
-}
+.input-form {
+  position: relative;
+  margin-top: 20px;
+  }
+  .input-form label {
+    position: absolute;
+    top:-20px;
+  }
+  
+table {
+  width: 100%;
+  background: #fff;
+  font-size: 16px;
+  border-collapse: collapse;
+  border: 2px solid black;
+  }
+  @media screen and (max-width: 768px) {
+   table {
+     font-size: 12px;
+   }
+  }
+  thead {
+    background: #eee;
+  }
+  thead tr th {
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-left: 1px solid black; 
+    border-bottom: 1px solid black;
+  }
+  tbody tr:nth-child(even) {
+    background: #eee;
+  }
+  td {
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-left: 1px solid black; 
+  }
 
-/* 検品のスタイル */
-#stockManagement {
-  display: none;
-}
+  input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+  }
 
-/* 棚卸のスタイル */
-#reports {
-  display: none;
-}
-
-/* 検索のスタイル */
-#finditem {
-  display: none;
-}
-
-/* 設定のスタイル */
-#settings {
-  display: none;
-}
-
-td {
-  text-align: center;
+button {
+  width: 100px;
+  height: 30px;
+  border: 1px solid black;
+  background-color: white;
 }

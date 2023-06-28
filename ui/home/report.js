@@ -68,7 +68,7 @@ async function getInventoryTable() {
       row.appendChild(consumedNumCell);
 
       const costCell = document.createElement('td');
-      costCell.textContent = item.cost;
+      costCell.textContent = item.costPrice;
       row.appendChild(costCell);
 
       const wasteNumCell = document.createElement('td');

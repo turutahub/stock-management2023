@@ -48,6 +48,7 @@ async function getInventoryList() {
 
       tableBody.appendChild(row);
     });
+    document.getElementById("modifyRegisterTable").innerHTML = ""
   } catch (error) {
     console.error('在庫一覧の取得エラー:', error);
     // エラー処理
