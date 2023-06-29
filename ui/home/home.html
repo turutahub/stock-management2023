@@ -31,7 +31,7 @@
     <label for="select6">棚卸</label>
     <input type="radio" name="button" id="select7" value="7" onclick="showContent('stock');getStockTable()">
     <label for="select7">在庫一覧</label>
-    <input type="radio" name="button" id="select8" value="8" onclick="showContent('finditem')">
+    <input type="radio" name="button" id="select8" value="8" onclick="showContent('Search')">
     <label for="select8">検索</label>
   </div>
 
@@ -294,7 +294,7 @@
   <script src="addreport.js"></script>
   <script src="calcReport.js"></script>
   </section>
-  <section id="finditem" class="content">
+  <section id="Search" class="content">
 
     <h2>検索</h2>
     <!-- 検索フォーム -->
@@ -352,6 +352,7 @@
       <input type="text" id="keyword">
       <button onclick="search()">検索</button>
     </div>
+    <!--
     <div>
       <label for="category">カテゴリー:</label>
       <select id="category">
@@ -361,6 +362,7 @@
       </select>
       <button onclick="filter()">絞り込み</button>
     </div>
+    -->
    
     <!-- 検索結果の表示領域 -->
     <div id="searchResults"></div>

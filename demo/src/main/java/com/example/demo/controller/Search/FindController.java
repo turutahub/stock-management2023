@@ -1,15 +1,49 @@
 package com.example.demo.controller.Search;
 
+import com.example.demo.model.*;
+import com.example.demo.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.naming.directory.SearchResult;
+import java.time.LocalDate;
 import java.util.List;
 
-/*public class FindController {
-    @RestController
+@RestController
+@RequestMapping("/search")
+public class FindController {
+    private final MainService service;
+
+    public FindController(MainService service) {
+        this.service = service;
+    }
+
+    @GetMapping(value = "/info", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<InformationModel> searchInformation(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
+        return service.searchInformation(LocalDate.parse(startDate), LocalDate.parse(endDate));
+    }
+
+    @GetMapping(value = "/stock", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SearchStockModel> searchStock(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
+        return service.searchStock(LocalDate.parse(startDate), LocalDate.parse(endDate));
+    }
+
+    @GetMapping(value = "/order", produces = "applicaiton/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderModel> searchOrder(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
+        return service.searchOrder(LocalDate.parse(startDate), LocalDate.parse(endDate));
+    }
+
+    @GetMapping(value = "/inv", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<SearchInventoryModel> searchInventory(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
+        return service.searchInventory(LocalDate.parse(startDate), LocalDate.parse(endDate));
+    }
+
+    /*
     public class SearchController {
         @Autowired
         private Database1Service database1Service;
@@ -33,4 +67,5 @@ import java.util.List;
             return combinedResults;
         }
     }
-}*/
+     */
+}

@@ -19,7 +19,7 @@ public class MainService {
     }
 
 
-    //食材登録機能
+    /* 食材登録機能 */
     public List<RegisterModel> getAllFood() {//food_mstの取得
         return repository.getAllFood();
     }
@@ -37,7 +37,7 @@ public class MainService {
     }
 
 
-    //発注機能
+    /* 発注機能 */
     public List<OrderModel> getAllOrder() {//impire_historyの取得
         return repository.getAllOrder();
     }
@@ -55,7 +55,7 @@ public class MainService {
     }
 
 
-    //検品機能
+    /* 検品機能 */
     public List<InspectModel> getAllInspection() {//inspection_historyの取得
         return repository.getAllInspection();
     }
@@ -82,7 +82,7 @@ public class MainService {
     }
 
 
-    //棚卸機能
+    /* 棚卸機能 */
     public List<InventoryModel> getAllInventory(LocalDate day) {//指定した日付のレコード表示
         return repository.getAllInventory(day);
     }
@@ -112,7 +112,7 @@ public class MainService {
     }
 
 
-    //在庫一覧
+    /* 在庫一覧 */
     public List<StockModel> getAllStock() {
         return repository.getAllStock();
     }
@@ -125,7 +125,25 @@ public class MainService {
         repository.insertStock(request);
     }
 
-    public void updatStock(StockRequest request) {
+    public void updateStock(StockRequest request) {
         repository.updateStock(request);
+    }
+
+
+    /* 検索機能 */
+    public List<InformationModel> searchInformation(LocalDate startDate, LocalDate endDate) {
+        return repository.searchInformation(startDate, endDate);
+    }
+
+    public List<SearchStockModel> searchStock(LocalDate startDate, LocalDate endDate) {
+        return repository.searchStock(startDate, endDate);
+    }
+
+    public List<OrderModel> searchOrder(LocalDate startDate, LocalDate endDate) {
+        return repository.searchOrder(startDate, endDate);
+    }
+
+    public List<SearchInventoryModel> searchInventory(LocalDate startDate, LocalDate endDate) {
+        return repository.searchInventory(startDate, endDate);
     }
 }
