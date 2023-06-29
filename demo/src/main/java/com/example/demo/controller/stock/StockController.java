@@ -39,6 +39,6 @@ public class StockController {
     @PutMapping(produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody StockRequest request) {
-        service.updatStock(request);
+        service.updateStock(request);
     }
 }

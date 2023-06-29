@@ -24,7 +24,7 @@ public class MainDataSource implements MainRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    //食材登録
+    /* 食材登録 */
     @Override
     public List<RegisterModel> getAllFood() {
         String sql = "SELECT * FROM food_mst";
@@ -83,7 +83,7 @@ public class MainDataSource implements MainRepository {
     }
 
 
-    //発注
+    /* 発注 */
     @Override//impire_historyレコード全表示(food_mst結合)
     public List<OrderModel> getAllOrder() {
         String sql = "SELECT *\n" +
@@ -149,7 +149,7 @@ public class MainDataSource implements MainRepository {
     }
 
 
-    //検品
+    /* 検品 */
     @Override//inspection_historyレコード全表示(food_mst、impire_history結合)
     public List<InspectModel> getAllInspection() {
         String sql = "SELECT ins.day AS inspection_day, imp.day AS impire_day, *\n" +
@@ -242,7 +242,7 @@ public class MainDataSource implements MainRepository {
     }
 
 
-    //棚卸し
+    /* 棚卸し */
     @Override//今日の日付を持つレコードをinventory_historyから表示
     public List<InventoryModel> getAllInventory(LocalDate day) {
         String sql = "SELECT fm.cost AS food_cost, stk.cost AS stock_cost, *\n" +
@@ -374,7 +374,7 @@ public class MainDataSource implements MainRepository {
     }
 
 
-    //在庫一覧
+    /* 在庫一覧 */
     @Override//impire_historyのfood_idごとに最新のdayを持つレコードを抽出し、impとする
     public List<StockModel> getAllStock() {
         String sql = "SELECT imp.day AS imp_day, stk.day AS stk_day, *\n" +
@@ -436,6 +436,69 @@ public class MainDataSource implements MainRepository {
                 request.getLossRate(),
                 request.getFoodId(),
                 request.getDay()
+        );
+    }
+
+    /* 検索機能 */
+    @Override
+    public List<InformationModel> searchInformation(LocalDate startDate, LocalDate endDate) {
+        String sql = "SELECT *　FROM informations_history　WHERE day BETWEEN ? AND ?";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql, startDate, endDate);
+        return records.stream().map(this::toInformationModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SearchStockModel> searchStock(LocalDate startDate, LocalDate endDate) {
+        String sql = "SELECT *\n" +
+                "FROM stock_history stk\n" +
+                "LEFT JOIN food_mst fm ON stk.food_id = fm.food_id\n" +
+                "WHERE day BETWEEN ? AND ?";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql, startDate, endDate);
+        return records.stream().map(this::toSearchStockModel).collect(Collectors.toList());
+    }
+
+    private SearchStockModel toSearchStockModel(Map<String, Object> record) {
+        Date day = (Date) record.get("day");
+        return new SearchStockModel(
+                (int) record.get("food_id"),
+                (String) record.get("food_name"),
+                day.toLocalDate(),
+                (int) record.get("cost"),
+                (int) record.get("waste_amt"),
+                (BigDecimal) record.get("loss_rate"),
+                (int) record.get("consumed_num")
+        );
+    }
+
+    @Override
+    public List<OrderModel> searchOrder(LocalDate startDate, LocalDate endDate) {
+        String sql = "SELECT *\n" +
+                "FROM impire_history imp\n" +
+                "LEFT JOIN food_mst fm ON imp.food_id = fm.food_id\n" +
+                "WHERE day BETWEEN ? AND ?";
+        List<Map<String , Object>> records = jdbcTemplate.queryForList(sql, startDate, endDate);
+        return records.stream().map(this::toOrderModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SearchInventoryModel> searchInventory(LocalDate startDate, LocalDate endDate) {
+        String sql = "SELECT *\n" +
+                "FROM inventory_history inv\n" +
+                "LEFT JOIN food_mst fm ON inv.food_id = fm.food_id\n" +
+                "WHERE day BETWEEN ? AND ?";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql, startDate, endDate);
+        return records.stream().map(this::toSearchInventoryModel).collect(Collectors.toList());
+    }
+
+    private SearchInventoryModel toSearchInventoryModel(Map<String, Object> record) {
+        Date day = (Date) record.get("day");
+        return new SearchInventoryModel(
+                (int) record.get("food_id"),
+                (String) record.get("food_name"),
+                day.toLocalDate(),
+                (int) record.get("waste_num"),
+                (int) record.get("spplm_num"),
+                (int) record.get("spplm_amt")
         );
     }
 }

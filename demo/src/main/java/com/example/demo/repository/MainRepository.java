@@ -12,21 +12,21 @@ import java.util.Date;
 import java.util.List;
 
 public interface MainRepository {
-    //食材登録機能
+    /* 食材登録機能 */
     List<RegisterModel> getAllFood();
     void registerFood(RegisterModel model);
     RegisterModel getById(int foodId);
     void updateFood(RegisterModel model);
     void deleteFood(int foodId);
 
-    //発注機能
+    /* 発注機能 */
     List<OrderModel> getAllOrder();
     void insertOrder(OrderRequest request);
     List<RegisterModel> getUnordered();
     OrderModel getCheckedOrder(int foodId, LocalDate day);
     void updateOrder(OrderRequest request);
 
-    //検品機能
+    /* 検品機能 */
     List<InspectModel> getAllInspection();
     List<OrderModel> getUnInspected();
     void insertInspection(InspectRequest request);
@@ -37,7 +37,7 @@ public interface MainRepository {
     void updateIns(int insNum, int insInsufficient, int foodId, LocalDate day);
 
 
-    //棚卸し機能
+    /* 棚卸し機能 */
     List<InventoryModel> getAllInventory(LocalDate day);
     List<InventoryModel> getDoneInventory();
     List<RegisterModel> getUnInventoried();
@@ -49,10 +49,16 @@ public interface MainRepository {
     void updateInfo(InformationModel model);
 
 
-    //在庫一覧機能
+    /* 在庫一覧機能 */
     List<StockModel> getAllStock();
     int getPastConsumedNum(int foodId, LocalDate day);
     void insertStock(StockRequest request);
     void updateStock(StockRequest request);
 
+
+    /* 検索機能 */
+    List<InformationModel> searchInformation(LocalDate startDate, LocalDate endDate);
+    List<SearchStockModel> searchStock(LocalDate startDate, LocalDate endDate);
+    List<OrderModel> searchOrder(LocalDate startDate, LocalDate endDate);
+    List<SearchInventoryModel> searchInventory(LocalDate startDate, LocalDate endDate);
 }

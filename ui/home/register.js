@@ -16,11 +16,13 @@ async function getInventoryList() {
     data.forEach((item) => {
       const row = document.createElement('tr');
 
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.setAttribute('name', 'inventoryItem');
-      checkbox.value = item.foodId;
-      row.appendChild(checkbox);
+      const checkBoxCell = document.createElement('td')
+      const checkBox = document.createElement('input');
+      checkBox.type = 'checkbox';
+      checkBox.setAttribute('name', 'inventoryItem');
+      checkBox.value = item.foodId;
+      checkBoxCell.appendChild(checkBox)
+      row.appendChild(checkBoxCell);
 
       const foodNameCell = document.createElement('td');
       foodNameCell.textContent = item.foodName;

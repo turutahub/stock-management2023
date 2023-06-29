@@ -11,10 +11,12 @@ async function getInspectionTable() {
     data.forEach(item => {
       const row = document.createElement('tr');
 
+      const checkBoxCell = document.createElement('td')
       const checkBox = document.createElement('input');
       checkBox.type = "checkbox";
       checkBox.setAttribute("class", "checkbox");
-      row.appendChild(checkBox)
+      checkBoxCell.appendChild(checkBox)
+      row.appendChild(checkBoxCell)
 
       const foodNameCell = document.createElement('td');
       foodNameCell.textContent = item.foodName;

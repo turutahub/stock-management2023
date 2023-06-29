@@ -86,30 +86,7 @@ window.onload = function() {
   showContent('home');
 };
 
-function showContent(contentId) {
-  const contents = [
-    'home',
-    'dashboard',
-    'stock',
-    'register',
-    'editForm',
-    'order',
-    'newOrder',
-    'inspect',
-    'stockManagement',
-    'finditem',
-    'reports',
-    'addreport',
-    'settings'
-  ];
 
-  contents.forEach(content => {
-    const contentElement = document.getElementById(content);
-    if (contentElement) {
-      contentElement.style.display = contentId === content ? 'block' : 'none';
-    }
-  });
-}
 // 初期表示時にホームと時計を表示
 window.onload = function() {
   showContent('home');
