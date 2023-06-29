@@ -55,7 +55,6 @@ setInterval(displayDate, 1000);
 function showContent(contentId) {
   const contents = [
     'home',
-    'dashboard',
     'stock',
     'register',
     'registerFood',
@@ -69,8 +68,7 @@ function showContent(contentId) {
     'stockManagement',
     'Search',
     'reports',
-    'addreport',
-    'settings'
+    'addreport'
   ];
 
   contents.forEach(content => {
@@ -86,38 +84,16 @@ window.onload = function() {
   showContent('home');
 };
 
-function showContent(contentId) {
-  const contents = [
-    'home',
-    'dashboard',
-    'stock',
-    'register',
-    'editForm',
-    'order',
-    'newOrder',
-    'inspect',
-    'stockManagement',
-    'finditem',
-    'reports',
-    'addreport',
-    'settings'
-  ];
-
-  contents.forEach(content => {
-    const contentElement = document.getElementById(content);
-    if (contentElement) {
-      contentElement.style.display = contentId === content ? 'block' : 'none';
-    }
-  });
-}
 // 初期表示時にホームと時計を表示
 window.onload = function() {
   showContent('home');
 };
 
 function openSettings() {
-  // 設定画面に遷移する処理
-  window.location.href = 'settings.html';
+  const settingsElement = document.getElementById('settings');
+  if (settingsElement) {
+    settingsElement.style.display = 'block';
+  }
 }
 
 
@@ -130,5 +106,91 @@ function today() {
   return formattedDate
 }
 
+// 在庫概要の表示
+function showStockSummary() {
+  const stockListElement = document.getElementById('stockList');
+  const stockList = getStockListFromDatabase(); // データベースから在庫一覧を取得
+  stockListElement.innerHTML = '';
+  for (const stockItem of stockList) {
+    const stockItemElement = document.createElement('li');
+    stockItemElement.textContent = stockItem.name + ': ' + stockItem.quantity;
+    stockListElement.appendChild(stockItemElement);
+  }
+}
 
+// 重要なアラートの表示
+function showImportantAlerts() {
+  const importantAlertsElement = document.getElementById('importantAlerts');
+  const importantAlerts = getImportantAlertsFromDatabase(); // データベースから重要なアラートを取得
+  importantAlertsElement.innerHTML = '';
+  for (const alert of importantAlerts) {
+    const alertItem = document.createElement('li');
+    alertItem.textContent = alert;
+    importantAlertsElement.appendChild(alertItem);
+  }
+}
 
+// 最新の発注情報の表示
+function showLatestShipments() {
+  const latestShipmentsElement = document.getElementById('latestShipments');
+  const latestShipments = getLatestShipmentsFromDatabase(); // データベースから最新の発注情報を取得
+  latestShipmentsElement.innerHTML = '';
+  for (const shipment of latestShipments) {
+    const shipmentItem = document.createElement('li');
+    shipmentItem.textContent = shipment;
+    latestShipmentsElement.appendChild(shipmentItem);
+  }
+}
+
+// 在庫概要、重要なアラート、最新の出荷情報の表示を更新
+function updateDashboard() {
+  showStockSummary();
+  showImportantAlerts();
+  showLatestShipments();
+}
+
+// ページ読み込み時にダッシュボードを更新
+window.addEventListener('load', updateDashboard);
+
+async function getStockTable() {
+  try {
+    const response = await fetch('http://localhost:8080/stock');
+    const data = await response.json();
+    const tableBody = document.getElementById('stockTable');
+
+    function calculateTotalStock(data) {
+      let totalStock = 0;
+      for (const item of data) {
+        totalStock += item.quantity;
+      }
+      return totalStock;
+    }
+
+    function displayTotalStock(totalStock) {
+      const totalStockElement = document.getElementById('totalStock');
+      totalStockElement.textContent = totalStock;
+    }
+
+    tableBody.innerHTML = ''; // Clear existing table data
+    for (const item of data) {
+      const row = document.createElement('tr');
+      const nameCell = document.createElement('td');
+      const quantityCell = document.createElement('td');
+
+      nameCell.textContent = item.name;
+      quantityCell.textContent = item.quantity;
+
+      row.appendChild(nameCell);
+      row.appendChild(quantityCell);
+
+      tableBody.appendChild(row);
+    }
+
+    const totalStock = calculateTotalStock(data);
+    displayTotalStock(totalStock);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+getStockTable();
