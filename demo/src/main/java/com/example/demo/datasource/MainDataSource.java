@@ -442,7 +442,7 @@ public class MainDataSource implements MainRepository {
     /* 検索機能 */
     @Override
     public List<InformationModel> searchInformation(LocalDate startDate, LocalDate endDate) {
-        String sql = "SELECT *　FROM informations_history　WHERE day BETWEEN ? AND ?";
+        String sql = "SELECT * FROM informations_history WHERE day BETWEEN ? AND ?";
         List<Map<String, Object>> records = jdbcTemplate.queryForList(sql, startDate, endDate);
         return records.stream().map(this::toInformationModel).collect(Collectors.toList());
     }

@@ -31,7 +31,7 @@ public class FindController {
         return service.searchStock(LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
 
-    @GetMapping(value = "/order", produces = "applicaiton/json")
+    @GetMapping(value = "/order", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderModel> searchOrder(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
         return service.searchOrder(LocalDate.parse(startDate), LocalDate.parse(endDate));

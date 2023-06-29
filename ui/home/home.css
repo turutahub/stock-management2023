@@ -172,7 +172,7 @@ section#addreport  button {
 }
 
 
-  /*食材登録入力フォーム*/
+  /* 食材登録入力フォーム */
 .input-form {
   position: relative;
   margin-top: 50px;
@@ -190,6 +190,7 @@ section#addreport  button {
     width: 450px;
   }
 
+  /* 売上入力フォーム */
 .sales-wrapper {
   text-align: right;
   margin-right: 100px;
