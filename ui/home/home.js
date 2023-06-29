@@ -106,7 +106,22 @@ function today() {
   return formattedDate
 }
 
-// 在庫概要の表示
+async function getStockTable() {
+  try {
+    const response = await fetch('http://localhost:8080/stock');
+    const data = await response.json();
+    const tableBody = document.getElementById('stockTable');
+
+    function calculateTotalStock(data) {
+      let totalStock = 0;
+      for (const item of data) {
+        totalStock += item.quantity;
+      }
+      return totalStock;
+    }
+
+
+// 在庫総数を在庫一覧から持ってきて表示
 function showStockSummary() {
   const stockListElement = document.getElementById('stockList');
   const stockList = getStockListFromDatabase(); // データベースから在庫一覧を取得
@@ -149,29 +164,15 @@ function updateDashboard() {
   showLatestShipments();
 }
 
-// ページ読み込み時にダッシュボードを更新
-window.addEventListener('load', updateDashboard);
-
-async function getStockTable() {
-  try {
-    const response = await fetch('http://localhost:8080/stock');
-    const data = await response.json();
-    const tableBody = document.getElementById('stockTable');
-
-    function calculateTotalStock(data) {
-      let totalStock = 0;
-      for (const item of data) {
-        totalStock += item.quantity;
-      }
-      return totalStock;
-    }
+// ページ読み込み時にホーム画面を更新
+window.addEventListener('load', updateHome);
 
     function displayTotalStock(totalStock) {
       const totalStockElement = document.getElementById('totalStock');
       totalStockElement.textContent = totalStock;
     }
 
-    tableBody.innerHTML = ''; // Clear existing table data
+    tableBody.innerHTML = ''; 
     for (const item of data) {
       const row = document.createElement('tr');
       const nameCell = document.createElement('td');
@@ -194,3 +195,49 @@ async function getStockTable() {
 }
 
 getStockTable();
+
+// データベースから在庫一覧を取得
+// データベースから在庫一覧を取得する処理
+async function getStockListFromDatabase() {
+  try {
+    const response = await fetch('http://localhost:8080/stock');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    return []; // エラー時は空の配列を返すか、エラー処理を行う
+  }
+}
+
+// データベースから重要なアラートを取得する処理
+async function getImportantAlertsFromDatabase() {
+  try {
+    const response = await fetch('http://localhost:8080/stock');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    return []; // エラー時は空の配列を返すか、エラー処理を行う
+  }
+}
+
+// データベースから最新の発注情報を取得する処理
+async function getLatestShipmentsFromDatabase() {
+  try {
+    const response = await fetch('http://localhost:8080/shipments');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    return []; // エラー時は空の配列を返すか、エラー処理を行う
+  }
+}
+
+// ページ読み込み時にホーム画面を更新
+function updateHome() {
+  updateDashboard();
+}
+
+// ページ読み込み時にホーム画面を更新
+window.addEventListener('load', updateHome);
+
