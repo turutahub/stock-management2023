@@ -306,18 +306,20 @@
   <script src="addreport.js"></script>
   <script src="calcReport.js"></script>
   </section>
-  <section id="Search" class="content">
 
+
+  <section id="Search" class="content">
     <h2>検索</h2>
-    <!-- 検索フォーム -->
+    <!-- 日付入力 -->
     <div>
       <label for="startDate">開始日:</label>
       <input type="date" id="startDate">
   
       <label for="endDate">終了日:</label>
       <input type="date" id="endDate">
+    </div>
+    <!-- チェックボックス -->
     <div>
-      <!-- チェックボックス -->
       <label for="displayCost">原価</label>
       <input type="checkbox" id="displayCost">
   
@@ -352,18 +354,21 @@
       <input type="checkbox" id="displaySales">
     </div>
   
-      </var>
-  
-      <!-- 他の表示項目のチェックボックスも同様に追加 -->
-  
-      <!-- 検索ボタン -->
-      <button onclick="search()">検索</button>
-    </div>
+    <!-- 検索ボタン -->
+    <button onclick="search()">検索</button>
+
+    <!-- 検索結果の表示領域 -->
+    <div id="searchResults"></div>
+    
+   
+    <!--
     <div>
       <label for="keyword">キーワード:</label>
       <input type="text" id="keyword">
       <button onclick="search()">検索</button>
     </div>
+    -->
+
     <!--
     <div>
       <label for="category">カテゴリー:</label>
@@ -376,8 +381,10 @@
     </div>
     -->
    
-    <!-- 検索結果の表示領域 -->
-    <div id="searchResults"></div>
+    
+    
+    <script src="Search.js"></script>
+    <script src="results.js"></script>
   </section>
   <script src="home.js"></script>
 </body>
