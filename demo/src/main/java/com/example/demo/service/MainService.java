@@ -19,6 +19,7 @@ public class MainService {
     }
 
 
+
     /* 食材登録機能 */
     public List<RegisterModel> getAllFood() {//food_mstの取得
         return repository.getAllFood();

@@ -224,7 +224,7 @@ async function getImportantAlertsFromDatabase() {
 // データベースから最新の発注情報を取得する処理
 async function getLatestShipmentsFromDatabase() {
   try {
-    const response = await fetch('http://localhost:8080/shipments');
+    const response = await fetch('http://localhost:8080/order');
     const data = await response.json();
     return data;
   } catch (error) {
