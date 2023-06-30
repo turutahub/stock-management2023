@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface MainRepository {
     /*ホーム画面機能（総在庫数・アラート表示・最新の発注）*/
-
+    int getStockByFood(String foodName);
 
     /* 食材登録機能 */
     List<RegisterModel> getAllFood();

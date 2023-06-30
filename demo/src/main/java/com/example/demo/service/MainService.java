@@ -20,6 +20,9 @@ public class MainService {
 
     /*ホーム画面機能*/
 
+    public int getStockByFood(String foodName) {
+        return repository.getStockByFood(foodName);
+    }
 
 
     /* 食材登録機能 */

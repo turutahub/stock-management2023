@@ -25,7 +25,16 @@ public class MainDataSource implements MainRepository {
     JdbcTemplate jdbcTemplate;
     /*ホーム画面機能*/
     @Override
-    public List<HomeModel> get
+    public int getStockByFood(String foodName) {
+        String sql = "SELECT stk.stock\n" +
+                "FROM stock_history stk\n" +
+                "LEFT JOIN food_mst fm ON stk.food_id = fm.food_id\n" +
+                "WHERE food_name = ? AND day = CURRENT_DATE";
+        return jdbcTemplate.queryForObject(sql, int.class, foodName);
+    }
+    /*@Override
+    public List<HomeModel> get*/
+
 
     /* 食材登録 */
     @Override
