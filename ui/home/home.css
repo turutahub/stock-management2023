@@ -44,7 +44,7 @@ h1, h2 {
 	  cursor: pointer;
     height: 30px;
 	  /*width: 156px;*/
-    width: 13.34%;
+    width: 15.7%;
 	  margin: 0;
 	  padding: 12px 5px;
 	  border-right: 3px solid #abb2b7;
@@ -200,3 +200,102 @@ section#addreport  button {
     width: 200px;
     border: 1px solid black;
   }
+
+
+
+.select-box {
+  position: relative;
+  }
+  .select-box::before,
+  .select-box::after {
+    position: absolute;
+    content: '';
+    pointer-events: none;
+  }
+  .select-box::before {
+    right: 0;
+    display: inline-block;
+    width: 2.8em;
+    height: 2.8em;
+    border-radius: 0 3px 3px 0;
+    background-color: #2589d0;
+    content: '';
+  }
+  .select-box::after {
+    position: absolute;
+    top: 50%;
+    right: 1.4em;
+    transform: translate(50%, -50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
+    content: '';
+  }
+  .select-box select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    min-width: 230px;
+    height: 2.8em;
+    padding: .4em 3.6em .4em .8em;
+    border: 2px solid #2589d0;
+    border-radius: 3px;
+    color: #333333;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  .select-box select:focus {
+    outline: 1px solid #2589d0;
+  }
+
+#stockSummary p {
+  display: inline;
+  margin-left: 30px;
+  font-size: 20px;
+}
+
+section#home {
+  z-index: 2;
+  position: fixed;
+  top: 90px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+}
+
+header button{
+  display: none;
+  margin-right: 150px;
+}
+
+section#home button {
+  margin-left: 190px;
+  margin-bottom: 50px;
+}
+
+section#home h2{
+  margin-left: 50px;
+}
+
+#stockSummary {
+  margin-left: 50px;
+}
+
+#latestShipments {
+  margin-left: 50px;
+}
+
+.research-box {
+  width: 900px;
+  margin-left: 230px;
+  border:2px solid black;
+  border-radius: 20px;
+}
+.research-box p:first-of-type {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}

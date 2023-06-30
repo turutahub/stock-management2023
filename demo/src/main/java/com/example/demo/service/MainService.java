@@ -25,9 +25,9 @@ public class MainService {
 
     /*ホーム画面機能*/
 
-    // getAllOrders()メソッド
-    public List<OrderModel> getAllOrders() {
-        // データベースなどから注文リストを取得する処理を実装する
+    public int getStockByFood(String foodName) {
+        return repository.getStockByFood(foodName);
+    }
 
         // 仮の実装として、空のリストを返す
         return new ArrayList<>();

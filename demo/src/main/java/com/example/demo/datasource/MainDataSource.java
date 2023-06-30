@@ -27,27 +27,16 @@ public class MainDataSource implements MainRepository {
     JdbcTemplate jdbcTemplate;
     /*ホーム画面機能*/
     @Override
-    public List<OrderModel> getLatestShipments() {
-        List<OrderModel> latestShipments = new ArrayList<>();
-
-        String query = "SELECT o.name FROM impire_history ih JOIN food_mst fm ON ih.food_id = fm.food_id JOIN orders o ON ih.order_id = o.order_id WHERE ih.therapy = 1";
-
-        jdbcTemplate.query(query, (ResultSet resultSet) -> {
-            while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                OrderModel order = new OrderModel(name);
-                latestShipments.add(order);
-            }
-        });
-
-        return latestShipments;
+    public int getStockByFood(String foodName) {
+        String sql = "SELECT stk.stock\n" +
+                "FROM stock_history stk\n" +
+                "LEFT JOIN food_mst fm ON stk.food_id = fm.food_id\n" +
+                "WHERE food_name = ? AND day = CURRENT_DATE";
+        return jdbcTemplate.queryForObject(sql, int.class, foodName);
     }
+    /*@Override
+    public List<HomeModel> get*/
 
-    @Override
-    public List<StockModel> getAllStock() {
-        List<StockModel> stockList = new ArrayList<>();
-        return stockList;
-    }
 
     /* 食材登録 */
     @Override

@@ -13,14 +13,19 @@
   <header class="header">
     <h1>在庫管理システム</h1>
     <div>
+      <button onclick="backHome()">ホームに戻る</button>
+    </div>
+    <div>
       <div class="clock" id="clock"></div>
       <div class="date" id="date"></div>
     </div>
   </header>
 
   <div class="radio-container">
+    <!--
     <input type="radio" name="button" id="select1" value="1" checked="" onclick="showContent('home')">
     <label for="select1">ホーム</label>
+    -->
     <input type="radio" name="button" id="select3" value="3" onclick="showContent('register');getInventoryList()">
     <label for="select3">食材登録</label>
     <input type="radio" name="button" id="select4" value="4" onclick="showContent('order');getOrderTable()">
@@ -48,11 +53,15 @@
         <button onclick="showContent('stock');getStockTable();select7Checked()">在庫一覧</button>
         <button onclick="showContent('Search');select8Checked()">検索</button>
       </div>
+      <div class="research-box"><p>クイックリサーチ</p>
       <div id="stockSummary">
         <h3>在庫概要</h3>
-        <p>総在庫数: <span id="totalStock"></span></p>
+        <label class="select-box">
+          <select id="selectBox"></select>
+        </label>
+        <p>本日の在庫数: <span id="totalStock"></span></p>
       </div>
-      
+
       <div id="latestShipments">
         <h3>最新の発注情報</h3>
         <ul id="latestShipmentsList">
@@ -60,6 +69,8 @@
           <li></li>
         </ul>
       </div>
+    </div>
+    </section>
 
   <section id="stock" class="content">
     <h2>在庫一覧</h2>

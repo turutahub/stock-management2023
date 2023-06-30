@@ -79,27 +79,39 @@ function showContent(contentId) {
   });
 }
 
+function backHome() {
+  document.getElementById("home").style.display = "block"
+  document.querySelector("header button").style.display = "none"
+}
+
 
 function select1Checked() {
   document.getElementById("select1").checked = true;
+  document.querySelector("header button").style.display = "block"
 }
 function select3Checked() {
   document.getElementById("select3").checked = true;
+  document.querySelector("header button").style.display = "block"
 }
 function select4Checked() {
   document.getElementById("select4").checked = true;
+  document.querySelector("header button").style.display = "block"
 }
 function select5Checked() {
   document.getElementById("select5").checked = true;
+  document.querySelector("header button").style.display = "block"
 }
 function select6Checked() {
   document.getElementById("select6").checked = true;
+  document.querySelector("header button").style.display = "block"
 }
 function select7Checked() {
   document.getElementById("select7").checked = true;
+  document.querySelector("header button").style.display = "block"
 }
 function select8Checked() {
   document.getElementById("select8").checked = true;
+  document.querySelector("header button").style.display = "block"
 }
 
 // 初期表示時にホームと時計を表示
@@ -118,8 +130,6 @@ function openSettings() {
     settingsElement.style.display = 'block';
   }
 }
-
-
 function today() {
   const today = new Date();
   const year = today.getFullYear();
@@ -260,3 +270,41 @@ function calculateTotalStock(stockList) {
 
   return totalStock;
 }
+
+document.addEventListener("DOMContentLoaded", async function() {
+  try {
+    var response = await fetch(`http://localhost:8080/register`)
+    var data = await response.json()
+
+    var selectBox = document.getElementById("selectBox")
+
+    data.forEach(elm => {
+      var option = new Option(elm.foodName)
+      selectBox.add(option)
+    })
+  } catch(e) {
+    console.error(e)
+  }
+  try {
+    var foodName = selectBox.value
+    var response = await fetch(`http://localhost:8080/home/stock/${foodName}`)
+    var stock = await response.json();
+    document.getElementById("totalStock").textContent = stock
+  } catch(e) {
+    document.getElementById("totalStock").textContent = "データ無し"
+    console.error(e)
+  }
+  selectBox.addEventListener("change", async function(event) {
+    try {
+      var foodName = event.target.value;
+      var response = await fetch(`http://localhost:8080/home/stock/${foodName}`)
+      var stock = await response.json();
+      document.getElementById("totalStock").textContent = stock
+    } catch(e) {
+      document.getElementById("totalStock").textContent = "データ無し"
+      console.error(e)
+    }
+  })
+})
+
+
