@@ -361,13 +361,18 @@
     <div id="searchResults"></div>
     
    
-    <!--
+  
     <div>
       <label for="keyword">キーワード:</label>
-      <input type="text" id="keyword">
-      <button onclick="search()">検索</button>
+      <input type="text" id="keyword" name="keyword">
     </div>
-    -->
+    <button onclick="searchKeyword()">検索(完全一致)</button>
+    <button onclick="partialMatch()">検索(部分一致)</button>
+
+    <div id="searchKeywordResult"></div>
+
+
+
 
     <!--
     <div>

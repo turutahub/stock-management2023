@@ -11,6 +11,8 @@ function search() {
   var invURL = `http://localhost:8080/search/inv`
   invURL += '?' + new URLSearchParams(getDates());
 
+  
+
   if(document.getElementById('displayCost').checked) {
     displayCost(stkURL); 
   }
@@ -44,6 +46,141 @@ function search() {
   if(document.getElementById('displaySales').checked) {
     displaySales(infoURL);
   }
+}
+
+async function searchKeyword() {
+  var keyword = document.getElementById('keyword').value;
+  var params = {
+    keyword: keyword
+  };
+  var url = `http://localhost:8080/search/food`
+  url += '?' + new URLSearchParams(params)
+
+  var response = await fetch(url);
+
+  var data = await response.json()
+
+  var field = document.getElementById("searchKeywordResult")
+  field.innerHTML = ""
+  document.getElementById("keyword").value = ""
+
+  var table = document.createElement("table")
+
+  var thead = document.createElement("thead")
+
+  var theadRow = document.createElement("tr")
+  theadRow.innerHTML = `<th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th>`
+
+  thead.appendChild(theadRow)
+  table.appendChild(thead)
+
+  var tbody = document.createElement("tbody")
+
+  data.forEach(elm => {
+
+
+  var row = document.createElement("tr")
+
+  var foodNameCell = document.createElement('td');
+  foodNameCell.textContent = elm.foodName;
+  row.appendChild(foodNameCell);
+
+  var unitCell = document.createElement('td');
+  unitCell.textContent = elm.unit;
+  row.appendChild(unitCell);
+
+  var costCell = document.createElement('td');
+  costCell.textContent = elm.cost;
+  row.appendChild(costCell);
+
+  var expDaysCell = document.createElement('td');
+  expDaysCell.textContent = elm.expDays;
+  row.appendChild(expDaysCell);
+
+  var supplierCell = document.createElement('td');
+  supplierCell.textContent = elm.supplier;
+  row.appendChild(supplierCell);
+
+  var noteCell = document.createElement('td');
+  noteCell.textContent = elm.note;
+  row.appendChild(noteCell);
+
+  console.log(row)
+
+
+  tbody.appendChild(row);
+})
+  table.appendChild(tbody);
+
+  field.appendChild(table)
+}
+
+async function partialMatch() {
+  var keyword = document.getElementById('keyword').value;
+  var params = {
+    keyword: keyword
+  };
+  var url = `http://localhost:8080/search/food/part`
+  url += '?' + new URLSearchParams(params)
+
+  var response = await fetch(url);
+
+  var data = await response.json()
+
+  var field = document.getElementById("searchKeywordResult")
+  field.innerHTML = ""
+  document.getElementById("keyword").value = ""
+
+  var table = document.createElement("table")
+
+  var thead = document.createElement("thead")
+
+  var theadRow = document.createElement("tr")
+  theadRow.innerHTML = `<th>食材名</th><th>単位</th><th>単価</th><th>消費期間</th><th>仕入れ店</th><th>備考</th>`
+
+  thead.appendChild(theadRow)
+  table.appendChild(thead)
+
+  var tbody = document.createElement("tbody")
+
+
+  data.forEach(elm => {
+
+
+  var row = document.createElement("tr")
+
+  var foodNameCell = document.createElement('td');
+  foodNameCell.textContent = elm.foodName;
+  row.appendChild(foodNameCell);
+
+  var unitCell = document.createElement('td');
+  unitCell.textContent = elm.unit;
+  row.appendChild(unitCell);
+
+  var costCell = document.createElement('td');
+  costCell.textContent = elm.cost;
+  row.appendChild(costCell);
+
+  var expDaysCell = document.createElement('td');
+  expDaysCell.textContent = elm.expDays;
+  row.appendChild(expDaysCell);
+
+  var supplierCell = document.createElement('td');
+  supplierCell.textContent = elm.supplier;
+  row.appendChild(supplierCell);
+
+  var noteCell = document.createElement('td');
+  noteCell.textContent = elm.note;
+  row.appendChild(noteCell);
+
+  console.log(row)
+
+
+  tbody.appendChild(row);
+})
+  table.appendChild(tbody);
+
+  field.appendChild(table)
 }
 
 // 日付期間の入力値を取得する関数

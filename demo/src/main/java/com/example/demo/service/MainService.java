@@ -146,4 +146,12 @@ public class MainService {
     public List<SearchInventoryModel> searchInventory(LocalDate startDate, LocalDate endDate) {
         return repository.searchInventory(startDate, endDate);
     }
+
+    public List<RegisterModel> searchFood(String keyword) {
+        return repository.searchFood(keyword);
+    }
+
+    public List<RegisterModel> searchFoodByPartialMatch(String keyword) {
+        return repository.searchFoodByPartialMatch(keyword);
+    }
 }
