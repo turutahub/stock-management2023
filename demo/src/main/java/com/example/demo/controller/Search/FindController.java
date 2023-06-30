@@ -43,6 +43,18 @@ public class FindController {
         return service.searchInventory(LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
 
+    @GetMapping(value = "/food", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RegisterModel> searchFood(@RequestParam("keyword") String keyword) {
+        return service.searchFood(keyword);
+    }
+
+    @GetMapping(value = "/food/part", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RegisterModel> searchFoodByPartialMatch(@RequestParam("keyword") String keyword) {
+        return service.searchFoodByPartialMatch(keyword);
+    }
+
     /*
     public class SearchController {
         @Autowired

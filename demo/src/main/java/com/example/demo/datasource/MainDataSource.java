@@ -501,4 +501,18 @@ public class MainDataSource implements MainRepository {
                 (int) record.get("spplm_amt")
         );
     }
+
+    @Override
+    public List<RegisterModel> searchFood(String keyword) {
+        String sql = "SELECT * FROM food_mst WHERE food_name = ?";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql, keyword);
+        return records.stream().map(this::toRegisterModel).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RegisterModel> searchFoodByPartialMatch(String keyword) {
+        String sql = "SELECT * FROM food_mst WHERE food_name LIKE '%' || ? || '%'";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql, keyword);
+        return records.stream().map(this::toRegisterModel).collect(Collectors.toList());
+    }
 }

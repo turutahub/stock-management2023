@@ -64,4 +64,7 @@ public interface MainRepository {
     List<SearchStockModel> searchStock(LocalDate startDate, LocalDate endDate);
     List<OrderModel> searchOrder(LocalDate startDate, LocalDate endDate);
     List<SearchInventoryModel> searchInventory(LocalDate startDate, LocalDate endDate);
+    List<RegisterModel> searchFood(String keyword);
+
+    List<RegisterModel> searchFoodByPartialMatch(String keyword);
 }

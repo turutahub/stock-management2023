@@ -93,7 +93,7 @@ async function displayCost(url) {
     });
     //console.log(Array)
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[1].getElementsByTagName('td')[i].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -110,7 +110,7 @@ async function displayCost(url) {
         return !isNaN(element);
     });
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[i].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -118,20 +118,7 @@ async function displayCost(url) {
 }
 
   
-//後から
-async function displayCostRate(url) {
-    const response = await fetch(url)
-    //console.log(await response.json())
 
-}
-  
-//後から
-async function displayBalance(url) {
-    const response = await fetch(url)
-    //console.log(await response.json())
-
-}
-  
 async function displayOrder(url){
     const response = await fetch(url)
     //console.log(await response.json())
@@ -228,7 +215,7 @@ async function displayOrder(url){
     });
     //console.log(Array)
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[1].getElementsByTagName('td')[i].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -245,7 +232,7 @@ async function displayOrder(url){
         return !isNaN(element);
     });
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[i].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -349,7 +336,7 @@ async function displayWasteNum(url) {
     });
     //console.log(Array)
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[1].getElementsByTagName('td')[i].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -366,7 +353,7 @@ async function displayWasteNum(url) {
         return !isNaN(element);
     });
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[i].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -471,7 +458,7 @@ async function displayWasteAmt(url) {
     });
     //console.log(Array)
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[1].getElementsByTagName('td')[i].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -488,7 +475,7 @@ async function displayWasteAmt(url) {
         return !isNaN(element);
     });
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[i].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -591,7 +578,7 @@ async function displayLossRate(url) {
     });
     //console.log(Array)
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[1].getElementsByTagName('td')[i].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -608,7 +595,7 @@ async function displayLossRate(url) {
         return !isNaN(element);
     });
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[i].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -712,7 +699,7 @@ async function displaySpplmNum(url) {
     });
     //console.log(Array)
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[1].getElementsByTagName('td')[i].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -729,7 +716,7 @@ async function displaySpplmNum(url) {
         return !isNaN(element);
     });
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[i].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -833,7 +820,7 @@ async function displaySpplmAmt(url) {
     });
     //console.log(Array)
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[1].getElementsByTagName('td')[i].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -850,7 +837,7 @@ async function displaySpplmAmt(url) {
         return !isNaN(element);
     });
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[i].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -953,7 +940,7 @@ async function displayConsumedNum(url) {
     });
     //console.log(Array)
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[1].getElementsByTagName('td')[i].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -970,7 +957,7 @@ async function displayConsumedNum(url) {
         return !isNaN(element);
     });
     var numericArray = Array.map(function(str) {
-        return parseInt(str);
+        return parseFloat(str);
     });
     //console.log(numericArray)
     rows[i].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
@@ -979,7 +966,248 @@ async function displayConsumedNum(url) {
 }
 
 //後から
+async function displayCostRate(url) {
+  const response = await fetch(url)
+  //console.log(await response.json())
+  var data = await response.json()
+
+  var field = document.getElementById("searchResults")
+
+  var title = document.createElement('h3')
+  title.textContent = "原価率"
+  field.appendChild(title)
+
+  var dates = [...new Set(data.map(item => item.day))].sort();// 日付を一意のセットに取得
+
+  ///// テーブルのヘッダー行を生成
+  var table = document.createElement('table');
+
+  var thead = document.createElement('thead');
+
+  var headerRow = document.createElement('tr');
+  headerRow.appendChild(document.createElement('th'));
+  
+  //　ヘッダーに日付記載
+  dates.forEach(date => {
+    var th = document.createElement('th');
+    th.textContent = date;
+    headerRow.appendChild(th);
+  });
+
+   //　ヘッダーに期間計セル追加
+   var th = document.createElement('th');
+   th.textContent = "期間計"
+   headerRow.appendChild(th)
+   
+   thead.appendChild(headerRow);
+   table.appendChild(thead);
+
+
+   var tbody = document.createElement('tbody')
+
+   var row = document.createElement('tr')
+
+   var stringCell = document.createElement('td')
+   stringCell.textContent = "総計"
+   row.appendChild(stringCell)
+
+   dates.forEach(date => {
+    var td = document.createElement('td');
+    var dataItem = data.find(item => item.day === date);
+    td.textContent = dataItem ? dataItem.costRate : '-';
+    row.appendChild(td);
+  });
+
+   row.appendChild(document.createElement("td"))
+    tbody.appendChild(row);
+
+  table.appendChild(tbody);
+  field.appendChild(table);
+
+  var columnValues = [];
+  for(i=1;i<dates.length+1;i++) {
+    var rows = table.getElementsByTagName('tr'); // テーブル内の全ての行を取得する
+
+    
+    var cell = rows[1].getElementsByTagName('td')[i]; // 指定した列のセルを取得する
+        var value = cell.textContent || cell.innerText; // セルの値を取得する
+        columnValues.push(value);
+  }
+
+  var Array = columnValues.filter(function(element) {
+    return !isNaN(element);
+});
+var numericArray = Array.map(function(str) {
+    return parseFloat(str);
+});
+console.log(numericArray)
+
+  rows[1].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+
+}
+  
+//後から
+async function displayBalance(url) {
+    const response = await fetch(url)
+    //console.log(await response.json())
+    var data = await response.json()
+
+    var field = document.getElementById("searchResults")
+  
+    var title = document.createElement('h3')
+    title.textContent = "収支"
+    field.appendChild(title)
+  
+    var dates = [...new Set(data.map(item => item.day))].sort();// 日付を一意のセットに取得
+  
+    ///// テーブルのヘッダー行を生成
+    var table = document.createElement('table');
+  
+    var thead = document.createElement('thead');
+  
+    var headerRow = document.createElement('tr');
+    headerRow.appendChild(document.createElement('th'));
+    
+    //　ヘッダーに日付記載
+    dates.forEach(date => {
+      var th = document.createElement('th');
+      th.textContent = date;
+      headerRow.appendChild(th);
+    });
+  
+     //　ヘッダーに期間計セル追加
+     var th = document.createElement('th');
+     th.textContent = "期間計"
+     headerRow.appendChild(th)
+     
+     thead.appendChild(headerRow);
+     table.appendChild(thead);
+  
+  
+     var tbody = document.createElement('tbody')
+  
+     var row = document.createElement('tr')
+  
+     var stringCell = document.createElement('td')
+     stringCell.textContent = "総計"
+     row.appendChild(stringCell)
+  
+     dates.forEach(date => {
+      var td = document.createElement('td');
+      var dataItem = data.find(item => item.day === date);
+      td.textContent = dataItem ? dataItem.balance : '-';
+      row.appendChild(td);
+    });
+  
+     row.appendChild(document.createElement("td"))
+      tbody.appendChild(row);
+  
+    table.appendChild(tbody);
+    field.appendChild(table);
+  
+    var columnValues = [];
+    for(i=1;i<dates.length+1;i++) {
+      var rows = table.getElementsByTagName('tr'); // テーブル内の全ての行を取得する
+  
+      
+      var cell = rows[1].getElementsByTagName('td')[i]; // 指定した列のセルを取得する
+          var value = cell.textContent || cell.innerText; // セルの値を取得する
+          columnValues.push(value);
+    }
+  
+    var Array = columnValues.filter(function(element) {
+      return !isNaN(element);
+  });
+  var numericArray = Array.map(function(str) {
+      return parseFloat(str);
+  });
+  console.log(numericArray)
+  
+    rows[1].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  
+
+}
+  
+
+//後から
 async function displaySales(url) {
     const response = await fetch(url)
     //console.log(await response.json())
+
+    var data = await response.json()
+
+    var field = document.getElementById("searchResults")
+  
+    var title = document.createElement('h3')
+    title.textContent = "売上"
+    field.appendChild(title)
+  
+    var dates = [...new Set(data.map(item => item.day))].sort();// 日付を一意のセットに取得
+  
+    ///// テーブルのヘッダー行を生成
+    var table = document.createElement('table');
+  
+    var thead = document.createElement('thead');
+  
+    var headerRow = document.createElement('tr');
+    headerRow.appendChild(document.createElement('th'));
+    
+    //　ヘッダーに日付記載
+    dates.forEach(date => {
+      var th = document.createElement('th');
+      th.textContent = date;
+      headerRow.appendChild(th);
+    });
+  
+     //　ヘッダーに期間計セル追加
+     var th = document.createElement('th');
+     th.textContent = "期間計"
+     headerRow.appendChild(th)
+     
+     thead.appendChild(headerRow);
+     table.appendChild(thead);
+  
+  
+     var tbody = document.createElement('tbody')
+  
+     var row = document.createElement('tr')
+  
+     var stringCell = document.createElement('td')
+     stringCell.textContent = "総計"
+     row.appendChild(stringCell)
+  
+     dates.forEach(date => {
+      var td = document.createElement('td');
+      var dataItem = data.find(item => item.day === date);
+      td.textContent = dataItem ? dataItem.sales : '-';
+      row.appendChild(td);
+    });
+  
+     row.appendChild(document.createElement("td"))
+      tbody.appendChild(row);
+  
+    table.appendChild(tbody);
+    field.appendChild(table);
+  
+    var columnValues = [];
+    for(i=1;i<dates.length+1;i++) {
+      var rows = table.getElementsByTagName('tr'); // テーブル内の全ての行を取得する
+  
+      
+      var cell = rows[1].getElementsByTagName('td')[i]; // 指定した列のセルを取得する
+          var value = cell.textContent || cell.innerText; // セルの値を取得する
+          columnValues.push(value);
+    }
+  
+    var Array = columnValues.filter(function(element) {
+      return !isNaN(element);
+  });
+  var numericArray = Array.map(function(str) {
+      return parseFloat(str);
+  });
+  console.log(numericArray)
+  
+    rows[1].getElementsByTagName('td')[dates.length+1].textContent = numericArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  
 }
