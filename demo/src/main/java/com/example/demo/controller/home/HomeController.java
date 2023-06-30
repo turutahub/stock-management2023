@@ -20,8 +20,8 @@ public class HomeController {
         return mainService.getStockByFood(foodName);
     }
 
-    @GetMapping("/order/latest-shipments")
-    public List<OrderModel> getLatestShipments() {
-            return mainService.getAllOrder();
+    @GetMapping("/order")
+    public List<OrderModel> getAll_Order() {
+        return mainService.getAll_Order();
     }
 }

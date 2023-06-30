@@ -18,7 +18,6 @@ import java.util.List;
 public class MainService {
     private final MainRepository repository;
 
-    @Autowired
     public MainService(MainRepository repository) {
         this.repository = repository;
     }
@@ -29,18 +28,9 @@ public class MainService {
         return repository.getStockByFood(foodName);
     }
 
-        // 仮の実装として、空のリストを返す
-        return new ArrayList<>();
+    public List<OrderModel> getAll_Order() {
+        return  repository.getAll_Order();
     }
-
-    // getAllStock()メソッド
-    public List<StockModel> getAllStock() {
-        // データベースなどから在庫リストを取得する処理を実装する
-
-        // 仮の実装として、空のリストを返す
-        return new ArrayList<>();
-    }
-}
 
     /* 食材登録機能 */
     public List<RegisterModel> getAllFood() {//food_mstの取得
