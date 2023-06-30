@@ -79,6 +79,29 @@ function showContent(contentId) {
   });
 }
 
+
+function select1Checked() {
+  document.getElementById("select1").checked = true;
+}
+function select3Checked() {
+  document.getElementById("select3").checked = true;
+}
+function select4Checked() {
+  document.getElementById("select4").checked = true;
+}
+function select5Checked() {
+  document.getElementById("select5").checked = true;
+}
+function select6Checked() {
+  document.getElementById("select6").checked = true;
+}
+function select7Checked() {
+  document.getElementById("select7").checked = true;
+}
+function select8Checked() {
+  document.getElementById("select8").checked = true;
+}
+
 // 初期表示時にホームと時計を表示
 window.onload = function() {
   showContent('home');

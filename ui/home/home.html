@@ -41,13 +41,12 @@
       <div id="menu">
         <h2>ホーム</h2>
       <div class="button-container">
-        <button onclick="showContent('home')">ホーム</button>
-        <button onclick="showContent('register');getInventoryList()">食材登録</button>
-        <button onclick="showContent('order');getOrderTable()">発注</button>
-        <button onclick="showContent('inspect');getInspectionTable()">検品</button>
-        <button onclick="showContent('reports');getInformationTable()">棚卸</button>
-        <button onclick="showContent('stock');getStockTable()">在庫一覧</button>
-        <button onclick="showContent('Search')">検索</button>
+        <button onclick="showContent('register');getInventoryList();select3Checked()">食材登録</button>
+        <button onclick="showContent('order');getOrderTable();select4Checked()">発注</button>
+        <button onclick="showContent('inspect');getInspectionTable();select5Checked()">検品</button>
+        <button onclick="showContent('reports');getInformationTable();select6Checked()">棚卸</button>
+        <button onclick="showContent('stock');getStockTable();select7Checked()">在庫一覧</button>
+        <button onclick="showContent('Search');select8Checked()">検索</button>
       </div>
       <div id="stockSummary">
         <h3>在庫概要</h3>
