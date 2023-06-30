@@ -10,17 +10,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @Service
 public class MainService {
     private final MainRepository repository;
+
+    @Autowired
     public MainService(MainRepository repository) {
         this.repository = repository;
     }
 
     /*ホーム画面機能*/
 
+    // getAllOrders()メソッド
+    public List<OrderModel> getAllOrders() {
+        // データベースなどから注文リストを取得する処理を実装する
+
+        // 仮の実装として、空のリストを返す
+        return new ArrayList<>();
+    }
+
+    // getAllStock()メソッド
+    public List<StockModel> getAllStock() {
+        // データベースなどから在庫リストを取得する処理を実装する
+
+        // 仮の実装として、空のリストを返す
+        return new ArrayList<>();
+    }
+}
 
     /* 食材登録機能 */
     public List<RegisterModel> getAllFood() {//food_mstの取得

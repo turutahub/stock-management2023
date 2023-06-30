@@ -13,21 +13,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/home")
 public class HomeController {
-
-    private MainService mainService;
+    private final MainService mainService;
 
     @Autowired
     public HomeController(MainService mainService) {
         this.mainService = mainService;
     }
 
-    @GetMapping("/latest-shipments")
-    public List<OrderModel> getLatestShipments() {
+    @GetMapping("/order")
+    public List<OrderModel> getOrderList() {
         return mainService.getAllOrders();
     }
 
     @GetMapping("/stock")
-    public List<StockModel> getStockList() {
-        return mainService.getAllStock();
+    public List<StockModel> getStockListWithSuper() {
+        return mainService.getAllStockWithSuper();
     }
 }
