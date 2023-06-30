@@ -120,59 +120,49 @@ async function getStockTable() {
       return totalStock;
     }
 
+    // 在庫一覧を取得する処理
+    async function getStockListFromDatabase() {
+      try {
+        const response = await fetch('http://localhost:8080/stock');
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error:', error);
+        return []; // エラー時は空の配列を返すか、エラー処理を行う
+      }
+    }
 
-// 在庫総数を在庫一覧から持ってきて表示
-function showStockSummary() {
-  const stockListElement = document.getElementById('stockList');
-  const stockList = getStockListFromDatabase(); // データベースから在庫一覧を取得
-  stockListElement.innerHTML = '';
-  for (const stockItem of stockList) {
-    const stockItemElement = document.createElement('li');
-    stockItemElement.textContent = stockItem.name + ': ' + stockItem.quantity;
-    stockListElement.appendChild(stockItemElement);
-  }
-}
+    // 最新の発注情報の表示
+    async function showLatestShipments() {
+      try {
+        const response = await fetch('http://localhost:8080/order');
+        const data = await response.json();
 
-// 重要なアラートの表示
-function showImportantAlerts() {
-  const importantAlertsElement = document.getElementById('importantAlerts');
-  const importantAlerts = getImportantAlertsFromDatabase(); // データベースから重要なアラートを取得
-  importantAlertsElement.innerHTML = '';
-  for (const alert of importantAlerts) {
-    const alertItem = document.createElement('li');
-    alertItem.textContent = alert;
-    importantAlertsElement.appendChild(alertItem);
-  }
-}
+        const latestShipmentsElement = document.getElementById('latestShipments');
+        latestShipmentsElement.innerHTML = '';
 
-// 最新の発注情報の表示
-function showLatestShipments() {
-  const latestShipmentsElement = document.getElementById('latestShipments');
-  const latestShipments = getLatestShipmentsFromDatabase(); // データベースから最新の発注情報を取得
-  latestShipmentsElement.innerHTML = '';
-  for (const shipment of latestShipments) {
-    const shipmentItem = document.createElement('li');
-    shipmentItem.textContent = shipment;
-    latestShipmentsElement.appendChild(shipmentItem);
-  }
-}
+        for (const shipment of data) {
+          const shipmentItem = document.createElement('li');
+          shipmentItem.textContent = shipment;
+          latestShipmentsElement.appendChild(shipmentItem);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
 
-// 在庫概要、重要なアラート、最新の出荷情報の表示を更新
-function updateDashboard() {
-  showStockSummary();
-  showImportantAlerts();
-  showLatestShipments();
-}
-
-// ページ読み込み時にホーム画面を更新
-window.addEventListener('load', updateHome);
+    // 在庫概要、最新の出荷情報の表示を更新
+    function updateDashboard() {
+      showStockSummary();
+      showLatestShipments();
+    }
 
     function displayTotalStock(totalStock) {
       const totalStockElement = document.getElementById('totalStock');
       totalStockElement.textContent = totalStock;
     }
 
-    tableBody.innerHTML = ''; 
+    tableBody.innerHTML = '';
     for (const item of data) {
       const row = document.createElement('tr');
       const nameCell = document.createElement('td');
@@ -194,50 +184,5 @@ window.addEventListener('load', updateHome);
   }
 }
 
-getStockTable();
-
-// データベースから在庫一覧を取得
-// データベースから在庫一覧を取得する処理
-async function getStockListFromDatabase() {
-  try {
-    const response = await fetch('http://localhost:8080/stock');
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error:', error);
-    return []; // エラー時は空の配列を返すか、エラー処理を行う
-  }
-}
-
-// データベースから重要なアラートを取得する処理
-async function getImportantAlertsFromDatabase() {
-  try {
-    const response = await fetch('http://localhost:8080/stock');
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error:', error);
-    return []; // エラー時は空の配列を返すか、エラー処理を行う
-  }
-}
-
-// データベースから最新の発注情報を取得する処理
-async function getLatestShipmentsFromDatabase() {
-  try {
-    const response = await fetch('http://localhost:8080/order');
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Error:', error);
-    return []; // エラー時は空の配列を返すか、エラー処理を行う
-  }
-}
-
 // ページ読み込み時にホーム画面を更新
-function updateHome() {
-  updateDashboard();
-}
-
-// ページ読み込み時にホーム画面を更新
-window.addEventListener('load', updateHome);
-
+window.addEventListener('load', getStockTable);
