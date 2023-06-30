@@ -149,10 +149,10 @@ async function getStockListFromDatabase() {
   }
 }
 
-// データベースから最新の出荷情報を取得する処理
+// データベースから最新の発注情報を取得する処理
 async function getLatestShipmentsFromDatabase() {
   try {
-    const response = await fetch('http://localhost:8080/order/latest-shipments');
+    const response = await fetch('http://localhost:8080/orders/latest-shipments');
     const data = await response.json();
     return data;
   } catch (error) {
@@ -160,6 +160,24 @@ async function getLatestShipmentsFromDatabase() {
     return [];
   }
 }
+
+// 最新の発注情報を表示
+function displayLatestShipments(latestShipments) {
+  const latestShipmentsList = document.getElementById('latestShipments').querySelector('ul');
+  latestShipmentsList.innerHTML = '';
+
+  for (const shipment of latestShipments) {
+    const listItem = document.createElement('li');
+    listItem.textContent = shipment.name;
+    latestShipmentsList.appendChild(listItem);
+  }
+}
+
+// ページ読み込み時に最新の発注情報を取得して表示
+window.addEventListener('DOMContentLoaded', async () => {
+  const latestShipments = await getLatestShipmentsFromDatabase();
+  displayLatestShipments(latestShipments);
+});
 
 // 在庫概要の総在庫数を表示
 function displayTotalStock(totalStock) {

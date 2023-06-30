@@ -6,6 +6,7 @@ import com.example.demo.controller.order.OrderRequest;
 import com.example.demo.controller.stock.StockRequest;
 import com.example.demo.model.*;
 import com.example.demo.repository.MainRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,7 +20,6 @@ public class MainService {
     }
 
     /*ホーム画面機能*/
-
 
 
     /* 食材登録機能 */

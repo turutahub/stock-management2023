@@ -10,31 +10,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/home")
 public class HomeController {
-    @RestController
-    @RequestMapping("/stock")
-    public class StockController {
 
-        @Autowired
-        private MainService mainService;
+    private MainService mainService;
 
-        @GetMapping
-        public List<StockModel> getStockList() {
-            return mainService.getAllStock();
-        }
+    @Autowired
+    public HomeController(MainService mainService) {
+        this.mainService = mainService;
     }
 
+    @GetMapping("/latest-shipments")
+    public List<OrderModel> getLatestShipments() {
+        return mainService.getAllOrders();
+    }
 
-    @RestController
-    @RequestMapping("/order")
-    public class OrderController {
-
-        @Autowired
-        private MainService mainService;
-
-        @GetMapping("/latest-shipments")
-        public List<OrderModel> getLatestShipments() {
-            return mainService.getAllOrder();
-        }
+    @GetMapping("/stock")
+    public List<StockModel> getStockList() {
+        return mainService.getAllStock();
     }
 }
