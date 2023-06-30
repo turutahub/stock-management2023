@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
 public class MainDataSource implements MainRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
+    /*ホーム画面機能*/
+    @Override
+    public List<HomeModel> get
 
     /* 食材登録 */
     @Override

@@ -18,6 +18,8 @@ public class MainService {
         this.repository = repository;
     }
 
+    /*ホーム画面機能*/
+
 
 
     /* 食材登録機能 */

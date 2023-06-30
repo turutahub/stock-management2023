@@ -106,83 +106,116 @@ function today() {
   return formattedDate
 }
 
-async function getStockTable() {
+// 在庫概要、最新の出荷情報の表示を更新
+async function updateDashboard() {
   try {
-    const response = await fetch('http://localhost:8080/stock');
-    const data = await response.json();
-    const tableBody = document.getElementById('stockTable');
+    await showStockSummary();
+    await showLatestShipments();
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
-    function calculateTotalStock(data) {
-      let totalStock = 0;
-      for (const item of data) {
-        totalStock += item.quantity;
-      }
-      return totalStock;
-    }
-
-    // 在庫一覧を取得する処理
-    async function getStockListFromDatabase() {
-      try {
-        const response = await fetch('http://localhost:8080/stock');
-        const data = await response.json();
-        return data;
-      } catch (error) {
-        console.error('Error:', error);
-        return []; // エラー時は空の配列を返すか、エラー処理を行う
-      }
-    }
-
-    // 最新の発注情報の表示
-    async function showLatestShipments() {
-      try {
-        const response = await fetch('http://localhost:8080/order');
-        const data = await response.json();
-
-        const latestShipmentsElement = document.getElementById('latestShipments');
-        latestShipmentsElement.innerHTML = '';
-
-        for (const shipment of data) {
-          const shipmentItem = document.createElement('li');
-          shipmentItem.textContent = shipment;
-          latestShipmentsElement.appendChild(shipmentItem);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    }
-
-    // 在庫概要、最新の出荷情報の表示を更新
-    function updateDashboard() {
-      showStockSummary();
-      showLatestShipments();
-    }
-
-    function displayTotalStock(totalStock) {
-      const totalStockElement = document.getElementById('totalStock');
-      totalStockElement.textContent = totalStock;
-    }
-
-    tableBody.innerHTML = '';
-    for (const item of data) {
-      const row = document.createElement('tr');
-      const nameCell = document.createElement('td');
-      const quantityCell = document.createElement('td');
-
-      nameCell.textContent = item.name;
-      quantityCell.textContent = item.quantity;
-
-      row.appendChild(nameCell);
-      row.appendChild(quantityCell);
-
-      tableBody.appendChild(row);
-    }
-
-    const totalStock = calculateTotalStock(data);
+// 在庫概要の表示を更新
+async function showStockSummary() {
+  try {
+    const stockList = await getStockListFromDatabase();
+    const totalStock = calculateTotalStock(stockList);
     displayTotalStock(totalStock);
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
-// ページ読み込み時にホーム画面を更新
-window.addEventListener('load', getStockTable);
+// 最新の発注情報の表示を更新
+async function showLatestShipments() {
+  try {
+    const latestShipments = await getLatestShipmentsFromDatabase();
+    displayLatestShipments(latestShipments);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// データベースから在庫一覧を取得する処理
+async function getStockListFromDatabase() {
+  try {
+    const response = await fetch('http://localhost:8080/stock');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    return [];
+  }
+}
+
+// データベースから最新の出荷情報を取得する処理
+async function getLatestShipmentsFromDatabase() {
+  try {
+    const response = await fetch('http://localhost:8080/order/latest-shipments');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error:', error);
+    return [];
+  }
+}
+
+// 在庫概要の総在庫数を表示
+function displayTotalStock(totalStock) {
+  const totalStockElement = document.getElementById('totalStock');
+  totalStockElement.textContent = totalStock;
+}
+
+// 最新の発注情報を表示
+function displayLatestShipments(latestShipments) {
+  const latestShipmentsList = document.getElementById('latestShipments').querySelector('ul');
+  latestShipmentsList.innerHTML = '';
+
+  for (const shipment of latestShipments) {
+    const listItem = document.createElement('li');
+    listItem.textContent = shipment.name;
+    latestShipmentsList.appendChild(listItem);
+  }
+}
+
+// 在庫一覧の表示を更新
+async function showStockTable() {
+  try {
+    const stockList = await getStockListFromDatabase();
+    displayStockTable(stockList);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// 在庫一覧の表示を更新
+function displayStockTable(stockList) {
+  const tableBody = document.getElementById('stockTableBody');
+  tableBody.innerHTML = '';
+
+  for (const item of stockList) {
+    const row = document.createElement('tr');
+    const nameCell = document.createElement('td');
+    const quantityCell = document.createElement('td');
+
+    nameCell.textContent = item.name;
+    quantityCell.textContent = item.quantity;
+
+    row.appendChild(nameCell);
+    row.appendChild(quantityCell);
+
+    tableBody.appendChild(row);
+  }
+}
+
+// 総在庫数を計算
+function calculateTotalStock(stockList) {
+  let totalStock = 0;
+
+  for (const item of stockList) {
+    totalStock += item.quantity;
+  }
+
+  return totalStock;
+}

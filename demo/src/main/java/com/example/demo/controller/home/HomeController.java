@@ -1,11 +1,14 @@
 package com.example.demo.controller.home;
 
+import com.example.demo.model.OrderModel;
+import com.example.demo.model.StockModel;
+import com.example.demo.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public class HomeController {
     @RestController
@@ -13,24 +16,25 @@ public class HomeController {
     public class StockController {
 
         @Autowired
-        private StockService stockService;
+        private MainService mainService;
 
         @GetMapping
-        public List<StockItem> getStockList() {
-            return stockService.getStockList();
+        public List<StockModel> getStockList() {
+            return mainService.getAllStock();
         }
     }
+
 
     @RestController
     @RequestMapping("/order")
     public class OrderController {
 
         @Autowired
-        private OrderService orderService;
+        private MainService mainService;
 
         @GetMapping("/latest-shipments")
-        public List<Shipment> getLatestShipments() {
-            return orderService.getLatestShipments();
+        public List<OrderModel> getLatestShipments() {
+            return mainService.getAllOrder();
         }
     }
 }
