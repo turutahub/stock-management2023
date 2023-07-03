@@ -270,20 +270,26 @@ document.addEventListener("DOMContentLoaded", async function() {
   try {
     var foodName = selectBox.value
     var response = await fetch(`http://localhost:8080/home/stock/${foodName}`)
-    var stock = await response.json();
-    document.getElementById("totalStock").textContent = stock
+    if (response.ok) {
+      var stock = await response.json();
+      document.getElementById("totalStock").textContent = stock;
+    } else {
+      document.getElementById("totalStock").textContent = "データ無し";
+    } 
   } catch(e) {
-    document.getElementById("totalStock").textContent = "データ無し"
     console.error(e)
   }
   selectBox.addEventListener("change", async function(event) {
     try {
       var foodName = event.target.value;
       var response = await fetch(`http://localhost:8080/home/stock/${foodName}`)
-      var stock = await response.json();
-      document.getElementById("totalStock").textContent = stock
+      if (response.ok) {
+        var stock = await response.json();
+        document.getElementById("totalStock").textContent = stock;
+      } else {
+        document.getElementById("totalStock").textContent = "データ無し";
+      } 
     } catch(e) {
-      document.getElementById("totalStock").textContent = "データ無し"
       console.error(e)
     }
   })

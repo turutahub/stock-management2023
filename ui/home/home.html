@@ -7,8 +7,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
   <title>在庫管理システム</title>
   <link rel="stylesheet" type="text/css" href="home.css" />
-  
 </head>
+
 <body>
   <header class="header">
     <h1>在庫管理システム</h1>
@@ -42,18 +42,19 @@
 
  
   
-    <section id="home" class="content">
-      <div id="menu">
-        <h2>ホーム</h2>
-      <div class="button-container">
-        <button onclick="showContent('register');getInventoryList();select3Checked()">食材登録</button>
-        <button onclick="showContent('order');getOrderTable();select4Checked()">発注</button>
-        <button onclick="showContent('inspect');getInspectionTable();select5Checked()">検品</button>
-        <button onclick="showContent('reports');getInformationTable();select6Checked()">棚卸</button>
-        <button onclick="showContent('stock');getStockTable();select7Checked()">在庫一覧</button>
-        <button onclick="showContent('Search');select8Checked()">検索</button>
-      </div>
-      <div class="research-box"><p>クイックリサーチ</p>
+  <section id="home" class="content">
+    <h2>ホーム</h2>
+    <div class="button-container">
+      <button onclick="showContent('register');getInventoryList();select3Checked()">食材登録</button>
+      <button onclick="showContent('order');getOrderTable();select4Checked()">発注</button>
+      <button onclick="showContent('inspect');getInspectionTable();select5Checked()">検品</button>
+      <button onclick="showContent('reports');getInformationTable();select6Checked()">棚卸</button>
+      <button onclick="showContent('stock');getStockTable();select7Checked()">在庫一覧</button>
+      <button onclick="showContent('Search');select8Checked()">検索</button>
+    </div>
+
+    <div class="research-box">
+      <p>クイックリサーチ</p>
       <div id="stockSummary">
         <h3>在庫概要</h3>
         <label class="select-box">
@@ -70,7 +71,7 @@
         </ul>
       </div>
     </div>
-    </section>
+  </section>
 
   <section id="stock" class="content">
     <h2>在庫一覧</h2>

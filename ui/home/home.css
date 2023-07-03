@@ -1,3 +1,6 @@
+  /* スクロールバー非表示 */
+body { overflow-y: hidden; }
+
   /* ヘッダー */
 .header {
   display: flex;
@@ -19,6 +22,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 h1, h2 {
   color: #333;
 }
@@ -202,7 +206,9 @@ section#addreport  button {
   }
 
 
+/* ホーム */
 
+/* セレクトボックス */
 .select-box {
   position: relative;
   }
@@ -249,12 +255,7 @@ section#addreport  button {
     outline: 1px solid #2589d0;
   }
 
-#stockSummary p {
-  display: inline;
-  margin-left: 30px;
-  font-size: 20px;
-}
-
+  /* ホーム画面 */
 section#home {
   z-index: 2;
   position: fixed;
@@ -265,37 +266,44 @@ section#home {
   margin: 0;
   padding: 0;
 }
-
+  /* ホームに戻るボタン */
 header button{
   display: none;
   margin-right: 150px;
 }
 
+  /* ホーム画面　ボタン */
 section#home button {
   margin-left: 190px;
   margin-bottom: 50px;
 }
-
+  
+ /* ホーム画面　文字 */
 section#home h2{
   margin-left: 50px;
 }
-
-#stockSummary {
-  margin-left: 50px;
-}
-
-#latestShipments {
-  margin-left: 50px;
-}
-
+  
+/* クイックリサーチボックス */
 .research-box {
   width: 900px;
   margin-left: 230px;
   border:2px solid black;
   border-radius: 20px;
-}
-.research-box p:first-of-type {
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 10px;
-}
+  }
+  .research-box p:first-of-type {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  #stockSummary p {
+    display: inline;
+    margin-left: 30px;
+    font-size: 20px;
+  }
+  #stockSummary {
+    margin-left: 50px;
+  }
+  #latestShipments {
+    margin-left: 50px;
+  }
+  
