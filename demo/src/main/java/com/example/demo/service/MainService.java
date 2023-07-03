@@ -6,14 +6,18 @@ import com.example.demo.controller.order.OrderRequest;
 import com.example.demo.controller.stock.StockRequest;
 import com.example.demo.model.*;
 import com.example.demo.repository.MainRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @Service
 public class MainService {
     private final MainRepository repository;
+
     public MainService(MainRepository repository) {
         this.repository = repository;
     }
@@ -24,6 +28,9 @@ public class MainService {
         return repository.getStockByFood(foodName);
     }
 
+    public List<OrderModel> getAll_Order() {
+        return  repository.getAll_Order();
+    }
 
     /* 食材登録機能 */
     public List<RegisterModel> getAllFood() {//food_mstの取得

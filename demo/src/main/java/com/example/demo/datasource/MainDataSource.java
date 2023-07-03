@@ -13,8 +13,10 @@ import org.springframework.stereotype.Repository;
 import javax.websocket.OnError;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,9 +34,18 @@ public class MainDataSource implements MainRepository {
                 "WHERE food_name = ? AND day = CURRENT_DATE";
         return jdbcTemplate.queryForObject(sql, int.class, foodName);
     }
-    /*@Override
-    public List<HomeModel> get*/
-
+    @Override
+    public List<OrderModel> getAll_Order() {
+        String sql = "SELECT * " +
+                "FROM impire_history imp " +
+                "LEFT JOIN food_mst fm ON fm.food_id = imp.food_id "+
+                "WHERE imp.day IN ( " +
+                 "SELECT MAX(day) " +
+                 "FROM impire_history " +
+                 "WHERE food_id = imp.food_id) ";
+        List<Map<String, Object>> records = jdbcTemplate.queryForList(sql);
+        return records.stream().map(this::toOrderModel).collect(Collectors.toList());
+    }
 
     /* 食材登録 */
     @Override
